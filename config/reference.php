@@ -1580,6 +1580,19 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     ignore_commands?: list<scalar|null|Param>,
  *     ignore_messages?: list<scalar|null|Param>,
  * }
+ * @psalm-type FosJsRoutingConfig = array{
+ *     serializer?: scalar|null|Param,
+ *     routes_to_expose?: list<scalar|null|Param>,
+ *     router?: scalar|null|Param, // Default: "router"
+ *     request_context_base_url?: scalar|null|Param, // Default: null
+ *     cache_control?: array{
+ *         public?: bool|Param, // Default: false
+ *         expires?: scalar|null|Param, // Default: null
+ *         maxage?: scalar|null|Param, // Default: null
+ *         smaxage?: scalar|null|Param, // Default: null
+ *         vary?: list<scalar|null|Param>,
+ *     },
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1603,6 +1616,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     survos_ez?: SurvosEzConfig,
  *     ux_icons?: UxIconsConfig,
  *     inspector?: InspectorConfig,
+ *     fos_js_routing?: FosJsRoutingConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1631,6 +1645,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         ux_icons?: UxIconsConfig,
  *         survos_deployment?: SurvosDeploymentConfig,
  *         inspector?: InspectorConfig,
+ *         fos_js_routing?: FosJsRoutingConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1655,6 +1670,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         survos_ez?: SurvosEzConfig,
  *         ux_icons?: UxIconsConfig,
  *         inspector?: InspectorConfig,
+ *         fos_js_routing?: FosJsRoutingConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1682,6 +1698,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         ux_icons?: UxIconsConfig,
  *         survos_deployment?: SurvosDeploymentConfig,
  *         inspector?: InspectorConfig,
+ *         fos_js_routing?: FosJsRoutingConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

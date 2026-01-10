@@ -20,6 +20,7 @@
         "doctrine/doctrine-bundle": "^3.2.2",
         "doctrine/doctrine-migrations-bundle": "^4.0",
         "doctrine/orm": "^3.6.1",
+        "friendsofsymfony/jsrouting-bundle": "*",
         "inspector-apm/inspector-symfony": "^1.10",
         "league/csv": "^9.28",
         "meilisearch/meilisearch-php": "dev-main",
@@ -101,6 +102,7 @@
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
+            "fos:js-routing:dump --format=js --target=public/js/fos_js_routes.js --callback=\"export default  \"": "symfony-cmd",
             "importmap:install": "symfony-cmd"
         },
         "post-install-cmd": [
