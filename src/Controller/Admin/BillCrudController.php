@@ -25,8 +25,9 @@ final class BillCrudController extends AbstractEzCrudController
         if ($pageName !== Crud::PAGE_INDEX) {
             return [];
         }
+        return [];
 
-        yield LinkedTextField::new('id', 'Id')
-            ->setRoute(self::SHOW_ROUTE, 'id', 'id');
+//        yield LinkedTextField::new('id', 'Id')
+//            ->setRoute(self::SHOW_ROUTE, 'id', 'id');
     }
 }
