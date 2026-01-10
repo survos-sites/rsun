@@ -18,6 +18,6 @@ final class MeiliDashboardController extends AbstractMeiliController
     public function configureDashboard(): Dashboard
     {
         return parent::configureDashboard()
-            ->setTitle('Meili Admin');
+            ->setTitle('Richmond Sunshine');
     }
 }
