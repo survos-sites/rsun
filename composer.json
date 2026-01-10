@@ -1,6 +1,8 @@
 {
     "type": "project",
     "license": "MIT",
+    "name": "survos-sites/rsun",
+    "description": "Meilisearch of data from richmond sunlight API/data",
     "minimum-stability": "stable",
     "prefer-stable": true,
     "keywords": ["Virginia", "legislation", "law"],
