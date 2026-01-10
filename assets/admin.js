@@ -1,8 +1,14 @@
-/**
- * EasyAdmin entrypoint (separate from app.js) to avoid bootstrap/tabler collisions
- * and ensure Stimulus + Symfony UX components load as expected.
+/*
+ * This file will be included onto the EasyAdmin pages via the importmap() Twig function.
  */
-import './stimulus_bootstrap.js';
 
-// Optional: JSON viewer (requires importmap/npm dependency)
-// import "@andypf/json-viewer";
+// import './stimulus_bootstrap.js';
+/*
+ * Welcome to your app's main JavaScript file!
+ *
+ * This file will be included onto the page via the importmap() Twig function,
+ * which should already be in your base.html.twig.
+ */
+// stimulus
+import './stimulus_bootstrap.js';
+import 'instantsearch.css/themes/algolia.min.css';

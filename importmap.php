@@ -20,6 +20,10 @@ return [
         'path' => './assets/meili.js',
         'entrypoint' => true,
     ],
+    'admin' => [
+        'path' => './assets/admin.js',
+        'entrypoint' => true,
+    ],
     '@hotwired/stimulus' => [
         'version' => '3.2.2',
     ],
@@ -280,5 +284,8 @@ return [
     'bootstrap/dist/css/bootstrap.min.css' => [
         'version' => '5.3.8',
         'type' => 'css',
+    ],
+    'chart.js' => [
+        'version' => '3.9.1',
     ],
 ];
