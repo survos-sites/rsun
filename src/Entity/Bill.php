@@ -25,7 +25,7 @@ use Survos\MeiliBundle\Metadata\MeiliIndex;
 )]
 final class Bill
 {
-	public const FILTERABLE_FIELDS = ['year', 'chamber', 'status', 'outcome'];
+	public const FILTERABLE_FIELDS = ['year', 'chamber', 'status', 'outcome','patron'];
 	public const SORTABLE_FIELDS = ['year'];
 	public const SEARCHABLE_FIELDS = ['catchLine', 'summary'];
 
