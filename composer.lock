@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6a14936574aa2db2151c0b2cc2f27942",
+    "content-hash": "015dd6195091025d7014e1f28234b17a",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -1512,6 +1512,136 @@
                 }
             ],
             "time": "2025-03-06T22:45:56+00:00"
+        },
+        {
+            "name": "inspector-apm/inspector-php",
+            "version": "3.16.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/inspector-apm/inspector-php.git",
+                "reference": "7da3ed54da70cde01daa1476ba089e4cd27b7a24"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/inspector-apm/inspector-php/zipball/7da3ed54da70cde01daa1476ba089e4cd27b7a24",
+                "reference": "7da3ed54da70cde01daa1476ba089e4cd27b7a24",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "ext-curl": "*",
+                "friendsofphp/php-cs-fixer": "^3.75",
+                "neuron-core/neuron-ai": "^2.8",
+                "phpstan/phpstan": "^2.1",
+                "phpunit/phpunit": "^9.0",
+                "rector/rector": "^2.2",
+                "tomasvotruba/type-coverage": "^2.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "3.16.x-dev",
+                    "dev-develop": "3.16.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Inspector\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Valerio Barbera",
+                    "email": "valerio@inspector.dev"
+                }
+            ],
+            "description": "Inspector monitoring for PHP applications.",
+            "keywords": [
+                "inspector",
+                "monitoring",
+                "observability",
+                "php",
+                "telemetry"
+            ],
+            "support": {
+                "issues": "https://github.com/inspector-apm/inspector-php/issues",
+                "source": "https://github.com/inspector-apm/inspector-php/tree/3.16.5"
+            },
+            "time": "2025-12-10T11:54:57+00:00"
+        },
+        {
+            "name": "inspector-apm/inspector-symfony",
+            "version": "1.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/inspector-apm/inspector-symfony.git",
+                "reference": "e8f285ded102d1d5ee052a77bf52079960e6f281"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/inspector-apm/inspector-symfony/zipball/e8f285ded102d1d5ee052a77bf52079960e6f281",
+                "reference": "e8f285ded102d1d5ee052a77bf52079960e6f281",
+                "shasum": ""
+            },
+            "require": {
+                "inspector-apm/inspector-php": "^3.11",
+                "php": ">=8.0",
+                "symfony/config": "^5.2|^6.0|^7.0|^8.0",
+                "symfony/console": "^5.2|^6.0|^7.0|^8.0",
+                "symfony/dependency-injection": "^5.2|^6.0|^7.0|^8.0",
+                "symfony/event-dispatcher": "^5.2|^6.0|^7.0|^8.0",
+                "symfony/framework-bundle": "^5.2|^6.0|^7.0|^8.0",
+                "symfony/http-kernel": "^5.2|^6.0|^7.0|^8.0",
+                "symfony/yaml": "^5.2|^6.0|^7.0|^8.0"
+            },
+            "require-dev": {
+                "doctrine/doctrine-bundle": "^2.4|^3.0",
+                "phpunit/phpunit": "^9.5",
+                "symfony/doctrine-messenger": "^5.2|^6.0|^7.0|^8.0",
+                "symfony/mailer": "^5.2|^6.0|^7.0|^8.0",
+                "symfony/messenger": "^5.2|^6.0|^7.2|^8.0",
+                "symfony/notifier": "^5.2|^6.0|^7.0|^8.0",
+                "symfony/security-bundle": "^5.2|^6.0|^7.0|^8.0",
+                "symfony/test-pack": "^1.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Inspector\\Symfony\\Bundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Valerio Barbera",
+                    "email": "valerio@inspector.dev"
+                }
+            ],
+            "description": "Code Execution Monitoring for Symfony applications.",
+            "homepage": "https://inspector.dev",
+            "keywords": [
+                "bundle",
+                "error-tracking",
+                "inspector",
+                "messenger-monitoring",
+                "monitoring",
+                "php",
+                "symfony"
+            ],
+            "support": {
+                "issues": "https://github.com/inspector-apm/inspector-symfony/issues",
+                "source": "https://github.com/inspector-apm/inspector-symfony/tree/1.10.0"
+            },
+            "time": "2025-12-01T15:25:57+00:00"
         },
         {
             "name": "league/csv",
@@ -13118,14 +13248,14 @@
     "prefer-lowest": false,
     "platform": {
         "php": ">=8.4",
-        "ext-ctype": "*",
-        "ext-iconv": "*",
-        "ext-sodium": "*",
         "ext-apcu": "*",
         "ext-bz2": "*",
+        "ext-ctype": "*",
         "ext-dom": "*",
+        "ext-iconv": "*",
         "ext-intl": "*",
         "ext-redis": "*",
+        "ext-sodium": "*",
         "ext-zip": "*"
     },
     "platform-dev": {},

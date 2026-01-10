@@ -1565,6 +1565,21 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  * @psalm-type SurvosDeploymentConfig = array{
  *     enabled?: bool|Param, // Default: true
  * }
+ * @psalm-type InspectorConfig = array{
+ *     enabled?: bool|Param, // Default: true
+ *     url?: scalar|null|Param, // Default: "https://ingest.inspector.dev"
+ *     ingestion_key?: scalar|null|Param, // Default: null
+ *     unhandled_exceptions?: bool|Param, // Default: true
+ *     messenger?: bool|Param, // Default: true
+ *     query?: bool|Param, // Default: true
+ *     query_bindings?: bool|Param, // Default: true
+ *     templates?: bool|Param, // Default: true
+ *     user?: bool|Param, // Default: true
+ *     transport?: scalar|null|Param, // Default: "async"
+ *     ignore_routes?: list<scalar|null|Param>,
+ *     ignore_commands?: list<scalar|null|Param>,
+ *     ignore_messages?: list<scalar|null|Param>,
+ * }
  * @psalm-type ConfigType = array{
  *     imports?: ImportsConfig,
  *     parameters?: ParametersConfig,
@@ -1587,6 +1602,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *     twig_component?: TwigComponentConfig,
  *     survos_ez?: SurvosEzConfig,
  *     ux_icons?: UxIconsConfig,
+ *     inspector?: InspectorConfig,
  *     "when@dev"?: array{
  *         imports?: ImportsConfig,
  *         parameters?: ParametersConfig,
@@ -1614,6 +1630,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         survos_ez?: SurvosEzConfig,
  *         ux_icons?: UxIconsConfig,
  *         survos_deployment?: SurvosDeploymentConfig,
+ *         inspector?: InspectorConfig,
  *     },
  *     "when@prod"?: array{
  *         imports?: ImportsConfig,
@@ -1637,6 +1654,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         twig_component?: TwigComponentConfig,
  *         survos_ez?: SurvosEzConfig,
  *         ux_icons?: UxIconsConfig,
+ *         inspector?: InspectorConfig,
  *     },
  *     "when@test"?: array{
  *         imports?: ImportsConfig,
@@ -1663,6 +1681,7 @@ use Symfony\Component\Config\Loader\ParamConfigurator as Param;
  *         survos_ez?: SurvosEzConfig,
  *         ux_icons?: UxIconsConfig,
  *         survos_deployment?: SurvosDeploymentConfig,
+ *         inspector?: InspectorConfig,
  *     },
  *     ...<string, ExtensionType|array{ // extra keys must follow the when@%env% pattern or match an extension alias
  *         imports?: ImportsConfig,

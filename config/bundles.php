@@ -25,4 +25,5 @@ return [
     Survos\EzBundle\SurvosEzBundle::class => ['all' => true],
     Symfony\UX\Icons\UXIconsBundle::class => ['all' => true],
     Survos\DeploymentBundle\SurvosDeploymentBundle::class => ['dev' => true, 'test' => true],
+    Inspector\Symfony\Bundle\InspectorBundle::class => ['all' => true],
 ];
