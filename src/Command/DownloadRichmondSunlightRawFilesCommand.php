@@ -14,7 +14,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Contracts\HttpClient\Exception\ExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
-#[AsCommand('app:richmondsunlight:download-raw', 'Download Richmond Sunlight bulk datasets into data directory')]
+#[AsCommand('app:download', 'Download Richmond Sunlight bulk datasets into data directory')]
 final class DownloadRichmondSunlightRawFilesCommand
 {
     public function __construct(
@@ -37,6 +37,15 @@ final class DownloadRichmondSunlightRawFilesCommand
         $this->filesystem->mkdir($absoluteDataDir);
 
         $io->title('Richmond Sunlight downloads');
+        for ($year=2023; $year<=2026; $year++) {
+            $url = sprintf('https://downloads.richmondsunlight.com/bills-%d.jsonl', $year);
+            $filename = $absoluteDataDir . '/' . $year . '.jsonl';
+            if (!file_exists($filename)) {
+                dump($url,$filename);
+                $this->downloadToFile($url, $filename);
+            }
+        }
+        return Command::SUCCESS;
 
         try {
             $html = $this->httpClient->request('GET', RichmondSunlightDownloadsScraper::DOWNLOADS_PAGE_URL)->getContent();
