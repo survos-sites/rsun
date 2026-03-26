@@ -29,16 +29,16 @@ bin/console meili:settings:update --force --keys bill --wait
 
 ## Loading Data
 
-Download the raw data files:
+Download the raw data files (if not already in data/):
 
 ```bash
-bin/console app:load
+bin/console app:richmondsunlight:download-raw
 ```
 
-Or iterate through data:
+Import bills into the database:
 
 ```bash
-bin/console state:iterate
+bin/console import:entities App\\Entity\\Bill data/bills.csv
 ```
 
 ## Development
