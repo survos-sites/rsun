@@ -100,15 +100,17 @@
     },
     "scripts": {
         "auto-scripts": {
-            "cache:clear": "symfony-cmd",
+            
             "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "fos:js-routing:dump --format=js --target=public/js/fos_js_routes.js --callback=\"export default  \"": "symfony-cmd",
+            "fos:js-routing:dump --format=json --target=public/js/fos_js_routes.json": "symfony-cmd",
             "importmap:install": "symfony-cmd"
         },
         "post-install-cmd": [
+            "php -d memory_limit=512M bin/console cache:clear",
             "@auto-scripts"
         ],
         "post-update-cmd": [
+            "php -d memory_limit=512M bin/console cache:clear",
             "@auto-scripts"
         ]
     },
