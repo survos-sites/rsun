@@ -1,16 +1,6 @@
 {
     "controllers": {
         "@survos/js-twig-bundle": {
-            "dexie": {
-                "enabled": true,
-                "fetch": "eager",
-                "autoimport": []
-            },
-            "js_twig": {
-                "enabled": true,
-                "fetch": "lazy",
-                "autoimport": []
-            }
         },
         "@survos/meili-bundle": {
             "insta": {
@@ -41,14 +31,6 @@
             }
         },
         "@survos/tabler-bundle": {
-            "accordion": {
-                "enabled": true,
-                "fetch": "lazy"
-            },
-            "search": {
-                "enabled": true,
-                "fetch": "lazy"
-            }
         },
         "@symfony/ux-chartjs": {
             "chart": {

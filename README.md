@@ -38,7 +38,7 @@ bin/console app:richmondsunlight:download-raw
 Import bills into the database:
 
 ```bash
-bin/console import:entities App\\Entity\\Bill data/bills.csv
+bin/console import:entities App\\Entity\\Bill data/2023.jsonl
 ```
 
 ## Development

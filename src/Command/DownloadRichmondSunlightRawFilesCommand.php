@@ -41,7 +41,7 @@ final class DownloadRichmondSunlightRawFilesCommand
             $url = sprintf('https://downloads.richmondsunlight.com/bills-%d.jsonl', $year);
             $filename = $absoluteDataDir . '/' . $year . '.jsonl';
             if (!file_exists($filename)) {
-                dump($url,$filename);
+                $io->note(sprintf('Downloading %s to %s', $url, $filename));
                 $this->downloadToFile($url, $filename);
             }
         }
