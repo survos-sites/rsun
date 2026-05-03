@@ -17,7 +17,6 @@ return [
     Survos\CoreBundle\SurvosCoreBundle::class => ['all' => true],
     Survos\MeiliBundle\SurvosMeiliBundle::class => ['all' => true],
     Survos\StateBundle\SurvosStateBundle::class => ['all' => true],
-    Museado\DataBundle\MuseadoDataBundle::class => ['all' => true],
     Survos\ImportBundle\SurvosImportBundle::class => ['all' => true],
     Survos\CodeBundle\SurvosCodeBundle::class => ['dev' => true, 'test' => true],
     Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
@@ -27,5 +26,6 @@ return [
     Survos\DeploymentBundle\SurvosDeploymentBundle::class => ['dev' => true, 'test' => true],
     Inspector\Symfony\Bundle\InspectorBundle::class => ['all' => true],
     Symfony\UX\Chartjs\ChartjsBundle::class => ['all' => true],
-    FOS\JsRoutingBundle\FOSJsRoutingBundle::class => ['all' => true],
+    Survos\DataBundle\SurvosDataBundle::class => ['all' => true],
+    Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
 ];

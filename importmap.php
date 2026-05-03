@@ -24,44 +24,44 @@ return [
         'path' => './assets/admin.js',
         'entrypoint' => true,
     ],
-    '@hotwired/stimulus' => [
-        'version' => '3.2.2',
-    ],
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],
+    '@hotwired/stimulus' => [
+        'version' => '3.2.2',
+    ],
     '@hotwired/turbo' => [
-        'version' => '7.3.0',
+        'version' => '8.0.23',
     ],
     'twig' => [
-        'version' => '1.17.1',
+        'version' => '2.0.0',
     ],
     'locutus/php/strings/sprintf' => [
-        'version' => '2.0.16',
+        'version' => '3.0.28',
     ],
     'locutus/php/strings/vsprintf' => [
-        'version' => '2.0.16',
+        'version' => '3.0.28',
     ],
     'locutus/php/math/round' => [
-        'version' => '2.0.16',
+        'version' => '3.0.28',
     ],
     'locutus/php/math/max' => [
-        'version' => '2.0.16',
+        'version' => '3.0.28',
     ],
     'locutus/php/math/min' => [
-        'version' => '2.0.16',
+        'version' => '3.0.28',
     ],
     'locutus/php/strings/strip_tags' => [
-        'version' => '2.0.16',
+        'version' => '3.0.28',
     ],
     'locutus/php/datetime/strtotime' => [
-        'version' => '2.0.16',
+        'version' => '3.0.28',
     ],
     'locutus/php/datetime/date' => [
-        'version' => '2.0.16',
+        'version' => '3.0.28',
     ],
     'locutus/php/var/boolval' => [
-        'version' => '2.0.16',
+        'version' => '3.0.28',
     ],
     'debug' => [
         'version' => '4.4.3',
@@ -79,19 +79,19 @@ return [
         'version' => '0.0.6',
     ],
     'instantsearch.js' => [
-        'version' => '4.86.1',
+        'version' => '4.92.1',
     ],
     '@algolia/events' => [
         'version' => '4.0.1',
     ],
     'algoliasearch-helper' => [
-        'version' => '3.27.0',
+        'version' => '3.28.1',
     ],
     'qs' => [
-        'version' => '6.14.1',
+        'version' => '6.15.0',
     ],
     'algoliasearch-helper/types/algoliasearch.js' => [
-        'version' => '3.27.0',
+        'version' => '3.28.1',
     ],
     'side-channel' => [
         'version' => '1.1.0',
@@ -100,7 +100,7 @@ return [
         'version' => '1.3.0',
     ],
     'object-inspect' => [
-        'version' => '1.13.3',
+        'version' => '1.13.4',
     ],
     'side-channel-list' => [
         'version' => '1.0.0',
@@ -112,10 +112,10 @@ return [
         'version' => '1.0.2',
     ],
     'get-intrinsic' => [
-        'version' => '1.2.5',
+        'version' => '1.3.0',
     ],
     'call-bound' => [
-        'version' => '1.0.2',
+        'version' => '1.0.4',
     ],
     'es-errors' => [
         'version' => '1.3.0',
@@ -145,13 +145,13 @@ return [
         'version' => '1.1.0',
     ],
     'dunder-proto/get' => [
-        'version' => '1.0.0',
+        'version' => '1.0.1',
     ],
     'call-bind-apply-helpers/functionApply' => [
-        'version' => '1.0.0',
+        'version' => '1.0.2',
     ],
     'call-bind-apply-helpers/functionCall' => [
-        'version' => '1.0.0',
+        'version' => '1.0.2',
     ],
     'function-bind' => [
         'version' => '1.1.2',
@@ -163,13 +163,13 @@ return [
         'version' => '1.0.8',
     ],
     'call-bind-apply-helpers' => [
-        'version' => '1.0.0',
+        'version' => '1.0.2',
     ],
     'set-function-length' => [
         'version' => '1.2.2',
     ],
     'call-bind-apply-helpers/applyBind' => [
-        'version' => '1.0.0',
+        'version' => '1.0.2',
     ],
     'define-data-property' => [
         'version' => '1.1.4',
@@ -178,13 +178,13 @@ return [
         'version' => '1.0.2',
     ],
     'instantsearch.js/es/widgets' => [
-        'version' => '4.86.1',
+        'version' => '4.92.1',
     ],
     'instantsearch-ui-components' => [
-        'version' => '0.16.0',
+        'version' => '0.22.1',
     ],
     'preact' => [
-        'version' => '10.28.1',
+        'version' => '10.29.0',
     ],
     'hogan.js' => [
         'version' => '3.0.2',
@@ -193,86 +193,86 @@ return [
         'version' => '3.1.1',
     ],
     'preact/hooks' => [
-        'version' => '10.28.1',
+        'version' => '10.29.0',
     ],
     'ai' => [
-        'version' => '5.0.117',
+        'version' => '6.0.138',
     ],
     '@babel/runtime/helpers/extends' => [
-        'version' => '7.28.4',
+        'version' => '7.29.2',
     ],
     '@babel/runtime/helpers/objectWithoutProperties' => [
-        'version' => '7.28.4',
+        'version' => '7.29.2',
     ],
     '@babel/runtime/helpers/typeof' => [
-        'version' => '7.28.4',
+        'version' => '7.29.2',
     ],
     '@babel/runtime/helpers/defineProperty' => [
-        'version' => '7.28.4',
+        'version' => '7.29.2',
     ],
     '@babel/runtime/helpers/slicedToArray' => [
-        'version' => '7.28.4',
+        'version' => '7.29.2',
     ],
     '@babel/runtime/helpers/toConsumableArray' => [
-        'version' => '7.28.4',
+        'version' => '7.29.2',
     ],
     'markdown-to-jsx' => [
-        'version' => '7.7.17',
+        'version' => '9.7.13',
     ],
     'htm' => [
         'version' => '3.1.1',
     ],
     '@ai-sdk/gateway' => [
-        'version' => '2.0.24',
+        'version' => '3.0.80',
     ],
     '@ai-sdk/provider-utils' => [
-        'version' => '3.0.20',
+        'version' => '4.0.21',
     ],
     '@ai-sdk/provider' => [
-        'version' => '2.0.1',
+        'version' => '3.0.8',
     ],
     'zod/v4' => [
-        'version' => '4.2.1',
+        'version' => '4.3.6',
     ],
     '@opentelemetry/api' => [
-        'version' => '1.9.0',
+        'version' => '1.9.1',
     ],
     'react' => [
-        'version' => '19.2.0',
+        'version' => '19.2.4',
     ],
     '@vercel/oidc' => [
-        'version' => '3.0.5',
+        'version' => '3.2.0',
     ],
     'eventsource-parser/stream' => [
         'version' => '3.0.6',
     ],
     'zod/v3' => [
-        'version' => '4.2.1',
+        'version' => '4.3.6',
     ],
     '@standard-schema/spec' => [
         'version' => '1.1.0',
     ],
     'instantsearch.css/themes/algolia.min.css' => [
-        'version' => '8.9.0',
+        'version' => '8.12.0',
         'type' => 'css',
     ],
     '@meilisearch/instant-meilisearch' => [
-        'version' => '0.29.1',
+        'version' => '0.30.0',
     ],
     'meilisearch' => [
-        'version' => '0.55.0',
+        'version' => '0.54.0',
     ],
     '@stimulus-components/dialog' => [
         'version' => '1.0.1',
     ],
     '@andypf/json-viewer' => [
-        'version' => '2.2.0',
+        'version' => '2.3.2',
     ],
     'pretty-print-json' => [
-        'version' => '3.0.6',
+        'version' => '3.0.7',
     ],
     'pretty-print-json/dist/css/pretty-print-json.min.css' => [
-        'version' => '3.0.6',
+        'version' => '3.0.7',
         'type' => 'css',
     ],
     'bootstrap' => [
@@ -286,6 +286,114 @@ return [
         'type' => 'css',
     ],
     'chart.js' => [
-        'version' => '3.9.1',
+        'version' => '4.5.1',
+    ],
+    '@tacman1123/twig-browser' => [
+        'version' => '0.4.18',
+    ],
+    '@tacman1123/twig-browser/src/compat/compileTwigBlocks.js' => [
+        'version' => '0.4.18',
+    ],
+    '@swc/helpers/esm/_sliced_to_array.js' => [
+        'version' => '0.5.20',
+    ],
+    '@swc/helpers/esm/_to_consumable_array.js' => [
+        'version' => '0.5.20',
+    ],
+    '@swc/helpers/esm/_define_property.js' => [
+        'version' => '0.5.20',
+    ],
+    '@swc/helpers/esm/_extends.js' => [
+        'version' => '0.5.20',
+    ],
+    '@swc/helpers/esm/_object_destructuring_empty.js' => [
+        'version' => '0.5.20',
+    ],
+    '@swc/helpers/esm/_object_spread.js' => [
+        'version' => '0.5.20',
+    ],
+    '@swc/helpers/esm/_object_spread_props.js' => [
+        'version' => '0.5.20',
+    ],
+    '@swc/helpers/esm/_type_of.js' => [
+        'version' => '0.5.20',
+    ],
+    '@swc/helpers/esm/_instanceof.js' => [
+        'version' => '0.5.20',
+    ],
+    '@swc/helpers/esm/_object_without_properties.js' => [
+        'version' => '0.5.20',
+    ],
+    '@swc/helpers/esm/_call_super.js' => [
+        'version' => '0.5.20',
+    ],
+    '@swc/helpers/esm/_class_call_check.js' => [
+        'version' => '0.5.20',
+    ],
+    '@swc/helpers/esm/_create_class.js' => [
+        'version' => '0.5.20',
+    ],
+    '@swc/helpers/esm/_inherits.js' => [
+        'version' => '0.5.20',
+    ],
+    'locutus/php/strings/index' => [
+        'version' => '3.0.9',
+    ],
+    'locutus/php/math/index' => [
+        'version' => '3.0.9',
+    ],
+    'locutus/php/datetime/index' => [
+        'version' => '3.0.9',
+    ],
+    'locutus/php/var/index' => [
+        'version' => '3.0.9',
+    ],
+    'es-object-atoms' => [
+        'version' => '1.1.1',
+    ],
+    'math-intrinsics/abs' => [
+        'version' => '1.1.0',
+    ],
+    'math-intrinsics/floor' => [
+        'version' => '1.1.0',
+    ],
+    'math-intrinsics/max' => [
+        'version' => '1.1.0',
+    ],
+    'math-intrinsics/min' => [
+        'version' => '1.1.0',
+    ],
+    'math-intrinsics/pow' => [
+        'version' => '1.1.0',
+    ],
+    'math-intrinsics/round' => [
+        'version' => '1.1.0',
+    ],
+    'math-intrinsics/sign' => [
+        'version' => '1.1.0',
+    ],
+    'get-proto' => [
+        'version' => '1.0.1',
+    ],
+    'get-proto/Object.getPrototypeOf' => [
+        'version' => '1.0.1',
+    ],
+    'get-proto/Reflect.getPrototypeOf' => [
+        'version' => '1.0.1',
+    ],
+    'markdown-to-jsx/entities' => [
+        'version' => '9.7.13',
+    ],
+    'zod' => [
+        'version' => '4.3.6',
+    ],
+    '@kurkle/color' => [
+        'version' => '0.3.4',
+    ],
+    'dexie' => [
+        'version' => '4.4.2',
+    ],
+    '@tacman1123/twig-browser/adapters/symfony' => [
+        'version' => '0.4.18',
     ],
 ];
