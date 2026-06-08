@@ -1,0 +1,16 @@
+<article class="list-group-item">
+    <div class="d-flex w-100 justify-content-between gap-3">
+        <div>
+            <div class="fw-semibold">
+                {{ hit.number|default(hit.id|default("Bill")) }}
+                {% if hit.catchLine|default(null) %}<span class="ms-2">{{ hit.catchLine }}</span>{% endif %}
+            </div>
+            {% if hit.summary|default(null) %}
+                <div class="text-muted small mt-1">{{ hit.summary|u.truncate(240, "...") }}</div>
+            {% endif %}
+        </div>
+        {% if hit.year|default(null) %}
+            <span class="badge bg-blue-lt align-self-start">{{ hit.year }}</span>
+        {% endif %}
+    </div>
+</article>

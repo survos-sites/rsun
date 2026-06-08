@@ -1,0 +1,37 @@
+{% extends '@SurvosTabler/layout/base.html.twig' %}
+
+{% block title %}Bill Doctrine Search{% endblock %}
+
+{% block content %}
+    <div class="page-header d-print-none mb-3">
+        <div class="container-xl">
+            <div class="row g-2 align-items-center">
+                <div class="col">
+                    <div class="page-pretitle">SQLite FTS5</div>
+                    <h1 class="page-title">{{ descriptor.label|default('Bill') }} Doctrine Search</h1>
+                </div>
+                <div class="col-auto ms-auto d-print-none">
+                    <a class="btn btn-outline-secondary" href="{{ path('app_bill_meili_search') }}">
+                        {{ ux_icon('tabler:search', {height: '18px', width: '18px'}) }}
+                        Meili Search
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-body">
+        <div class="container-xl">
+            {% if search %}
+                <twig:Mezcalito:UxSearch:Layout
+                    :name="search.name"
+                    :options="{ hitTemplate: search.hitTemplate }"
+                />
+            {% else %}
+                <div class="alert alert-warning">
+                    Bill search is not registered in the UX Search registry.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

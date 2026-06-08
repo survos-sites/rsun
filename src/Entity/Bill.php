@@ -10,6 +10,9 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\Id;
+use Survos\FieldBundle\Attribute\EntityMeta;
+use Survos\FieldBundle\Attribute\Field;
+use Survos\FieldBundle\Enum\Widget;
 use Survos\MeiliBundle\Metadata\MeiliIndex;
 
 /**
@@ -17,6 +20,12 @@ use Survos\MeiliBundle\Metadata\MeiliIndex;
  * @profile data/data/2023/20_normalize/obj.profile.json
  */
 #[Entity(repositoryClass: BillRepository::class)]
+#[EntityMeta(
+	icon: 'tabler:file-text',
+	group: 'Legislation',
+	label: 'Bills',
+	description: 'Virginia legislation imported from Richmond Sunlight',
+)]
 #[MeiliIndex(
 	primaryKey: 'id',
 	filterable: self::FILTERABLE_FIELDS,
@@ -158,6 +167,7 @@ final class Bill
 	 * @stats total=3029, nulls=0, distinct=52
 	 */
 	#[Column(type: Types::INTEGER, nullable: true)]
+	#[Field(filterable: true, widget: Widget::Range, facet: true)]
 	public ?int $copatronCount = null;
 
 	/**
@@ -174,6 +184,7 @@ final class Bill
 	 * @stats total=3029, nulls=0, distinct=78
 	 */
 	#[Column(type: Types::INTEGER, nullable: true)]
+	#[Field(filterable: true, widget: Widget::Select, facet: true)]
 	public ?int $patronDistrict = null;
 
 	/**
@@ -182,6 +193,7 @@ final class Bill
 	 * @stats total=3029, nulls=0, distinct=1
 	 */
 	#[Column(type: Types::INTEGER, nullable: true)]
+	#[Field(filterable: true, widget: Widget::Range, facet: true)]
 	public ?int $year = null;
 
 	/**

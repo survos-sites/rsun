@@ -101,14 +101,11 @@
             "bin/phpunit"
         ]
     },
+    "survos/atlas-bundle": {
+        "version": "2.7.19"
+    },
     "survos/code-bundle": {
         "version": "2.0.97"
-    },
-    "survos/core-bundle": {
-        "version": "2.0.97"
-    },
-    "survos/data-bundle": {
-        "version": "2.0.175"
     },
     "survos/deployment-bundle": {
         "version": "2.0.97"
@@ -116,11 +113,17 @@
     "survos/ez-bundle": {
         "version": "2.0.97"
     },
+    "survos/field-bundle": {
+        "version": "2.7.19"
+    },
     "survos/import-bundle": {
         "version": "2.0.97"
     },
     "survos/jsonl-bundle": {
         "version": "2.0.97"
+    },
+    "survos/kit-bundle": {
+        "version": "2.7.19"
     },
     "survos/meili-bundle": {
         "version": "2.0",
@@ -245,15 +248,6 @@
         "files": [
             "config/packages/mailer.yaml"
         ]
-    },
-    "symfony/maker-bundle": {
-        "version": "1.65",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "1.0",
-            "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
-        }
     },
     "symfony/messenger": {
         "version": "8.0",
@@ -395,6 +389,18 @@
             "config/packages/ux_icons.yaml"
         ]
     },
+    "symfony/ux-live-component": {
+        "version": "3.1",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "main",
+            "version": "2.6",
+            "ref": "b7130b7b5ddc2f8994bd6149d7c093b184782f0c"
+        },
+        "files": [
+            "config/routes/ux_live_component.yaml"
+        ]
+    },
     "symfony/ux-turbo": {
         "version": "2.32",
         "recipe": {
@@ -467,6 +473,9 @@
         "files": [
             "config/packages/workflow.yaml"
         ]
+    },
+    "tacman/ux-search": {
+        "version": "1.0.1"
     },
     "twig/extra-bundle": {
         "version": "v3.22.2"

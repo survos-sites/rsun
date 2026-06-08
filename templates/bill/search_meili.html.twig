@@ -1,0 +1,34 @@
+{% extends '@SurvosTabler/layout/base.html.twig' %}
+
+{% block title %}Bill Search{% endblock %}
+
+{% block content %}
+    <div class="page-header d-print-none mb-3">
+        <div class="container-xl">
+            <div class="row g-2 align-items-center">
+                <div class="col">
+                    <div class="page-pretitle">Meilisearch</div>
+                    <h1 class="page-title">Bill Search</h1>
+                </div>
+                <div class="col-auto ms-auto d-print-none">
+                    <div class="btn-list">
+                        <a class="btn btn-outline-secondary" href="{{ path('app_bill_ux_search') }}">
+                            {{ ux_icon('tabler:database-search', {height: '18px', width: '18px'}) }}
+                            Doctrine Search
+                        </a>
+                        <a class="btn btn-outline-secondary" href="{{ path('meili_insta', {indexName: 'bill'}) }}">
+                            {{ ux_icon('tabler:bug', {height: '18px', width: '18px'}) }}
+                            Debug
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-body">
+        <div class="container-xl">
+            {{ component('meili_instant_search', {indexName: 'bill'}) }}
+        </div>
+    </div>
+{% endblock %}

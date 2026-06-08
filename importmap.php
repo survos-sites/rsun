@@ -10,390 +10,148 @@
  *     be used as an "entrypoint" (and passed to the importmap() Twig function).
  *
  * The "importmap:require" command can be used to add new entries to this file.
+ *
+ * @return array<string, array{    // Import name as key, description of the imported file as value
+ *     path: string,               // Logical, relative or absolute path to the file
+ *     type?: 'js'|'css'|'json',   // Type of the file, defaults to 'js'
+ *     entrypoint?: bool,          // Whether the file is an entrypoint, for 'js' only
+ * }|array{
+ *     version: string,            // Version of the remote package
+ *     package_specifier?: string, // Remote "package-name/path" specifier, defaults to the import name
+ *     type?: 'js'|'css'|'json',
+ *     entrypoint?: bool,
+ * }>
  */
 return [
-    'app' => [
-        'path' => './assets/app.js',
-        'entrypoint' => true,
-    ],
-    'meili' => [
-        'path' => './assets/meili.js',
-        'entrypoint' => true,
-    ],
-    'admin' => [
-        'path' => './assets/admin.js',
-        'entrypoint' => true,
-    ],
-    '@symfony/stimulus-bundle' => [
-        'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
-    ],
-    '@hotwired/stimulus' => [
-        'version' => '3.2.2',
-    ],
-    '@hotwired/turbo' => [
-        'version' => '8.0.23',
-    ],
-    'twig' => [
-        'version' => '2.0.0',
-    ],
-    'locutus/php/strings/sprintf' => [
-        'version' => '3.0.28',
-    ],
-    'locutus/php/strings/vsprintf' => [
-        'version' => '3.0.28',
-    ],
-    'locutus/php/math/round' => [
-        'version' => '3.0.28',
-    ],
-    'locutus/php/math/max' => [
-        'version' => '3.0.28',
-    ],
-    'locutus/php/math/min' => [
-        'version' => '3.0.28',
-    ],
-    'locutus/php/strings/strip_tags' => [
-        'version' => '3.0.28',
-    ],
-    'locutus/php/datetime/strtotime' => [
-        'version' => '3.0.28',
-    ],
-    'locutus/php/datetime/date' => [
-        'version' => '3.0.28',
-    ],
-    'locutus/php/var/boolval' => [
-        'version' => '3.0.28',
-    ],
-    'debug' => [
-        'version' => '4.4.3',
-    ],
-    'ms' => [
-        'version' => '2.1.3',
-    ],
-    'stimulus-attributes' => [
-        'version' => '1.0.2',
-    ],
-    'escape-html' => [
-        'version' => '1.0.3',
-    ],
-    'fos-routing' => [
-        'version' => '0.0.6',
-    ],
-    'instantsearch.js' => [
-        'version' => '4.92.1',
-    ],
-    '@algolia/events' => [
-        'version' => '4.0.1',
-    ],
-    'algoliasearch-helper' => [
-        'version' => '3.28.1',
-    ],
-    'qs' => [
-        'version' => '6.15.0',
-    ],
-    'algoliasearch-helper/types/algoliasearch.js' => [
-        'version' => '3.28.1',
-    ],
-    'side-channel' => [
-        'version' => '1.1.0',
-    ],
-    'es-errors/type' => [
-        'version' => '1.3.0',
-    ],
-    'object-inspect' => [
-        'version' => '1.13.4',
-    ],
-    'side-channel-list' => [
-        'version' => '1.0.0',
-    ],
-    'side-channel-map' => [
-        'version' => '1.0.1',
-    ],
-    'side-channel-weakmap' => [
-        'version' => '1.0.2',
-    ],
-    'get-intrinsic' => [
-        'version' => '1.3.0',
-    ],
-    'call-bound' => [
-        'version' => '1.0.4',
-    ],
-    'es-errors' => [
-        'version' => '1.3.0',
-    ],
-    'es-errors/eval' => [
-        'version' => '1.3.0',
-    ],
-    'es-errors/range' => [
-        'version' => '1.3.0',
-    ],
-    'es-errors/ref' => [
-        'version' => '1.3.0',
-    ],
-    'es-errors/syntax' => [
-        'version' => '1.3.0',
-    ],
-    'es-errors/uri' => [
-        'version' => '1.3.0',
-    ],
-    'gopd' => [
-        'version' => '1.2.0',
-    ],
-    'es-define-property' => [
-        'version' => '1.0.1',
-    ],
-    'has-symbols' => [
-        'version' => '1.1.0',
-    ],
-    'dunder-proto/get' => [
-        'version' => '1.0.1',
-    ],
-    'call-bind-apply-helpers/functionApply' => [
-        'version' => '1.0.2',
-    ],
-    'call-bind-apply-helpers/functionCall' => [
-        'version' => '1.0.2',
-    ],
-    'function-bind' => [
-        'version' => '1.1.2',
-    ],
-    'hasown' => [
-        'version' => '2.0.2',
-    ],
-    'call-bind' => [
-        'version' => '1.0.8',
-    ],
-    'call-bind-apply-helpers' => [
-        'version' => '1.0.2',
-    ],
-    'set-function-length' => [
-        'version' => '1.2.2',
-    ],
-    'call-bind-apply-helpers/applyBind' => [
-        'version' => '1.0.2',
-    ],
-    'define-data-property' => [
-        'version' => '1.1.4',
-    ],
-    'has-property-descriptors' => [
-        'version' => '1.0.2',
-    ],
-    'instantsearch.js/es/widgets' => [
-        'version' => '4.92.1',
-    ],
-    'instantsearch-ui-components' => [
-        'version' => '0.22.1',
-    ],
-    'preact' => [
-        'version' => '10.29.0',
-    ],
-    'hogan.js' => [
-        'version' => '3.0.2',
-    ],
-    'htm/preact' => [
-        'version' => '3.1.1',
-    ],
-    'preact/hooks' => [
-        'version' => '10.29.0',
-    ],
-    'ai' => [
-        'version' => '6.0.138',
-    ],
-    '@babel/runtime/helpers/extends' => [
-        'version' => '7.29.2',
-    ],
-    '@babel/runtime/helpers/objectWithoutProperties' => [
-        'version' => '7.29.2',
-    ],
-    '@babel/runtime/helpers/typeof' => [
-        'version' => '7.29.2',
-    ],
-    '@babel/runtime/helpers/defineProperty' => [
-        'version' => '7.29.2',
-    ],
-    '@babel/runtime/helpers/slicedToArray' => [
-        'version' => '7.29.2',
-    ],
-    '@babel/runtime/helpers/toConsumableArray' => [
-        'version' => '7.29.2',
-    ],
-    'markdown-to-jsx' => [
-        'version' => '9.7.13',
-    ],
-    'htm' => [
-        'version' => '3.1.1',
-    ],
-    '@ai-sdk/gateway' => [
-        'version' => '3.0.80',
-    ],
-    '@ai-sdk/provider-utils' => [
-        'version' => '4.0.21',
-    ],
-    '@ai-sdk/provider' => [
-        'version' => '3.0.8',
-    ],
-    'zod/v4' => [
-        'version' => '4.3.6',
-    ],
-    '@opentelemetry/api' => [
-        'version' => '1.9.1',
-    ],
-    'react' => [
-        'version' => '19.2.4',
-    ],
-    '@vercel/oidc' => [
-        'version' => '3.2.0',
-    ],
-    'eventsource-parser/stream' => [
-        'version' => '3.0.6',
-    ],
-    'zod/v3' => [
-        'version' => '4.3.6',
-    ],
-    '@standard-schema/spec' => [
-        'version' => '1.1.0',
-    ],
-    'instantsearch.css/themes/algolia.min.css' => [
-        'version' => '8.12.0',
-        'type' => 'css',
-    ],
-    '@meilisearch/instant-meilisearch' => [
-        'version' => '0.30.0',
-    ],
-    'meilisearch' => [
-        'version' => '0.54.0',
-    ],
-    '@stimulus-components/dialog' => [
-        'version' => '1.0.1',
-    ],
-    '@andypf/json-viewer' => [
-        'version' => '2.3.2',
-    ],
-    'pretty-print-json' => [
-        'version' => '3.0.7',
-    ],
-    'pretty-print-json/dist/css/pretty-print-json.min.css' => [
-        'version' => '3.0.7',
-        'type' => 'css',
-    ],
-    'bootstrap' => [
-        'version' => '5.3.8',
-    ],
-    '@popperjs/core' => [
-        'version' => '2.11.8',
-    ],
-    'bootstrap/dist/css/bootstrap.min.css' => [
-        'version' => '5.3.8',
-        'type' => 'css',
-    ],
-    'chart.js' => [
-        'version' => '4.5.1',
-    ],
-    '@tacman1123/twig-browser' => [
-        'version' => '0.4.18',
-    ],
-    '@tacman1123/twig-browser/src/compat/compileTwigBlocks.js' => [
-        'version' => '0.4.18',
-    ],
-    '@swc/helpers/esm/_sliced_to_array.js' => [
-        'version' => '0.5.20',
-    ],
-    '@swc/helpers/esm/_to_consumable_array.js' => [
-        'version' => '0.5.20',
-    ],
-    '@swc/helpers/esm/_define_property.js' => [
-        'version' => '0.5.20',
-    ],
-    '@swc/helpers/esm/_extends.js' => [
-        'version' => '0.5.20',
-    ],
-    '@swc/helpers/esm/_object_destructuring_empty.js' => [
-        'version' => '0.5.20',
-    ],
-    '@swc/helpers/esm/_object_spread.js' => [
-        'version' => '0.5.20',
-    ],
-    '@swc/helpers/esm/_object_spread_props.js' => [
-        'version' => '0.5.20',
-    ],
-    '@swc/helpers/esm/_type_of.js' => [
-        'version' => '0.5.20',
-    ],
-    '@swc/helpers/esm/_instanceof.js' => [
-        'version' => '0.5.20',
-    ],
-    '@swc/helpers/esm/_object_without_properties.js' => [
-        'version' => '0.5.20',
-    ],
-    '@swc/helpers/esm/_call_super.js' => [
-        'version' => '0.5.20',
-    ],
-    '@swc/helpers/esm/_class_call_check.js' => [
-        'version' => '0.5.20',
-    ],
-    '@swc/helpers/esm/_create_class.js' => [
-        'version' => '0.5.20',
-    ],
-    '@swc/helpers/esm/_inherits.js' => [
-        'version' => '0.5.20',
-    ],
-    'locutus/php/strings/index' => [
-        'version' => '3.0.9',
-    ],
-    'locutus/php/math/index' => [
-        'version' => '3.0.9',
-    ],
-    'locutus/php/datetime/index' => [
-        'version' => '3.0.9',
-    ],
-    'locutus/php/var/index' => [
-        'version' => '3.0.9',
-    ],
-    'es-object-atoms' => [
-        'version' => '1.1.1',
-    ],
-    'math-intrinsics/abs' => [
-        'version' => '1.1.0',
-    ],
-    'math-intrinsics/floor' => [
-        'version' => '1.1.0',
-    ],
-    'math-intrinsics/max' => [
-        'version' => '1.1.0',
-    ],
-    'math-intrinsics/min' => [
-        'version' => '1.1.0',
-    ],
-    'math-intrinsics/pow' => [
-        'version' => '1.1.0',
-    ],
-    'math-intrinsics/round' => [
-        'version' => '1.1.0',
-    ],
-    'math-intrinsics/sign' => [
-        'version' => '1.1.0',
-    ],
-    'get-proto' => [
-        'version' => '1.0.1',
-    ],
-    'get-proto/Object.getPrototypeOf' => [
-        'version' => '1.0.1',
-    ],
-    'get-proto/Reflect.getPrototypeOf' => [
-        'version' => '1.0.1',
-    ],
-    'markdown-to-jsx/entities' => [
-        'version' => '9.7.13',
-    ],
-    'zod' => [
-        'version' => '4.3.6',
-    ],
-    '@kurkle/color' => [
-        'version' => '0.3.4',
-    ],
-    'dexie' => [
-        'version' => '4.4.2',
-    ],
-    '@tacman1123/twig-browser/adapters/symfony' => [
-        'version' => '0.4.18',
-    ],
+    'app' => ['path' => './assets/app.js', 'entrypoint' => true],
+    'meili' => ['path' => './assets/meili.js', 'entrypoint' => true],
+    'admin' => ['path' => './assets/admin.js', 'entrypoint' => true],
+    '@symfony/stimulus-bundle' => ['path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js'],
+    '@survos/js-twig/generated/fos_routes.js' => ['path' => '@survos/js-twig/generated/fos_routes.js'],
+    '@hotwired/stimulus' => ['version' => '3.2.2'],
+    '@hotwired/turbo' => ['version' => '8.0.23'],
+    'twig' => ['version' => '2.0.0'],
+    'debug' => ['version' => '4.4.3'],
+    'ms' => ['version' => '2.1.3'],
+    'stimulus-attributes' => ['version' => '1.0.2'],
+    'escape-html' => ['version' => '1.0.3'],
+    'fos-routing' => ['version' => '0.0.6'],
+    '@algolia/events' => ['version' => '4.0.1'],
+    'algoliasearch-helper' => ['version' => '3.28.2'],
+    'qs' => ['version' => '6.15.1'],
+    'algoliasearch-helper/types/algoliasearch.js' => ['version' => '3.28.2'],
+    'side-channel' => ['version' => '1.1.0'],
+    'es-errors/type' => ['version' => '1.3.0'],
+    'object-inspect' => ['version' => '1.13.3'],
+    'side-channel-list' => ['version' => '1.0.0'],
+    'side-channel-map' => ['version' => '1.0.1'],
+    'side-channel-weakmap' => ['version' => '1.0.2'],
+    'get-intrinsic' => ['version' => '1.2.5'],
+    'call-bound' => ['version' => '1.0.2'],
+    'es-errors' => ['version' => '1.3.0'],
+    'es-errors/eval' => ['version' => '1.3.0'],
+    'es-errors/range' => ['version' => '1.3.0'],
+    'es-errors/ref' => ['version' => '1.3.0'],
+    'es-errors/syntax' => ['version' => '1.3.0'],
+    'es-errors/uri' => ['version' => '1.3.0'],
+    'gopd' => ['version' => '1.2.0'],
+    'es-define-property' => ['version' => '1.0.1'],
+    'has-symbols' => ['version' => '1.1.0'],
+    'dunder-proto/get' => ['version' => '1.0.0'],
+    'call-bind-apply-helpers/functionApply' => ['version' => '1.0.0'],
+    'call-bind-apply-helpers/functionCall' => ['version' => '1.0.0'],
+    'function-bind' => ['version' => '1.1.2'],
+    'hasown' => ['version' => '2.0.2'],
+    'call-bind' => ['version' => '1.0.8'],
+    'call-bind-apply-helpers' => ['version' => '1.0.0'],
+    'set-function-length' => ['version' => '1.2.2'],
+    'call-bind-apply-helpers/applyBind' => ['version' => '1.0.0'],
+    'define-data-property' => ['version' => '1.1.4'],
+    'has-property-descriptors' => ['version' => '1.0.2'],
+    'instantsearch-ui-components' => ['version' => '0.25.0'],
+    'preact' => ['version' => '10.29.1'],
+    'hogan.js' => ['version' => '3.0.2'],
+    'htm/preact' => ['version' => '3.1.1'],
+    'preact/hooks' => ['version' => '10.29.1'],
+    'ai' => ['version' => '6.0.138'],
+    '@babel/runtime/helpers/extends' => ['version' => '7.29.2'],
+    '@babel/runtime/helpers/objectWithoutProperties' => ['version' => '7.29.2'],
+    '@babel/runtime/helpers/typeof' => ['version' => '7.29.2'],
+    '@babel/runtime/helpers/defineProperty' => ['version' => '7.29.2'],
+    '@babel/runtime/helpers/slicedToArray' => ['version' => '7.29.2'],
+    '@babel/runtime/helpers/toConsumableArray' => ['version' => '7.29.2'],
+    'markdown-to-jsx' => ['version' => '7.7.17'],
+    'htm' => ['version' => '3.1.1'],
+    '@ai-sdk/gateway' => ['version' => '3.0.80'],
+    '@ai-sdk/provider-utils' => ['version' => '4.0.21'],
+    '@ai-sdk/provider' => ['version' => '3.0.8'],
+    'zod/v4' => ['version' => '4.3.6'],
+    '@opentelemetry/api' => ['version' => '1.9.1'],
+    'react' => ['version' => '19.2.0'],
+    '@vercel/oidc' => ['version' => '3.2.0'],
+    'eventsource-parser/stream' => ['version' => '3.0.6'],
+    'zod/v3' => ['version' => '4.3.6'],
+    '@standard-schema/spec' => ['version' => '1.1.0'],
+    '@stimulus-components/dialog' => ['version' => '1.0.1'],
+    'pretty-print-json' => ['version' => '3.0.7'],
+    'pretty-print-json/dist/css/pretty-print-json.min.css' => ['version' => '3.0.7', 'type' => 'css'],
+    'bootstrap' => ['version' => '5.3.8'],
+    '@popperjs/core' => ['version' => '2.11.8'],
+    'bootstrap/dist/css/bootstrap.min.css' => ['version' => '5.3.8', 'type' => 'css'],
+    'chart.js' => ['version' => '4.5.1'],
+    '@tacman1123/twig-browser' => ['version' => '0.4.18'],
+    '@tacman1123/twig-browser/src/compat/compileTwigBlocks.js' => ['version' => '0.4.18'],
+    '@swc/helpers/esm/_sliced_to_array.js' => ['version' => '0.5.18'],
+    '@swc/helpers/esm/_to_consumable_array.js' => ['version' => '0.5.18'],
+    '@swc/helpers/esm/_define_property.js' => ['version' => '0.5.18'],
+    '@swc/helpers/esm/_extends.js' => ['version' => '0.5.18'],
+    '@swc/helpers/esm/_object_destructuring_empty.js' => ['version' => '0.5.18'],
+    '@swc/helpers/esm/_object_spread.js' => ['version' => '0.5.18'],
+    '@swc/helpers/esm/_object_spread_props.js' => ['version' => '0.5.18'],
+    '@swc/helpers/esm/_type_of.js' => ['version' => '0.5.18'],
+    '@swc/helpers/esm/_instanceof.js' => ['version' => '0.5.18'],
+    '@swc/helpers/esm/_object_without_properties.js' => ['version' => '0.5.18'],
+    '@swc/helpers/esm/_call_super.js' => ['version' => '0.5.18'],
+    '@swc/helpers/esm/_class_call_check.js' => ['version' => '0.5.18'],
+    '@swc/helpers/esm/_create_class.js' => ['version' => '0.5.18'],
+    '@swc/helpers/esm/_inherits.js' => ['version' => '0.5.18'],
+    'es-object-atoms' => ['version' => '1.1.1'],
+    'math-intrinsics/abs' => ['version' => '1.1.0'],
+    'math-intrinsics/floor' => ['version' => '1.1.0'],
+    'math-intrinsics/max' => ['version' => '1.1.0'],
+    'math-intrinsics/min' => ['version' => '1.1.0'],
+    'math-intrinsics/pow' => ['version' => '1.1.0'],
+    'math-intrinsics/round' => ['version' => '1.1.0'],
+    'math-intrinsics/sign' => ['version' => '1.1.0'],
+    'get-proto' => ['version' => '1.0.1'],
+    'get-proto/Object.getPrototypeOf' => ['version' => '1.0.1'],
+    'get-proto/Reflect.getPrototypeOf' => ['version' => '1.0.1'],
+    'markdown-to-jsx/entities' => ['version' => '9.7.13'],
+    'zod' => ['version' => '4.3.6'],
+    '@kurkle/color' => ['version' => '0.3.4'],
+    '@tacman1123/twig-browser/adapters/symfony' => ['version' => '0.4.18'],
+    'instantsearch.js' => ['version' => '4.95.0'],
+    'instantsearch.js/es/widgets' => ['version' => '4.95.0'],
+    'instantsearch.css/themes/algolia.min.css' => ['version' => '8.15.0', 'type' => 'css'],
+    '@meilisearch/instant-meilisearch' => ['version' => '0.30.0'],
+    'meilisearch' => ['version' => '0.54.0'],
+    '@andypf/json-viewer' => ['version' => '2.4.0'],
+    'locutus/php/strings/sprintf' => ['version' => '3.0.34'],
+    'locutus/php/strings/vsprintf' => ['version' => '3.0.34'],
+    'locutus/php/math/round' => ['version' => '3.0.34'],
+    'locutus/php/math/max' => ['version' => '3.0.34'],
+    'locutus/php/math/min' => ['version' => '3.0.34'],
+    'locutus/php/strings/strip_tags' => ['version' => '3.0.34'],
+    'locutus/php/datetime/strtotime' => ['version' => '3.0.34'],
+    'locutus/php/datetime/date' => ['version' => '3.0.34'],
+    'locutus/php/var/boolval' => ['version' => '3.0.34'],
+    'locutus/php/strings/index' => ['version' => '3.0.34'],
+    'locutus/php/math/index' => ['version' => '3.0.34'],
+    'locutus/php/datetime/index' => ['version' => '3.0.34'],
+    'locutus/php/var/index' => ['version' => '3.0.34'],
+    'dexie' => ['version' => '4.4.2'],
+    '@symfony/ux-live-component' => ['path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js'],
+    '@tacman/ux-search' => ['path' => './vendor/tacman/ux-search/assets/dist/controller.js'],
+    '@tabler/core' => ['version' => '1.4.0'],
+    '@tabler/core/dist/css/tabler.min.css' => ['version' => '1.4.0', 'type' => 'css'],
 ];

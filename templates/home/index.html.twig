@@ -1,0 +1,86 @@
+{% extends '@SurvosTabler/layout/base.html.twig' %}
+
+{% block title %}Richmond Sunlight{% endblock %}
+
+{% block content %}
+    <div class="page-header d-print-none mb-3">
+        <div class="container-xl">
+            <div class="row g-2 align-items-center">
+                <div class="col">
+                    <div class="page-pretitle">Virginia Legislation</div>
+                    <h1 class="page-title">Richmond Sunlight</h1>
+                </div>
+                <div class="col-auto ms-auto d-print-none">
+                    <div class="btn-list">
+                        <a class="btn btn-outline-primary" href="{{ path('survos_admin_dashboard') }}">
+                            {{ ux_icon('tabler:layout-dashboard', {height: '18px', width: '18px'}) }} Admin
+                        </a>
+                        <a class="btn btn-outline-secondary" href="/ez">
+                            {{ ux_icon('tabler:external-link', {height: '18px', width: '18px'}) }} /ez
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-body">
+        <div class="container-xl">
+            <div class="row row-cards">
+                {% for card in entityCards %}
+                    {% set descriptor = card.descriptor %}
+                    <div class="col-12 col-md-6 col-xl-4">
+                        <div class="card h-100">
+                            <div class="card-body">
+                                <div class="d-flex align-items-start gap-3">
+                                    {% if descriptor.icon %}
+                                        <div class="text-primary">{{ ux_icon(descriptor.icon, {height: '32px', width: '32px'}) }}</div>
+                                    {% endif %}
+                                    <div class="flex-fill">
+                                        <div class="subheader">{{ descriptor.group }}</div>
+                                        <h2 class="h2 mb-1">{{ descriptor.label }}</h2>
+                                        {% if descriptor.description %}
+                                            <div class="text-muted small">{{ descriptor.description }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <div class="row g-2 mt-3">
+                                    <div class="col-6">
+                                        <div class="text-muted small">Rows</div>
+                                        <div class="h2 mb-0">{{ card.rowCount is not null ? card.rowCount|number_format : 'n/a' }}</div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="text-muted small">Entity</div>
+                                        <code class="small">{{ descriptor.code }}</code>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer d-flex flex-wrap gap-2">
+                                {% if card.dashboardUrl %}
+                                    <a class="btn btn-sm btn-primary" href="{{ card.dashboardUrl }}">Inventory</a>
+                                {% endif %}
+                                {% if card.uxSearchUrl %}
+                                    <a class="btn btn-sm btn-outline-primary" href="{{ card.uxSearchUrl }}">Doctrine Search</a>
+                                {% endif %}
+                                {% if card.meiliSearchUrl %}
+                                    <a class="btn btn-sm btn-outline-secondary" href="{{ card.meiliSearchUrl }}">Meili Search</a>
+                                {% endif %}
+                                {% if card.meiliDiagnosticsUrl %}
+                                    <a class="btn btn-sm btn-outline-secondary" href="{{ card.meiliDiagnosticsUrl }}">Meili Diagnostics</a>
+                                {% endif %}
+                                {% for workflow in card.workflows %}
+                                    {% if workflow.url %}<a class="btn btn-sm btn-outline-secondary" href="{{ workflow.url }}">{{ workflow.name }}</a>{% endif %}
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <div class="col-12">
+                        <div class="alert alert-warning">No #[EntityMeta] entities are registered.</div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
