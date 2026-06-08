@@ -1,13 +1,37 @@
+{% set statusText = hit.statusDetail|default(hit.status)|default(null) %}
+{% set statusKey = statusText|default('')|lower %}
+{% set outcomeKey = hit.outcome|default('')|lower %}
+{% set isPassed = outcomeKey == 'passed' or statusKey starts with 'passed' or statusKey starts with 'signed' or statusKey starts with 'enacted' %}
+{% set isFailed = outcomeKey == 'failed' or statusKey starts with 'failed' or statusKey starts with 'vetoed' or statusKey starts with 'stricken' %}
+{% set statusBadgeClass = isPassed ? 'bg-success-lt text-success' : (isFailed ? 'bg-danger-lt text-danger' : 'bg-secondary-lt text-secondary') %}
+
 <article class="list-group-item">
-    <div class="d-flex w-100 justify-content-between gap-3">
-        <div>
-            <div class="fw-semibold">
-                {{ hit.number|default(hit.id|default("Bill")) }}
-                {% if hit.catchLine|default(null) %}<span class="ms-2">{{ hit.catchLine }}</span>{% endif %}
+    <div class="d-flex w-100 justify-content-between gap-3 flex-wrap">
+        <div class="flex-grow-1">
+            <div class="fw-semibold d-flex flex-wrap align-items-center gap-2">
+                <a href="{{ path('app_bill_show', {id: hit.id}) }}">
+                    {{ hit.number|default(hit.id|default("Bill"))|upper }}
+                </a>
+                {% if hit.outcome|default(statusText) %}
+                    <span class="badge {{ statusBadgeClass }}">{{ hit.outcome|default(statusText)|title }}</span>
+                {% endif %}
+                {% if hit.catchLine|default(null) %}<span>{{ hit.catchLine }}</span>{% endif %}
             </div>
             {% if hit.summary|default(null) %}
-                <div class="text-muted small mt-1">{{ hit.summary|u.truncate(240, "...") }}</div>
+                <div class="text-muted small mt-1">{{ hit.summary|u.truncate(240, "...")|sanitize_html('bill_text') }}</div>
             {% endif %}
+            <div class="btn-list mt-2">
+                <a class="btn btn-sm btn-outline-primary" href="{{ path('app_bill_show', {id: hit.id}) }}">
+                    {{ ux_icon('tabler:file-text', {height: '16px', width: '16px'}) }}
+                    Details
+                </a>
+                {% if hit.url|default(null) %}
+                    <a class="btn btn-sm btn-outline-secondary" href="{{ hit.url }}" target="_blank" rel="noopener noreferrer">
+                        {{ ux_icon('tabler:external-link', {height: '16px', width: '16px'}) }}
+                        Source
+                    </a>
+                {% endif %}
+            </div>
         </div>
         {% if hit.year|default(null) %}
             <span class="badge bg-blue-lt align-self-start">{{ hit.year }}</span>

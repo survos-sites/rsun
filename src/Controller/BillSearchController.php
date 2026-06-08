@@ -13,6 +13,14 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class BillSearchController extends AbstractController
 {
+    #[Route('/bills/{id}', name: 'app_bill_show', requirements: ['id' => '\\d+'], methods: ['GET'])]
+    public function show(Bill $bill): Response
+    {
+        return $this->render('bill/show.html.twig', [
+            'bill' => $bill,
+        ]);
+    }
+
     #[Route('/bills/search', name: 'app_bill_meili_search', methods: ['GET'])]
     public function meili(): Response
     {

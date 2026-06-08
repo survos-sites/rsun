@@ -1,0 +1,154 @@
+{% extends '@SurvosTabler/layout/base.html.twig' %}
+
+{% block title %}{{ bill.number|upper }}{% endblock %}
+{% block page_title %}{{ bill.number|upper }}{% endblock %}
+
+{% block content %}
+    {% set statusText = bill.statusDetail|default(bill.status)|default('n/a') %}
+    {% set statusKey = statusText|lower %}
+    {% set outcomeKey = bill.outcome|default('')|lower %}
+    {% set isPassed = outcomeKey == 'passed' or statusKey starts with 'passed' or statusKey starts with 'signed' or statusKey starts with 'enacted' %}
+    {% set isFailed = outcomeKey == 'failed' or statusKey starts with 'failed' or statusKey starts with 'vetoed' or statusKey starts with 'stricken' %}
+    {% set statusBadgeClass = isPassed ? 'bg-success-lt text-success' : (isFailed ? 'bg-danger-lt text-danger' : 'bg-secondary-lt text-secondary') %}
+
+    <div class="page-header d-print-none mb-3">
+        <div class="container-xl">
+            <div class="row g-2 align-items-center">
+                <div class="col">
+                    <div class="page-pretitle">
+                        {{ bill.year }} {{ bill.chamber|default('bill')|title }}
+                    </div>
+                    <div class="d-flex flex-wrap align-items-center gap-2 mb-2">
+                        <h1 class="page-title mb-0" style="font-size: 2.25rem; line-height: 1.1;">{{ bill.number|upper }}</h1>
+                        <span class="badge {{ statusBadgeClass }} fs-4">{{ bill.outcome|default(statusText)|title }}</span>
+                    </div>
+                    {% if bill.catchLine %}
+                        <h2 class="mb-0" style="font-size: 2rem; line-height: 1.2; font-weight: 600;">{{ bill.catchLine }}</h2>
+                    {% endif %}
+                </div>
+                <div class="col-auto ms-auto d-print-none">
+                    <div class="btn-list">
+                        <a class="btn btn-outline-secondary" href="{{ path('app_bill_ux_search') }}">
+                            {{ ux_icon('tabler:database-search', {height: '18px', width: '18px'}) }}
+                            Search
+                        </a>
+                        {% if bill.url %}
+                            <a class="btn btn-primary" href="{{ bill.url }}" target="_blank" rel="noopener noreferrer">
+                                {{ ux_icon('tabler:external-link', {height: '18px', width: '18px'}) }}
+                                Richmond Sunlight
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="page-body">
+        <div class="container-xl">
+            <div class="row row-cards">
+                <div class="col-12 col-lg-8">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Summary</h2>
+                        </div>
+                        <div class="card-body">
+                            {% if bill.summary %}
+                                <div class="mb-0">{{ bill.summary|sanitize_html('bill_text') }}</div>
+                            {% else %}
+                                <div class="text-muted">No summary is available.</div>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    {% if bill.fullText %}
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h2 class="card-title">Full Text</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="text-body bill-text">{{ bill.fullText|sanitize_html('bill_text') }}</div>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <div class="col-12 col-lg-4">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="card-title">Bill Details</h2>
+                        </div>
+                        <div class="card-body">
+                            <dl class="row mb-0">
+                                <dt class="col-5">Status</dt>
+                                <dd class="col-7"><span class="badge {{ statusBadgeClass }}">{{ statusText }}</span></dd>
+
+                                <dt class="col-5">Outcome</dt>
+                                <dd class="col-7"><span class="badge {{ statusBadgeClass }}">{{ bill.outcome|default('n/a') }}</span></dd>
+
+                                <dt class="col-5">Introduced</dt>
+                                <dd class="col-7">{{ bill.dateIntroduced|default('n/a') }}</dd>
+
+                                <dt class="col-5">Patron</dt>
+                                <dd class="col-7">{{ bill.patronNameFormatted|default(bill.patron)|default('n/a') }}</dd>
+
+                                <dt class="col-5">Party</dt>
+                                <dd class="col-7">{{ bill.patronParty|default('n/a') }}</dd>
+
+                                <dt class="col-5">District</dt>
+                                <dd class="col-7">{{ bill.patronDistrict|default('n/a') }}</dd>
+
+                                <dt class="col-5">Committee</dt>
+                                <dd class="col-7">{{ bill.committee|default('n/a') }}</dd>
+
+                                <dt class="col-5">Copatrons</dt>
+                                <dd class="col-7">{{ bill.copatronCount is not null ? bill.copatronCount : 'n/a' }}</dd>
+
+                                <dt class="col-5">Words</dt>
+                                <dd class="col-7">{{ bill.wordCount is not null ? bill.wordCount|number_format : 'n/a' }}</dd>
+                            </dl>
+                        </div>
+                        {% if bill.url %}
+                            <div class="card-footer">
+                                <div class="text-muted small mb-2">Citation</div>
+                                <a href="{{ bill.url }}" target="_blank" rel="noopener noreferrer">{{ bill.url }}</a>
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    {% if bill.statusHistory %}
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h2 class="card-title">Status History</h2>
+                            </div>
+                            <div class="list-group list-group-flush">
+                                {% for item in bill.statusHistory %}
+                                    <div class="list-group-item">
+                                        {% if item is iterable %}
+                                            {% for key, value in item %}
+                                                <div><span class="text-muted">{{ key }}:</span> {{ value is iterable ? value|json_encode : value }}</div>
+                                            {% endfor %}
+                                        {% else %}
+                                            {{ item }}
+                                        {% endif %}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endif %}
+
+                    {% if bill.related %}
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h2 class="card-title">Related</h2>
+                            </div>
+                            <div class="card-body">
+                                <pre class="mb-0 small">{{ bill.related|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+                            </div>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

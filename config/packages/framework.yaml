@@ -1,6 +1,36 @@
 # see https://symfony.com/doc/current/reference/configuration/framework.html
 framework:
     secret: '%env(APP_SECRET)%'
+    html_sanitizer:
+        sanitizers:
+            bill_text:
+                allow_elements:
+                    a: ['href', 'title']
+                    b: '*'
+                    br: '*'
+                    center: '*'
+                    div: '*'
+                    em: '*'
+                    i: '*'
+                    li: '*'
+                    ol: '*'
+                    p: '*'
+                    span: '*'
+                    strong: '*'
+                    table: '*'
+                    tbody: '*'
+                    td: '*'
+                    th: '*'
+                    thead: '*'
+                    tr: '*'
+                    u: '*'
+                    ul: '*'
+                allowed_link_schemes: ['http', 'https']
+                force_https_urls: true
+                force_attributes:
+                    a:
+                        rel: 'noopener noreferrer'
+                        target: '_blank'
 
     # Note that the session will be started ONLY if you read or write from it.
     session: true

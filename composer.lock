@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "05e03a16296dc58568c4df04c0518026",
+    "content-hash": "a13419f0818039062d20052fc67a3b21",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -1885,6 +1885,188 @@
             "time": "2025-12-27T15:18:42+00:00"
         },
         {
+            "name": "league/uri",
+            "version": "7.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/uri.git",
+                "reference": "08cf38e3924d4f56238125547b5720496fac8fd4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/uri/zipball/08cf38e3924d4f56238125547b5720496fac8fd4",
+                "reference": "08cf38e3924d4f56238125547b5720496fac8fd4",
+                "shasum": ""
+            },
+            "require": {
+                "league/uri-interfaces": "^7.8.1",
+                "php": "^8.1",
+                "psr/http-factory": "^1"
+            },
+            "conflict": {
+                "league/uri-schemes": "^1.0"
+            },
+            "suggest": {
+                "ext-bcmath": "to improve IPV4 host parsing",
+                "ext-dom": "to convert the URI into an HTML anchor tag",
+                "ext-fileinfo": "to create Data URI from file contennts",
+                "ext-gmp": "to improve IPV4 host parsing",
+                "ext-intl": "to handle IDN host with the best performance",
+                "ext-uri": "to use the PHP native URI class",
+                "jeremykendall/php-domain-parser": "to further parse the URI host and resolve its Public Suffix and Top Level Domain",
+                "league/uri-components": "to provide additional tools to manipulate URI objects components",
+                "league/uri-polyfill": "to backport the PHP URI extension for older versions of PHP",
+                "php-64bit": "to improve IPV4 host parsing",
+                "rowbot/url": "to handle URLs using the WHATWG URL Living Standard specification",
+                "symfony/polyfill-intl-idn": "to handle IDN host via the Symfony polyfill if ext-intl is not present"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "7.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Uri\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ignace Nyamagana Butera",
+                    "email": "nyamsprod@gmail.com",
+                    "homepage": "https://nyamsprod.com"
+                }
+            ],
+            "description": "URI manipulation library",
+            "homepage": "https://uri.thephpleague.com",
+            "keywords": [
+                "URN",
+                "data-uri",
+                "file-uri",
+                "ftp",
+                "hostname",
+                "http",
+                "https",
+                "middleware",
+                "parse_str",
+                "parse_url",
+                "psr-7",
+                "query-string",
+                "querystring",
+                "rfc2141",
+                "rfc3986",
+                "rfc3987",
+                "rfc6570",
+                "rfc8141",
+                "uri",
+                "uri-template",
+                "url",
+                "ws"
+            ],
+            "support": {
+                "docs": "https://uri.thephpleague.com",
+                "forum": "https://thephpleague.slack.com",
+                "issues": "https://github.com/thephpleague/uri-src/issues",
+                "source": "https://github.com/thephpleague/uri/tree/7.8.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/nyamsprod",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-03-15T20:22:25+00:00"
+        },
+        {
+            "name": "league/uri-interfaces",
+            "version": "7.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/thephpleague/uri-interfaces.git",
+                "reference": "85d5c77c5d6d3af6c54db4a78246364908f3c928"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/thephpleague/uri-interfaces/zipball/85d5c77c5d6d3af6c54db4a78246364908f3c928",
+                "reference": "85d5c77c5d6d3af6c54db4a78246364908f3c928",
+                "shasum": ""
+            },
+            "require": {
+                "ext-filter": "*",
+                "php": "^8.1",
+                "psr/http-message": "^1.1 || ^2.0"
+            },
+            "suggest": {
+                "ext-bcmath": "to improve IPV4 host parsing",
+                "ext-gmp": "to improve IPV4 host parsing",
+                "ext-intl": "to handle IDN host with the best performance",
+                "php-64bit": "to improve IPV4 host parsing",
+                "rowbot/url": "to handle URLs using the WHATWG URL Living Standard specification",
+                "symfony/polyfill-intl-idn": "to handle IDN host via the Symfony polyfill if ext-intl is not present"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "7.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "League\\Uri\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Ignace Nyamagana Butera",
+                    "email": "nyamsprod@gmail.com",
+                    "homepage": "https://nyamsprod.com"
+                }
+            ],
+            "description": "Common tools for parsing and resolving RFC3987/RFC3986 URI",
+            "homepage": "https://uri.thephpleague.com",
+            "keywords": [
+                "data-uri",
+                "file-uri",
+                "ftp",
+                "hostname",
+                "http",
+                "https",
+                "parse_str",
+                "parse_url",
+                "psr-7",
+                "query-string",
+                "querystring",
+                "rfc3986",
+                "rfc3987",
+                "rfc6570",
+                "uri",
+                "url",
+                "ws"
+            ],
+            "support": {
+                "docs": "https://uri.thephpleague.com",
+                "forum": "https://thephpleague.slack.com",
+                "issues": "https://github.com/thephpleague/uri-src/issues",
+                "source": "https://github.com/thephpleague/uri-interfaces/tree/7.8.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/sponsors/nyamsprod",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-03-08T20:05:35+00:00"
+        },
+        {
             "name": "meilisearch/meilisearch-php",
             "version": "dev-main",
             "source": {
@@ -2966,7 +3148,7 @@
         },
         {
             "name": "survos/atlas-bundle",
-            "version": "2.7.19",
+            "version": "2.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/atlas-bundle.git",
@@ -3029,7 +3211,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/atlas-bundle/issues",
-                "source": "https://github.com/survos/atlas-bundle/tree/2.7.19"
+                "source": "https://github.com/survos/atlas-bundle/tree/2.7.22"
             },
             "funding": [
                 {
@@ -3041,7 +3223,7 @@
         },
         {
             "name": "survos/data-contracts",
-            "version": "2.7.19",
+            "version": "2.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/data-contracts.git",
@@ -3076,7 +3258,7 @@
             "description": "Shared data vocabularies, content metadata, and item DTO contracts for Survos data/media/import packages.",
             "support": {
                 "issues": "https://github.com/survos/data-contracts/issues",
-                "source": "https://github.com/survos/data-contracts/tree/2.7.19"
+                "source": "https://github.com/survos/data-contracts/tree/2.7.22"
             },
             "funding": [
                 {
@@ -3088,7 +3270,7 @@
         },
         {
             "name": "survos/ez-bundle",
-            "version": "2.7.19",
+            "version": "2.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/ez-bundle.git",
@@ -3138,7 +3320,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/ez-bundle/issues",
-                "source": "https://github.com/survos/ez-bundle/tree/2.7.19"
+                "source": "https://github.com/survos/ez-bundle/tree/2.7.22"
             },
             "funding": [
                 {
@@ -3150,16 +3332,16 @@
         },
         {
             "name": "survos/field-bundle",
-            "version": "2.7.19",
+            "version": "2.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/field-bundle.git",
-                "reference": "474902440ecb53d634faba133442abafcd02019f"
+                "reference": "32f6c5b0b250c5bf6ef854c66dccba6e0d765a4a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/field-bundle/zipball/474902440ecb53d634faba133442abafcd02019f",
-                "reference": "474902440ecb53d634faba133442abafcd02019f",
+                "url": "https://api.github.com/repos/survos/field-bundle/zipball/32f6c5b0b250c5bf6ef854c66dccba6e0d765a4a",
+                "reference": "32f6c5b0b250c5bf6ef854c66dccba6e0d765a4a",
                 "shasum": ""
             },
             "require": {
@@ -3210,7 +3392,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/field-bundle/issues",
-                "source": "https://github.com/survos/field-bundle/tree/2.7.19"
+                "source": "https://github.com/survos/field-bundle/tree/2.7.22"
             },
             "funding": [
                 {
@@ -3218,11 +3400,11 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-07T16:24:01+00:00"
+            "time": "2026-06-08T16:05:12+00:00"
         },
         {
             "name": "survos/import-bundle",
-            "version": "2.7.19",
+            "version": "2.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/import-bundle.git",
@@ -3285,7 +3467,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/import-bundle/issues",
-                "source": "https://github.com/survos/import-bundle/tree/2.7.19"
+                "source": "https://github.com/survos/import-bundle/tree/2.7.22"
             },
             "funding": [
                 {
@@ -3297,7 +3479,7 @@
         },
         {
             "name": "survos/js-twig-bundle",
-            "version": "2.7.19",
+            "version": "2.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/js-twig-bundle.git",
@@ -3344,7 +3526,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/js-twig-bundle/issues",
-                "source": "https://github.com/survos/js-twig-bundle/tree/2.7.19"
+                "source": "https://github.com/survos/js-twig-bundle/tree/2.7.22"
             },
             "funding": [
                 {
@@ -3356,7 +3538,7 @@
         },
         {
             "name": "survos/jsonl-bundle",
-            "version": "2.7.19",
+            "version": "2.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/jsonl-bundle.git",
@@ -3408,7 +3590,7 @@
             "description": "Fast, concurrent, resumable, strictly-ordered JSONL ingestion utilities for Symfony 7.3 / PHP 8.4",
             "support": {
                 "issues": "https://github.com/survos/jsonl-bundle/issues",
-                "source": "https://github.com/survos/jsonl-bundle/tree/2.7.19"
+                "source": "https://github.com/survos/jsonl-bundle/tree/2.7.22"
             },
             "funding": [
                 {
@@ -3420,7 +3602,7 @@
         },
         {
             "name": "survos/kit-bundle",
-            "version": "2.7.19",
+            "version": "2.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/kit-bundle.git",
@@ -3468,7 +3650,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/kit-bundle/issues",
-                "source": "https://github.com/survos/kit-bundle/tree/2.7.19"
+                "source": "https://github.com/survos/kit-bundle/tree/2.7.22"
             },
             "funding": [
                 {
@@ -3480,7 +3662,7 @@
         },
         {
             "name": "survos/lingua-contracts",
-            "version": "2.7.19",
+            "version": "2.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/lingua-contracts.git",
@@ -3512,7 +3694,7 @@
             "description": "Shared DTOs and API surface (routes/headers) for Survos Lingua client/server interoperability.",
             "support": {
                 "issues": "https://github.com/survos/lingua-contracts/issues",
-                "source": "https://github.com/survos/lingua-contracts/tree/2.7.19"
+                "source": "https://github.com/survos/lingua-contracts/tree/2.7.22"
             },
             "funding": [
                 {
@@ -3524,7 +3706,7 @@
         },
         {
             "name": "survos/lingua-core",
-            "version": "2.7.19",
+            "version": "2.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/lingua-core.git",
@@ -3557,7 +3739,7 @@
             "description": "Core identity utilities (hash/key calculation and canonicalization) shared across Survos Lingua, Babel, and server implementations.",
             "support": {
                 "issues": "https://github.com/survos/lingua-core/issues",
-                "source": "https://github.com/survos/lingua-core/tree/2.7.19"
+                "source": "https://github.com/survos/lingua-core/tree/2.7.22"
             },
             "funding": [
                 {
@@ -3569,16 +3751,16 @@
         },
         {
             "name": "survos/meili-bundle",
-            "version": "2.7.19",
+            "version": "2.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/meili-bundle.git",
-                "reference": "8b247a7296451d2321d7e69fa852911f3295e599"
+                "reference": "85450a85187a3d769b1a3190412d9eeefcd4c921"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/meili-bundle/zipball/8b247a7296451d2321d7e69fa852911f3295e599",
-                "reference": "8b247a7296451d2321d7e69fa852911f3295e599",
+                "url": "https://api.github.com/repos/survos/meili-bundle/zipball/85450a85187a3d769b1a3190412d9eeefcd4c921",
+                "reference": "85450a85187a3d769b1a3190412d9eeefcd4c921",
                 "shasum": ""
             },
             "require": {
@@ -3649,7 +3831,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/meili-bundle/issues",
-                "source": "https://github.com/survos/meili-bundle/tree/2.7.19"
+                "source": "https://github.com/survos/meili-bundle/tree/2.7.22"
             },
             "funding": [
                 {
@@ -3657,20 +3839,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-05T16:43:18+00:00"
+            "time": "2026-06-08T12:53:52+00:00"
         },
         {
             "name": "survos/search-bundle",
-            "version": "2.7.19",
+            "version": "2.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/search-bundle.git",
-                "reference": "9d03e8aaf21c742fc2781e21f7983b517deddfb8"
+                "reference": "b0eb5aedee8b3c9629e74119f51f3dfdc87ab3c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/search-bundle/zipball/9d03e8aaf21c742fc2781e21f7983b517deddfb8",
-                "reference": "9d03e8aaf21c742fc2781e21f7983b517deddfb8",
+                "url": "https://api.github.com/repos/survos/search-bundle/zipball/b0eb5aedee8b3c9629e74119f51f3dfdc87ab3c4",
+                "reference": "b0eb5aedee8b3c9629e74119f51f3dfdc87ab3c4",
                 "shasum": ""
             },
             "require": {
@@ -3713,7 +3895,7 @@
             "description": "Field-driven Symfony UX search adapters, including SQLite FTS5 and PostgreSQL BM25 backends.",
             "support": {
                 "issues": "https://github.com/survos/search-bundle/issues",
-                "source": "https://github.com/survos/search-bundle/tree/2.7.19"
+                "source": "https://github.com/survos/search-bundle/tree/2.7.22"
             },
             "funding": [
                 {
@@ -3721,11 +3903,11 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-06-06T20:35:48+00:00"
+            "time": "2026-06-08T16:04:43+00:00"
         },
         {
             "name": "survos/state-bundle",
-            "version": "2.7.19",
+            "version": "2.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/state-bundle.git",
@@ -3800,7 +3982,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/state-bundle/issues",
-                "source": "https://github.com/survos/state-bundle/tree/2.7.19"
+                "source": "https://github.com/survos/state-bundle/tree/2.7.22"
             },
             "funding": [
                 {
@@ -3812,7 +3994,7 @@
         },
         {
             "name": "survos/tabler-bundle",
-            "version": "2.7.19",
+            "version": "2.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/tabler-bundle.git",
@@ -3903,7 +4085,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/tabler-bundle/issues",
-                "source": "https://github.com/survos/tabler-bundle/tree/2.7.19"
+                "source": "https://github.com/survos/tabler-bundle/tree/2.7.22"
             },
             "funding": [
                 {
@@ -5721,6 +5903,78 @@
             "homepage": "https://symfony.com",
             "support": {
                 "source": "https://github.com/symfony/framework-bundle/tree/v8.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-05-29T05:06:50+00:00"
+        },
+        {
+            "name": "symfony/html-sanitizer",
+            "version": "v8.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/html-sanitizer.git",
+                "reference": "adf86ad7e51344c0b121c9f8a26c95ea35b2b8fc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/html-sanitizer/zipball/adf86ad7e51344c0b121c9f8a26c95ea35b2b8fc",
+                "reference": "adf86ad7e51344c0b121c9f8a26c95ea35b2b8fc",
+                "shasum": ""
+            },
+            "require": {
+                "ext-dom": "*",
+                "league/uri": "^6.5|^7.0",
+                "php": ">=8.4.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\HtmlSanitizer\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Titouan Galopin",
+                    "email": "galopintitouan@gmail.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Provides an object-oriented API to sanitize untrusted HTML input for safe insertion into a document's DOM.",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "Purifier",
+                "html",
+                "sanitizer"
+            ],
+            "support": {
+                "source": "https://github.com/symfony/html-sanitizer/tree/v8.1.0"
             },
             "funding": [
                 {
@@ -11328,16 +11582,16 @@
         },
         {
             "name": "phpunit/php-code-coverage",
-            "version": "14.2.1",
+            "version": "14.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "ed4f43a9a69d6be9f92d50397044ccb862bd8133"
+                "reference": "10d7da3628a99289cdf4c662dd7f0d73f1baec83"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/ed4f43a9a69d6be9f92d50397044ccb862bd8133",
-                "reference": "ed4f43a9a69d6be9f92d50397044ccb862bd8133",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/10d7da3628a99289cdf4c662dd7f0d73f1baec83",
+                "reference": "10d7da3628a99289cdf4c662dd7f0d73f1baec83",
                 "shasum": ""
             },
             "require": {
@@ -11394,7 +11648,7 @@
             "support": {
                 "issues": "https://github.com/sebastianbergmann/php-code-coverage/issues",
                 "security": "https://github.com/sebastianbergmann/php-code-coverage/security/policy",
-                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/14.2.1"
+                "source": "https://github.com/sebastianbergmann/php-code-coverage/tree/14.2.2"
             },
             "funding": [
                 {
@@ -11414,7 +11668,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-06-07T09:07:04+00:00"
+            "time": "2026-06-08T11:50:38+00:00"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -14123,7 +14377,7 @@
         },
         {
             "name": "survos/code-bundle",
-            "version": "2.7.19",
+            "version": "2.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/code-bundle.git",
@@ -14188,7 +14442,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/code-bundle/issues",
-                "source": "https://github.com/survos/code-bundle/tree/2.7.19"
+                "source": "https://github.com/survos/code-bundle/tree/2.7.22"
             },
             "funding": [
                 {
@@ -14200,16 +14454,16 @@
         },
         {
             "name": "survos/deployment-bundle",
-            "version": "2.7.19",
+            "version": "2.7.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/survos/deployment-bundle.git",
-                "reference": "534cd449dc3650d014471a4c6bf8e6ad1013d4f8"
+                "reference": "76a4aaf3f7d83333b094ffb5fc7fda732c9295ad"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/survos/deployment-bundle/zipball/534cd449dc3650d014471a4c6bf8e6ad1013d4f8",
-                "reference": "534cd449dc3650d014471a4c6bf8e6ad1013d4f8",
+                "url": "https://api.github.com/repos/survos/deployment-bundle/zipball/76a4aaf3f7d83333b094ffb5fc7fda732c9295ad",
+                "reference": "76a4aaf3f7d83333b094ffb5fc7fda732c9295ad",
                 "shasum": ""
             },
             "require": {
@@ -14248,7 +14502,7 @@
             ],
             "support": {
                 "issues": "https://github.com/survos/deployment-bundle/issues",
-                "source": "https://github.com/survos/deployment-bundle/tree/2.7.19"
+                "source": "https://github.com/survos/deployment-bundle/tree/2.7.22"
             },
             "funding": [
                 {
@@ -14256,7 +14510,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-12T14:12:30+00:00"
+            "time": "2026-06-08T16:04:44+00:00"
         },
         {
             "name": "symfony/browser-kit",
@@ -14473,6 +14727,105 @@
                 }
             ],
             "time": "2026-05-29T05:06:50+00:00"
+        },
+        {
+            "name": "symfony/maker-bundle",
+            "version": "v1.67.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/maker-bundle.git",
+                "reference": "6ce8b313845f16bcf385ee3cb31d8b24e30d5516"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/maker-bundle/zipball/6ce8b313845f16bcf385ee3cb31d8b24e30d5516",
+                "reference": "6ce8b313845f16bcf385ee3cb31d8b24e30d5516",
+                "shasum": ""
+            },
+            "require": {
+                "composer-runtime-api": "^2.1",
+                "doctrine/inflector": "^2.0",
+                "nikic/php-parser": "^5.0",
+                "php": ">=8.1",
+                "symfony/config": "^6.4|^7.0|^8.0",
+                "symfony/console": "^6.4|^7.0|^8.0",
+                "symfony/dependency-injection": "^6.4|^7.0|^8.0",
+                "symfony/deprecation-contracts": "^2.2|^3",
+                "symfony/filesystem": "^6.4|^7.0|^8.0",
+                "symfony/finder": "^6.4|^7.0|^8.0",
+                "symfony/framework-bundle": "^6.4|^7.0|^8.0",
+                "symfony/http-kernel": "^6.4|^7.0|^8.0",
+                "symfony/process": "^6.4|^7.0|^8.0"
+            },
+            "conflict": {
+                "doctrine/doctrine-bundle": "<2.10",
+                "doctrine/orm": "<2.15"
+            },
+            "require-dev": {
+                "composer/semver": "^3.0",
+                "doctrine/doctrine-bundle": "^2.10|^3.0",
+                "doctrine/orm": "^2.15|^3",
+                "doctrine/persistence": "^3.1|^4.0",
+                "symfony/http-client": "^6.4|^7.0|^8.0",
+                "symfony/phpunit-bridge": "^6.4.1|^7.0|^8.0",
+                "symfony/security-core": "^6.4|^7.0|^8.0",
+                "symfony/security-http": "^6.4|^7.0|^8.0",
+                "symfony/yaml": "^6.4|^7.0|^8.0",
+                "twig/twig": "^3.0|^4.x-dev"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-main": "1.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Bundle\\MakerBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Maker helps you create empty commands, controllers, form classes, tests and more so you can forget about writing boilerplate code.",
+            "homepage": "https://symfony.com/doc/current/bundles/SymfonyMakerBundle/index.html",
+            "keywords": [
+                "code generator",
+                "dev",
+                "generator",
+                "scaffold",
+                "scaffolding"
+            ],
+            "support": {
+                "issues": "https://github.com/symfony/maker-bundle/issues",
+                "source": "https://github.com/symfony/maker-bundle/tree/v1.67.0"
+            },
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://github.com/nicolas-grekas",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
+            "time": "2026-03-18T13:39:06+00:00"
         },
         {
             "name": "symfony/web-profiler-bundle",
