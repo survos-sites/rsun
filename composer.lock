@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a13419f0818039062d20052fc67a3b21",
+    "content-hash": "3fd042a024c9370eae89b50f7084d0c1",
     "packages": [
         {
             "name": "adbario/php-dot-notation",
@@ -3100,11 +3100,17 @@
         },
         {
             "name": "survos/admin-bundle",
-            "version": "dev-main",
+            "version": "2.7.22",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/survos/admin-bundle.git",
+                "reference": "cc71cbe7ad169e84b33309f6b759159280e00d2a"
+            },
             "dist": {
-                "type": "path",
-                "url": "../mono/bu/admin-bundle",
-                "reference": "3715d294b74ea7df11b2ddc25eaa9b3b54bc6b09"
+                "type": "zip",
+                "url": "https://api.github.com/repos/survos/admin-bundle/zipball/cc71cbe7ad169e84b33309f6b759159280e00d2a",
+                "reference": "cc71cbe7ad169e84b33309f6b759159280e00d2a",
+                "shasum": ""
             },
             "require": {
                 "php": "^8.4",
@@ -3120,11 +3126,11 @@
             },
             "type": "symfony-bundle",
             "extra": {
-                "branch-alias": {
-                    "dev-main": "1.0-dev"
-                },
                 "symfony": {
                     "allow-contrib": true
+                },
+                "branch-alias": {
+                    "dev-main": "1.0-dev"
                 }
             },
             "autoload": {
@@ -3132,6 +3138,7 @@
                     "Survos\\AdminBundle\\": "src/"
                 }
             },
+            "notification-url": "https://packagist.org/downloads/",
             "license": [
                 "MIT"
             ],
@@ -3142,9 +3149,17 @@
                 "symfony",
                 "tabler"
             ],
-            "transport-options": {
-                "relative": true
-            }
+            "support": {
+                "issues": "https://github.com/survos/admin-bundle/issues",
+                "source": "https://github.com/survos/admin-bundle/tree/2.7.22"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/kbond",
+                    "type": "github"
+                }
+            ],
+            "time": "2026-06-08T13:07:51+00:00"
         },
         {
             "name": "survos/atlas-bundle",
@@ -14967,8 +14982,7 @@
     "minimum-stability": "stable",
     "stability-flags": {
         "meilisearch/meilisearch-php": 20,
-        "roave/security-advisories": 20,
-        "survos/admin-bundle": 20
+        "roave/security-advisories": 20
     },
     "prefer-stable": true,
     "prefer-lowest": false,

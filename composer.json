@@ -25,7 +25,7 @@
         "meilisearch/meilisearch-php": "dev-main",
         "phpdocumentor/reflection-docblock": "^6.0.3",
         "phpstan/phpdoc-parser": "^2.3.2",
-        "survos/admin-bundle": "dev-main",
+        "survos/admin-bundle": "^2.7.22",
         "survos/ez-bundle": "^2.7.22",
         "survos/import-bundle": "^2.7.22",
         "survos/js-twig-bundle": "^2.7.22",
@@ -137,10 +137,5 @@
         "symfony/maker-bundle": "^1.67",
         "symfony/stopwatch": "^8.1.0",
         "symfony/web-profiler-bundle": "^8.1.0"
-    },
-    "repositories": [{
-        "name": "survos-admin-bundle",
-        "type": "path",
-        "url": "../mono/bu/admin-bundle"
-    }]
+    }
 }
