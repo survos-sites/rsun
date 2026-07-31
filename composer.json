@@ -7,7 +7,7 @@
     "prefer-stable": true,
     "keywords": ["Virginia", "legislation", "law"],
     "require": {
-        "php": ">=8.4",
+        "php": "^8.5",
         "ext-apcu": "*",
         "ext-bz2": "*",
         "ext-ctype": "*",
@@ -30,7 +30,7 @@
         "survos/import-bundle": "^2.7.22",
         "survos/js-twig-bundle": "^2.7.22",
         "survos/lingua-core": "^2.7.22",
-        "survos/meili-bundle": "^2.7.22",
+        "survos/meili-bundle": "^2.18.1",
         "survos/search-bundle": "^2.7.22",
         "survos/state-bundle": "^2.7.22",
         "survos/tabler-bundle": "^2.7.22",
@@ -128,7 +128,6 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^13.2.0",
-        "roave/security-advisories": "dev-latest",
         "survos/code-bundle": "^2.7.22",
         "survos/deployment-bundle": "^2.7.22",
         "symfony/browser-kit": "^8.1.0",
