@@ -1,0 +1,7 @@
+survos_search:
+    default_adapter: default
+    adapters:
+        # Was mezcalito_ux_search.adapters.default. Same DSN, same postgres BM25
+        # adapter -- survos/search-bundle absorbed ux-search, so only the config
+        # root and the env var name change.
+        default: '%env(SURVOS_SEARCH_DEFAULT_DSN)%'

@@ -151,7 +151,7 @@ return [
     'locutus/php/var/index' => ['version' => '3.0.34'],
     'dexie' => ['version' => '4.4.2'],
     '@symfony/ux-live-component' => ['path' => './vendor/symfony/ux-live-component/assets/dist/live_controller.js'],
-    '@tacman/ux-search' => ['path' => './vendor/tacman/ux-search/assets/dist/controller.js'],
+    '@survos/search-bundle' => ['path' => './vendor/survos/search-bundle/assets/src/controller.js'],
     '@tabler/core' => ['version' => '1.4.0'],
     '@tabler/core/dist/css/tabler.min.css' => ['version' => '1.4.0', 'type' => 'css'],
 ];

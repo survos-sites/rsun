@@ -78,12 +78,12 @@
                 "fetch": "eager"
             }
         },
-        "@tacman/ux-search": {
+        "@survos/search-bundle": {
             "ux-search": {
                 "enabled": true,
                 "fetch": "eager",
                 "autoimport": {
-                    "@tacman/ux-search/dist/default.min.css": true
+                    "@survos/search-bundle/styles/ux-search.css": true
                 }
             },
             "ux-search--refinement-list": {

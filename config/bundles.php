@@ -32,7 +32,6 @@ return [
     Survos\Kit\SurvosKitBundle::class => ['all' => true],
     Survos\FieldBundle\SurvosFieldBundle::class => ['all' => true],
     Symfony\UX\LiveComponent\LiveComponentBundle::class => ['all' => true],
-    Mezcalito\UxSearchBundle\MezcalitoUxSearchBundle::class => ['all' => true],
     Survos\SearchBundle\SurvosSearchBundle::class => ['all' => true],
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
 ];
