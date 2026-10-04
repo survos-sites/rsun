@@ -12,6 +12,13 @@ framework:
                 retry_strategy:
                     max_retries: 3
                     multiplier: 2
+            elastic:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                options:
+                    queue_name: rsun_elastic
+                retry_strategy:
+                    max_retries: 3
+                    multiplier: 2
             failed: 'doctrine://default?queue_name=failed'
             sync: 'sync://'
 
@@ -24,7 +31,8 @@ framework:
             Symfony\Component\Mailer\Messenger\SendEmailMessage: async
             Symfony\Component\Notifier\Message\ChatMessage: async
             Symfony\Component\Notifier\Message\SmsMessage: async
-            'Survos\MeiliBundle\Message\BatchIndexEntitiesMessage': async
+            Survos\ElasticBundle\Message\ReindexDocuments: elastic
+            Survos\ElasticBundle\Message\RemoveDocuments: elastic
 
             # Route your messages to the transports
             # 'App\Message\YourMessage': async

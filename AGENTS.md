@@ -68,7 +68,7 @@ bin/console ca:fetch
 bin/console code:entity
 
 # Generate admin controllers
-bin/console code:meili:admin
+bin/console elastic:index:status
 ```
 
 ### Castor Tasks
@@ -128,7 +128,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 ### Entity Patterns
 - Use PHP 8 attributes for Doctrine mapping (`#[Entity]`, `#[Column]`, etc.)
 - Final classes with readonly constructor properties
-- Include Meilisearch integration with `#[MeiliIndex]` attributes
+- Use `#[EntityMeta]` and field constants for automatic Elasticsearch registration
 - Define constants for searchable/filterable fields
 - Comprehensive PHPDoc with generation metadata
 
@@ -167,7 +167,7 @@ use Symfony\Component\Console\Attribute\AsCommand;
 - **Importmap** for dependency management
 - **Stimulus** for JavaScript controllers
 - **Bootstrap 5** for CSS framework
-- **Meilisearch** instant search integration
+- **Elasticsearch** instant search integration
 
 ### Asset Structure
 ```
@@ -193,7 +193,7 @@ assets/
 - Standard Symfony env pattern (APP_ENV, DATABASE_URL, etc.)
 
 ### Search Integration
-- Meilisearch for full-text search functionality
+- Elasticsearch for full-text search functionality
 - Configurable indices with filterable/sortable fields
 - Integration with admin interfaces
 
@@ -212,7 +212,7 @@ assets/
 ### When Working with Data
 1. Use JSONL format for data imports/exports
 2. Implement proper data validation
-3. Use Meilisearch for search functionality
+3. Use Elasticsearch for search functionality
 4. Follow established entity patterns
 5. Use proper type declarations for all data structures
 
@@ -226,7 +226,7 @@ assets/
 ## Key Dependencies
 - **Symfony 8.0**: Main framework
 - **Doctrine ORM**: Database layer
-- **Meilisearch**: Search functionality
+- **Elasticsearch**: Search functionality
 - **EasyAdmin**: Admin interfaces
 - **PHPUnit**: Testing framework
 - **AssetMapper**: Modern asset management

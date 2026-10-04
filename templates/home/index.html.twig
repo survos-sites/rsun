@@ -15,8 +15,8 @@
                         <a class="btn btn-outline-primary" href="{{ path('survos_admin_dashboard') }}">
                             {{ ux_icon('tabler:layout-dashboard', {height: '18px', width: '18px'}) }} Admin
                         </a>
-                        <a class="btn btn-outline-secondary" href="/ez">
-                            {{ ux_icon('tabler:external-link', {height: '18px', width: '18px'}) }} /ez
+                        <a class="btn btn-outline-secondary" href="{{ path('survos_elastic_admin_index') }}">
+                            {{ ux_icon('tabler:external-link', {height: '18px', width: '18px'}) }} Search indexes
                         </a>
                     </div>
                 </div>
@@ -61,13 +61,7 @@
                                     <a class="btn btn-sm btn-primary" href="{{ card.dashboardUrl }}">Inventory</a>
                                 {% endif %}
                                 {% if card.uxSearchUrl %}
-                                    <a class="btn btn-sm btn-outline-primary" href="{{ card.uxSearchUrl }}">Doctrine Search</a>
-                                {% endif %}
-                                {% if card.meiliSearchUrl %}
-                                    <a class="btn btn-sm btn-outline-secondary" href="{{ card.meiliSearchUrl }}">Meili Search</a>
-                                {% endif %}
-                                {% if card.meiliDiagnosticsUrl %}
-                                    <a class="btn btn-sm btn-outline-secondary" href="{{ card.meiliDiagnosticsUrl }}">Meili Diagnostics</a>
+                                    <a class="btn btn-sm btn-outline-primary" href="{{ path('app_bill_search') }}">Search bills</a>
                                 {% endif %}
                                 {% for workflow in card.workflows %}
                                     {% if workflow.url %}<a class="btn btn-sm btn-outline-secondary" href="{{ workflow.url }}">{{ workflow.name }}</a>{% endif %}

@@ -7,7 +7,6 @@ namespace App\Controller;
 use Doctrine\Persistence\ManagerRegistry;
 use Survos\FieldBundle\Model\EntityMetaDescriptor;
 use Survos\FieldBundle\Registry\EntityMetaRegistry;
-use Survos\MeiliBundle\Registry\MeiliRegistry;
 use Survos\SearchBundle\Registry\UxSearchRegistry;
 use Survos\StateBundle\Service\WorkflowHelperService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,7 +21,6 @@ final class HomeController extends AbstractController
         private readonly ManagerRegistry $doctrine,
         private readonly RouterInterface $router,
         private readonly UxSearchRegistry $uxSearchRegistry,
-        private readonly MeiliRegistry $meiliRegistry,
         private readonly WorkflowHelperService $workflowHelper,
     ) {}
 
@@ -40,7 +38,6 @@ final class HomeController extends AbstractController
     private function entityCard(EntityMetaDescriptor $descriptor): array
     {
         $class = $descriptor->class;
-        $meiliBaseName = $this->meiliBaseNameForClass($class);
         $workflows = $this->workflowsForClass($class);
 
         return [
@@ -49,12 +46,6 @@ final class HomeController extends AbstractController
             'dashboardUrl' => $this->routeUrl('survos_entity_dashboard', ['code' => $descriptor->code]),
             'uxSearchUrl' => $this->uxSearchRegistry->forClass($class)
                 ? $this->routeUrl('survos_entity_ux_search', ['code' => $descriptor->code])
-                : null,
-            'meiliSearchUrl' => $meiliBaseName
-                ? $this->routeUrl('meili_insta', ['indexName' => $meiliBaseName])
-                : null,
-            'meiliDiagnosticsUrl' => $meiliBaseName
-                ? $this->routeUrl('meili_admin_meili_index_dashboard', ['indexName' => $meiliBaseName])
                 : null,
             'workflows' => array_map(fn (string $name): array => [
                 'name' => $name,
@@ -75,17 +66,6 @@ final class HomeController extends AbstractController
         } catch (\Throwable) {
             return null;
         }
-    }
-
-    private function meiliBaseNameForClass(string $class): ?string
-    {
-        foreach ($this->meiliRegistry->names() as $baseName) {
-            if ($this->meiliRegistry->classFor((string) $baseName) === $class) {
-                return (string) $baseName;
-            }
-        }
-
-        return null;
     }
 
     private function workflowsForClass(string $class): array

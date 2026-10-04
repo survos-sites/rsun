@@ -1,0 +1,17 @@
+<article class="card w-100">
+    <div class="card-body">
+        <div class="subheader">{{ hit.year|e }} · {{ hit.chamber|e }} · {{ hit.number|e }}</div>
+        <h2 class="h3 mt-2">
+            <a href="/bills/{{ hit.id|e }}">
+                {% if hit._highlightResult.catchLine is defined %}{{ hit._highlightResult.catchLine.value|raw }}{% else %}{{ hit.catchLine|e }}{% endif %}
+            </a>
+        </h2>
+        {% set summary = hit.summary|striptags %}
+        <p>{{ summary|slice(0, 400)|e }}{% if summary|length > 400 %}…{% endif %}</p>
+        <div class="text-secondary">{{ hit.patronNameFormatted|e }}</div>
+    </div>
+    <footer class="card-footer d-flex justify-content-between gap-3">
+        <span>{{ hit.status|e }}{% if hit.outcome %} · {{ hit.outcome|e }}{% endif %}</span>
+        <a href="/bills/{{ hit.id|e }}">View bill</a>
+    </footer>
+</article>

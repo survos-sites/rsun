@@ -1,0 +1,40 @@
+{% extends '@SurvosTabler/layout/base.html.twig' %}
+{% block title %}Search bills{% endblock %}
+{% do page({show_page_header: false}) %}
+{% block content %}
+{% set sc = survos_stimulus('search-bundle', 'instantsearch') %}
+<div class="container-xl py-4" {{ stimulus_controller(sc, {
+    endpoint: path('survos_search_instant'),
+    name: name,
+    template: path('app_bill_search_template'),
+    sorts: sorts
+}) }}>
+    <h1>Search Virginia bills</h1>
+    <p class="text-secondary">Search legislation by title, summary, full text, or patron.</p>
+    <div class="mb-4" {{ stimulus_target(sc, 'query') }}></div>
+    <div class="alert alert-danger" role="alert" hidden {{ stimulus_target(sc, 'error') }}></div>
+    <div class="row g-4">
+        <aside class="col-12 col-md-3" aria-label="Search filters">
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="h3 mb-0">Refine results</h2>
+                <div {{ stimulus_target(sc, 'clear') }}></div>
+            </div>
+            {% for field, label in facets %}
+                <section class="mb-4">
+                    <h3 class="h4">{{ label }}</h3>
+                    <div data-field="{{ field }}" data-label="{{ label }}" {{ stimulus_target(sc, 'facet') }}></div>
+                </section>
+            {% endfor %}
+        </aside>
+        <main class="col-12 col-md-9">
+            <div class="d-flex justify-content-between align-items-center gap-3 mb-3">
+                <div aria-live="polite" {{ stimulus_target(sc, 'stats') }}></div>
+                <div aria-label="Sort results" {{ stimulus_target(sc, 'sort') }}></div>
+            </div>
+            <div class="mb-3" {{ stimulus_target(sc, 'current') }}></div>
+            <div {{ stimulus_target(sc, 'hits') }}></div>
+            <div class="mt-4" {{ stimulus_target(sc, 'pagination') }}></div>
+        </main>
+    </div>
+</div>
+{% endblock %}

@@ -24,7 +24,6 @@
  */
 return [
     'app' => ['path' => './assets/app.js', 'entrypoint' => true],
-    'meili' => ['path' => './assets/meili.js', 'entrypoint' => true],
     'admin' => ['path' => './assets/admin.js', 'entrypoint' => true],
     '@symfony/stimulus-bundle' => ['path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js'],
     '@survos/js-twig/generated/fos_routes.js' => ['path' => '@survos/js-twig/generated/fos_routes.js'],
@@ -130,8 +129,6 @@ return [
     'instantsearch.js' => ['version' => '4.95.0'],
     'instantsearch.js/es/widgets' => ['version' => '4.95.0'],
     'instantsearch.css/themes/algolia.min.css' => ['version' => '8.15.0', 'type' => 'css'],
-    '@meilisearch/instant-meilisearch' => ['version' => '0.30.0'],
-    'meilisearch' => ['version' => '0.54.0'],
     '@andypf/json-viewer' => ['version' => '2.4.0'],
     'locutus/php/strings/sprintf' => ['version' => '3.0.34'],
     'locutus/php/strings/vsprintf' => ['version' => '3.0.34'],
