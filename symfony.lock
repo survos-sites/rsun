@@ -101,6 +101,9 @@
             "bin/phpunit"
         ]
     },
+    "survos/admin-bundle": {
+        "version": "2.33.0"
+    },
     "survos/atlas-bundle": {
         "version": "2.7.19"
     },
@@ -109,6 +112,9 @@
     },
     "survos/deployment-bundle": {
         "version": "2.0.97"
+    },
+    "survos/elastic-bundle": {
+        "version": "2.33.0"
     },
     "survos/ez-bundle": {
         "version": "2.0.97"
@@ -119,14 +125,23 @@
     "survos/import-bundle": {
         "version": "2.0.97"
     },
+    "survos/js-twig-bundle": {
+        "version": "2.34.38"
+    },
     "survos/jsonl-bundle": {
         "version": "2.0.97"
     },
     "survos/kit-bundle": {
         "version": "2.7.19"
     },
+    "survos/search-bundle": {
+        "version": "2.34.38"
+    },
     "survos/state-bundle": {
         "version": "2.0.97"
+    },
+    "survos/tabler-bundle": {
+        "version": "2.34.38"
     },
     "symfony/asset-mapper": {
         "version": "8.0",

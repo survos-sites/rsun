@@ -12,6 +12,27 @@
                 "autoimport": []
             }
         },
+        "@survos/search-bundle": {
+            "ux-search": {
+                "enabled": true,
+                "fetch": "eager",
+                "autoimport": {
+                    "@survos/search-bundle/styles/ux-search.css": true
+                }
+            },
+            "ux-search--refinement-list": {
+                "enabled": true,
+                "fetch": "eager"
+            },
+            "ux-search-range-slider": {
+                "enabled": true,
+                "fetch": "eager"
+            },
+            "instantsearch": {
+                "enabled": true,
+                "fetch": "eager"
+            }
+        },
         "@survos/state-bundle": {
             "workflow": {
                 "enabled": true,
@@ -24,6 +45,22 @@
                 "fetch": "lazy"
             },
             "search": {
+                "enabled": true,
+                "fetch": "lazy"
+            },
+            "clipboard": {
+                "enabled": true,
+                "fetch": "lazy"
+            },
+            "closeable": {
+                "enabled": true,
+                "fetch": "lazy"
+            },
+            "tooltip": {
+                "enabled": true,
+                "fetch": "lazy"
+            },
+            "conditional-fields": {
                 "enabled": true,
                 "fetch": "lazy"
             }
@@ -54,30 +91,6 @@
             "mercure-turbo-stream": {
                 "enabled": false,
                 "fetch": "eager"
-            }
-        },
-        "@survos/search-bundle": {
-            "ux-search": {
-                "enabled": true,
-                "fetch": "eager",
-                "autoimport": {
-                    "@survos/search-bundle/styles/ux-search.css": true
-                }
-            },
-            "ux-search--refinement-list": {
-                "enabled": true,
-                "fetch": "eager"
-            },
-            "ux-search-range-slider": {
-                "enabled": true,
-                "fetch": "eager"
-            },
-            "instantsearch": {
-                "enabled": true,
-                "fetch": "eager",
-                "autoimport": {
-                    "instantsearch.css/themes/algolia.min.css": true
-                }
             }
         }
     },
