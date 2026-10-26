@@ -165,4 +165,6 @@ return [
     '@floating-ui/core' => ['version' => '1.8.0'],
     '@floating-ui/utils' => ['version' => '0.2.12'],
     '@floating-ui/utils/dom' => ['version' => '0.2.12'],
+    'router' => ['path' => './assets/router.js'],
+    '@symfony/ux-router' => ['path' => './vendor/symfony/ux-router/assets/dist/router_controller.js'],
 ];
