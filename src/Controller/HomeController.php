@@ -8,7 +8,7 @@ use Doctrine\Persistence\ManagerRegistry;
 use Survos\FieldBundle\Model\EntityMetaDescriptor;
 use Survos\FieldBundle\Registry\EntityMetaRegistry;
 use Survos\SearchBundle\Registry\UxSearchRegistry;
-use Survos\StateBundle\Service\WorkflowHelperService;
+use Survos\WorkflowExtrasBundle\Service\WorkflowCatalog;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
@@ -21,7 +21,7 @@ final class HomeController extends AbstractController
         private readonly ManagerRegistry $doctrine,
         private readonly RouterInterface $router,
         private readonly UxSearchRegistry $uxSearchRegistry,
-        private readonly WorkflowHelperService $workflowHelper,
+        private readonly WorkflowCatalog $workflowCatalog,
     ) {}
 
     #[Route('/', name: 'app_homepage')]
@@ -49,7 +49,7 @@ final class HomeController extends AbstractController
                 : null,
             'workflows' => array_map(fn (string $name): array => [
                 'name' => $name,
-                'url' => $this->routeUrl('survos_workflow', ['flowCode' => $name]),
+                'url' => $this->routeUrl('survos_workflow_extras', ['flowCode' => $name]),
             ], $workflows),
         ];
     }
@@ -70,15 +70,7 @@ final class HomeController extends AbstractController
 
     private function workflowsForClass(string $class): array
     {
-        $grouped = $this->workflowHelper->getWorkflowsGroupedByClass();
-        $workflows = $grouped[$class] ?? [];
-        foreach ($grouped as $supportedClass => $names) {
-            if ($supportedClass !== $class && is_a($class, (string) $supportedClass, true)) {
-                $workflows = array_merge($workflows, (array) $names);
-            }
-        }
-
-        return array_values(array_unique($workflows));
+        return $this->workflowCatalog->forClass($class);
     }
 
     private function routeUrl(string $route, array $parameters = []): ?string

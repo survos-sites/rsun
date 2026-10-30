@@ -28,7 +28,7 @@ final class UxRouterWiringTest extends KernelTestCase
 
         self::assertFalse(class_exists('FOS\\JsRoutingBundle\\FOSJsRoutingBundle'));
         $dumped = file_get_contents($projectDir.'/var/routes/index.js');
-        self::assertStringContainsString('"survos_workflow_transition"', $dumped);
+        self::assertStringContainsString('export const routes', $dumped);
 
         $entries = require $projectDir.'/importmap.php';
         self::assertArrayHasKey('router', $entries);

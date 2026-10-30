@@ -15,7 +15,6 @@ return [
     Survos\JsonlBundle\SurvosJsonlBundle::class => ['all' => true],
     Survos\JsTwigBundle\SurvosJsTwigBundle::class => ['all' => true],
     Survos\ElasticBundle\SurvosElasticBundle::class => ['all' => true],
-    Survos\StateBundle\SurvosStateBundle::class => ['all' => true],
     Survos\ImportBundle\SurvosImportBundle::class => ['all' => true],
     Survos\CodeBundle\SurvosCodeBundle::class => ['dev' => true, 'test' => true],
     Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
@@ -36,4 +35,5 @@ return [
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Symfony\UX\Router\UXRouterBundle::class => ['all' => true],
     Survos\MenuBundle\SurvosMenuBundle::class => ['all' => true],
+    Survos\WorkflowExtrasBundle\SurvosWorkflowExtrasBundle::class => ['all' => true],
 ];
