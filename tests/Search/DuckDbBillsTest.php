@@ -40,13 +40,6 @@ final class DuckDbBillsTest extends TestCase
         self::assertSame(1, $meta['versions']);
         self::assertSame($one, $service->bill(1));
         self::assertNull($service->bill(99));
-        $found = $service->search('minimum wage', 2026);
-        self::assertSame(1, $found['total']);
-        self::assertSame(1, (int) $found['hits'][0]['id']);
-        self::assertSame(' Raise the minimum wage. ', $found['hits'][0]['summary']);
-        self::assertSame(0, $service->search('minimum wage', 2026, 'senate')['total']);
-        self::assertSame(0, $service->search("x' OR 1=1 --", 2024)['total']);
-        self::assertSame(1, $service->search('', null, '', 999)['page']);
         $db = $service->open();
         $this->expectException(\PDOException::class);
         $db->exec('DELETE FROM bills');

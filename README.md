@@ -92,7 +92,10 @@ Data is imported from https://www.richmondsunlight.com/downloads/
 
 ## Local DuckDB experiment
 
-A separate native-PDO full-text search prototype is available at `/bills/duckdb`.
+In dev/test, `/bills/search` uses SearchBundle’s native DuckDB adapter through the
+existing `/instant-search` endpoint. Production keeps its Elasticsearch configuration.
+The local bundle is linked with `php ../mono/link "$PWD"`; it must include the
+DuckDB adapter, `ftsConjunctive`, and explicit-search precedence changes.
 Build its immutable snapshot with `php bin/console app:duckdb:build` after downloading
 the source files. See [the experiment and measurements](docs/duckdb-experiment.md)
 for setup, version differences, benchmarking and current limitations.

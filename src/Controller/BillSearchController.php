@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\Bill;
+use App\Repository\BillRepository;
+use App\Service\DuckDbBills;
 use Survos\SearchBundle\Search\SearchProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -13,8 +14,14 @@ use Symfony\Component\Routing\Attribute\Route;
 final class BillSearchController extends AbstractController
 {
     #[Route('/bills/{id}', name: 'app_bill_show', requirements: ['id' => '\\d+'], methods: ['GET'])]
-    public function show(Bill $bill): Response
+    public function show(int $id, SearchProvider $provider, DuckDbBills $duck, BillRepository $repository): Response
     {
+        if ('duckdb' === $provider->getSearch(self::SEARCH)->getAdapterName()) {
+            $record = $duck->bill($id) ?? throw $this->createNotFoundException('Bill not found');
+
+            return $this->render('bill/duckdb_show.html.twig', ['bill' => $record]);
+        }
+        $bill = $repository->find($id) ?? throw $this->createNotFoundException('Bill not found');
         return $this->render('bill/show.html.twig', [
             'bill' => $bill,
         ]);
@@ -39,7 +46,7 @@ final class BillSearchController extends AbstractController
         $available = array_map(static fn ($facet) => $facet->getProperty(), $search->getFacets());
         $sorts = array_map(
             static fn ($sort) => ['value' => self::SEARCH.'::'.$sort->getKey(), 'label' => $sort->getLabel()],
-            $search->getAvailableSorts(),
+            array_values(array_filter($search->getAvailableSorts(), static fn ($sort) => null !== $sort->getKey() && '' !== $sort->getKey())),
         );
 
         return $this->render('bill/search.html.twig', [

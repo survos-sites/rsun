@@ -2,7 +2,7 @@
 {% block title %}{{ bill.number|upper }} · DuckDB{% endblock %}
 {% block content %}
 <div class="container-xl py-4">
-    <a href="{{ path('app_bill_duckdb') }}">← DuckDB search</a>
+    <a href="{{ path('app_bill_search') }}">← Bill search</a>
     <div class="subheader mt-3">{{ bill.year }} · {{ bill.chamber }} · {{ bill.number|upper }}</div>
     <h1>{{ bill.catch_line }}</h1><p>{{ bill.patron_name_formatted }} · {{ bill.status }}</p>
     <div class="card mb-3"><div class="card-body"><h2>Summary</h2>{{ bill.summary|default('')|sanitize_html('bill_text') }}</div></div>

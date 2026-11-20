@@ -117,42 +117,6 @@ final readonly class DuckDbBills
         return $db;
     }
 
-    public function search(string $query = '', ?int $year = null, string $chamber = '', int $page = 1, ?\PDO $db = null): array
-    {
-        $start = hrtime(true);
-        $db ??= $this->open();
-        $openMs = (hrtime(true) - $start) / 1e6;
-        $query = mb_substr(trim($query), 0, 300);
-        $conditions = ['true'];
-        $params = [];
-        $score = '0.0';
-        if ($query !== '') {
-            $score = 'fts_main_bills.match_bm25(id, ?, conjunctive := 1)';
-            $params[] = $query;
-            $conditions[] = 'score IS NOT NULL';
-        }
-        if ($year !== null) {
-            $conditions[] = 'year = ?';
-            $params[] = $year;
-        }
-        if ($chamber !== '') {
-            $conditions[] = 'chamber = ?';
-            $params[] = $chamber;
-        }
-        $base = 'WITH matches AS (SELECT *, '.$score.' AS score FROM bills) ';
-        $where = implode(' AND ', $conditions);
-        $statement = $db->prepare($base.'SELECT count(*) FROM matches WHERE '.$where);
-        $statement->execute($params);
-        $total = (int) $statement->fetchColumn();
-        $pages = max(1, (int) ceil($total / 24));
-        $page = max(1, min($page, $pages));
-        $statement = $db->prepare($base.'SELECT id, year, number, chamber, status, outcome, catch_line, summary, patron_name, score FROM matches WHERE '.$where.' ORDER BY score DESC, year DESC, id LIMIT 24 OFFSET '.(($page - 1) * 24));
-        $statement->execute($params);
-        $hits = $statement->fetchAll(\PDO::FETCH_ASSOC);
-
-        return ['hits' => $hits, 'total' => $total, 'page' => $page, 'pages' => $pages, 'openMs' => round($openMs, 2), 'elapsedMs' => round((hrtime(true) - $start) / 1e6, 2)];
-    }
-
     public function bill(int $id): ?array
     {
         $db = $this->open();
