@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Repository\BillRepository;
-use App\Service\DuckDbBills;
 use Survos\SearchBundle\Search\SearchProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,13 +13,8 @@ use Symfony\Component\Routing\Attribute\Route;
 final class BillSearchController extends AbstractController
 {
     #[Route('/bills/{id}', name: 'app_bill_show', requirements: ['id' => '\\d+'], methods: ['GET'])]
-    public function show(int $id, SearchProvider $provider, DuckDbBills $duck, BillRepository $repository): Response
+    public function show(int $id, BillRepository $repository): Response
     {
-        if ('duckdb' === $provider->getSearch(self::SEARCH)->getAdapterName()) {
-            $record = $duck->bill($id) ?? throw $this->createNotFoundException('Bill not found');
-
-            return $this->render('bill/duckdb_show.html.twig', ['bill' => $record]);
-        }
         $bill = $repository->find($id) ?? throw $this->createNotFoundException('Bill not found');
         return $this->render('bill/show.html.twig', [
             'bill' => $bill,
@@ -42,15 +36,17 @@ final class BillSearchController extends AbstractController
     #[Route('/bills/search/ux', name: 'app_bill_ux_search', methods: ['GET'])]
     public function search(SearchProvider $provider): Response
     {
-        $search = $provider->getSearch(self::SEARCH)->create();
+        $name = 'app_bill_pg';
+        $search = $provider->getSearch($name)->create();
         $available = array_map(static fn ($facet) => $facet->getProperty(), $search->getFacets());
         $sorts = array_map(
-            static fn ($sort) => ['value' => self::SEARCH.'::'.$sort->getKey(), 'label' => $sort->getLabel()],
+            static fn ($sort) => ['value' => $name.'::'.$sort->getKey(), 'label' => $sort->getLabel()],
             array_values(array_filter($search->getAvailableSorts(), static fn ($sort) => null !== $sort->getKey() && '' !== $sort->getKey())),
         );
 
         return $this->render('bill/search.html.twig', [
-            'name' => self::SEARCH,
+            'name' => $name,
+            'backendLabel' => 'app_bill_es' === $name ? 'Elasticsearch / BM25' : 'PostgreSQL FTS / BM25',
             'facets' => array_intersect_key(self::FACETS, array_flip($available)),
             'sorts' => $sorts,
         ]);

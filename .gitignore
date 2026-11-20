@@ -23,3 +23,6 @@
 /data
 config.bat
 node_modules
+
+# Local experiments, downloaded tools, provider logs and test artifacts
+/work/

@@ -1,3 +1,5 @@
+@import './indigo-web/indigo-web.css';
+@import './bill-reader.css';
 body {
     background-color: var(--tblr-bg-surface-secondary, #f6f8fb);
     color: var(--tblr-body-color, #182433);

@@ -4,6 +4,8 @@ framework:
     html_sanitizer:
         sanitizers:
             bill_text:
+                # Full legislative documents must not be silently truncated (default: 20 KB).
+                max_input_length: -1
                 allow_elements:
                     a: ['href', 'title']
                     b: '*'
@@ -17,6 +19,9 @@ framework:
                     p: '*'
                     span: '*'
                     strong: '*'
+                    s: '*'
+                    del: '*'
+                    ins: '*'
                     table: '*'
                     tbody: '*'
                     td: '*'

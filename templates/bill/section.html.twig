@@ -1,0 +1,11 @@
+{% extends '@SurvosTabler/layout/base.html.twig' %}
+{% block title %}{{ section.number|upper }} · {{ section.version }}{% endblock %}
+{% block content %}
+<div class="container-xl py-4">
+    <a href="{{ path('app_bill_show', {id: section.bill_id}) }}">← {{ section.number|upper }}</a>
+    <h1 class="mt-3">{{ section.number|upper }} · {{ section.version }}</h1>
+    <p>{{ section.year }} · {{ section.source_date|default('Date unavailable') }} · {{ section.status }} · {{ section.outcome }}</p>
+    <p><a href="{{ path('app_bill_chat', {year: section.year, bill: section.bill_id}) }}">Chat about this bill</a></p>
+    <twig:BillReader :html="section.html" :id="'section-' ~ section.id" />
+</div>
+{% endblock %}

@@ -1,4 +1,5 @@
-survos_elastic:
-    analysis:
-        language: english
-        ascii_folding: true
+when@prod:
+    survos_elastic:
+        analysis:
+            language: english
+            ascii_folding: true

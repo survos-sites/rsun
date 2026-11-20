@@ -1,0 +1,74 @@
+.bill-reader {
+    container-type: inline-size;
+    background: var(--tblr-bg-surface, white);
+    border: 1px solid var(--tblr-border-color, #ddd);
+    border-radius: .75rem;
+    margin-block: 1.5rem;
+    overflow-wrap: anywhere;
+}
+.bill-reader-toolbar { padding: 1.25rem clamp(1rem, 3cqi, 2.5rem); border-bottom: 1px solid var(--tblr-border-color, #ddd); }
+.bill-reader-toolbar h2 { margin: 0 0 .5rem; }
+.bill-reader-toolbar p { margin: 0; color: var(--tblr-secondary, #626976); font-size: .875rem; }
+.bill-reader-layout { display: grid; gap: 2rem; padding: clamp(1rem, 3cqi, 2.5rem); }
+.bill-reader-outline { font-size: .9rem; }
+.bill-reader-outline summary { font-weight: 700; cursor: pointer; }
+.bill-reader-outline ol { list-style: none; padding: 0; margin: 1rem 0 0; display: grid; gap: .8rem; }
+.bill-reader-outline a { text-decoration: none; }
+.bill-reader-outline a:hover { text-decoration: underline; }
+.bill-reader .bill-reader-text { min-width: 0; max-width: 76ch; width: 100%; margin-inline: auto; font-family: Georgia, 'Times New Roman', serif; font-size: clamp(1rem, 2cqi, 1.125rem); line-height: 1.8; }
+.bill-reader-text p { margin-block: 0 1.25em; }
+.bill-reader-text center { font-size: .9em; color: var(--tblr-secondary, #626976); margin-block: .5em; }
+.bill-reader-text .bill-section-heading { font-family: system-ui, sans-serif; font-size: 1.3em; line-height: 1.4; font-weight: 700; text-align: left; margin-block: 2.5rem 1.5rem; padding-block-start: 1.5rem; border-top: 2px solid var(--tblr-border-color, #ddd); scroll-margin-top: 5rem; }
+.bill-reader-text .bill-section-heading:target { background: var(--tblr-primary-lt, #eef4ff); }
+.bill-reader-text .bill-definition { padding-inline-start: 1rem; border-inline-start: 3px solid var(--tblr-border-color, #ddd); margin-block: 1.5rem; }
+.bill-reader-text .akn-def { font-weight: 700; }
+.bill-reader-text .bill-subsection { margin-block-start: 2rem; }
+.bill-reader-text .bill-subsection::first-letter { font-weight: 700; }
+.bill-reader-text .bill-numbered { margin-inline-start: 1.5rem; }
+.bill-reader :is(ins, .akn-ins) { background: #e1f3e8; color: #155d35; text-decoration: underline; text-decoration-thickness: 1px; }
+.bill-reader :is(s, del, .akn-del) { background: #fce8e8; color: #8c2929; text-decoration: line-through; }
+.bill-reader table { display: block; max-width: 100%; overflow-x: auto; }
+@container (min-width: 960px) {
+    .bill-reader-layout:has(.bill-reader-outline) { grid-template-columns: minmax(10rem, 15rem) minmax(0, 1fr); }
+    .bill-reader-outline { position: sticky; top: 2rem; align-self: start; }
+}
+@media print {
+    .bill-reader { border: 0; }
+    .bill-reader-outline { display: none; }
+    .bill-reader-layout { display: block; padding: 0; }
+    .bill-reader-text .bill-section-heading { break-after: avoid; }
+}
+/* Native top-layer panel: no permanent third column and no offcanvas dependency. */
+.bill-contents-panel {
+    position: fixed;
+    inset: 0 auto 0 0;
+    margin: 0;
+    width: min(25rem, 92vw);
+    height: 100dvh;
+    max-height: none;
+    padding: 1.5rem;
+    border: 0;
+    border-inline-end: 1px solid var(--tblr-border-color, #ddd);
+    background: var(--tblr-bg-surface, white);
+    color: var(--tblr-body-color, #182433);
+    box-shadow: .5rem 0 2rem #0002;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    font-family: system-ui, sans-serif;
+    translate: -100% 0;
+    transition: translate .2s ease, display .2s allow-discrete, overlay .2s allow-discrete;
+}
+.bill-contents-panel:popover-open { translate: 0 0; }
+@starting-style { .bill-contents-panel:popover-open { translate: -100% 0; } }
+.bill-contents-panel::backdrop { background: #0003; }
+.bill-contents-panel ol { list-style: none; padding: 0; }
+.bill-contents-sections > li { padding-block: 1rem; border-bottom: 1px solid var(--tblr-border-color, #ddd); }
+.bill-contents-panel summary { cursor: pointer; font-weight: 600; line-height: 1.5; }
+.bill-contents-panel details ol { padding-inline-start: 1rem; display: grid; gap: .6rem; }
+.bill-contents-panel a { display: block; padding-block: .2rem; text-decoration: none; }
+.bill-contents-panel a:hover { text-decoration: underline; }
+.bill-contents-section-start { margin-block: .75rem; font-size: .9rem; }
+.bill-reader-text [id] { scroll-margin-top: 5rem; }
+.bill-reader-text p:target { background: var(--tblr-primary-lt, #eef4ff); }
+@media (prefers-reduced-motion: reduce) { .bill-contents-panel { transition: none; } }
+@media print { .bill-reader-toolbar button, .bill-contents-panel { display: none; } }

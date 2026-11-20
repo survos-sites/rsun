@@ -1,7 +1,18 @@
 survos_search:
-    default_adapter: '%env(SEARCH_ADAPTER)%'
-    public_searches: [app_bill]
+    default_adapter: es
+    public_searches: [app_bill_pg, app_bill_es]
     index_prefix: '%env(SEARCH_INDEX_PREFIX)%'
     adapters:
+        pg_bm25: 'postgres-bm25://default'
         es: '%env(ELASTICSEARCH_DSN)%'
-        duckdb: 'duckdb://bills'
+
+when@dev:
+    survos_search:
+        default_adapter: pg_bm25
+
+when@test:
+    survos_search:
+        default_adapter: duckdb
+        adapters:
+            duckdb: 'duckdb://bills'
+        public_searches: [app_bill, app_bill_pg, app_bill_es]

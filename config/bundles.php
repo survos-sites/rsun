@@ -14,7 +14,7 @@ return [
     Symfony\Bundle\MonologBundle\MonologBundle::class => ['all' => true],
     Survos\JsonlBundle\SurvosJsonlBundle::class => ['all' => true],
     Survos\JsTwigBundle\SurvosJsTwigBundle::class => ['all' => true],
-    Survos\ElasticBundle\SurvosElasticBundle::class => ['all' => true],
+    Survos\ElasticBundle\SurvosElasticBundle::class => ['prod' => true],
     Survos\ImportBundle\SurvosImportBundle::class => ['all' => true],
     Survos\CodeBundle\SurvosCodeBundle::class => ['dev' => true, 'test' => true],
     Symfony\UX\TwigComponent\TwigComponentBundle::class => ['all' => true],
@@ -38,4 +38,6 @@ return [
     Survos\WorkflowExtrasBundle\SurvosWorkflowExtrasBundle::class => ['all' => true],
     Symfony\AI\AiBundle\AiBundle::class => ['all' => true],
     Symfony\AI\McpBundle\McpBundle::class => ['all' => true],
+    ApiPlatform\Symfony\Bundle\ApiPlatformBundle::class => ['all' => true],
+    Survos\AiChatBundle\SurvosAiChatBundle::class => ['all' => true],
 ];

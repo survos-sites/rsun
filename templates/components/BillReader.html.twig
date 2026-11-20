@@ -1,0 +1,34 @@
+<section {{ attributes.defaults({class: 'bill-reader'}) }} aria-label="Bill full text">
+    <header class="bill-reader-toolbar">
+        <div class="d-flex justify-content-between align-items-center gap-3">
+            <h2>Full text</h2>
+            {% if document.sections %}<button type="button" class="btn btn-outline-primary btn-sm" popovertarget="{{ document.id }}-contents">Contents</button>{% endif %}
+        </div>
+        <p>Changes in this version: <ins>added text</ins> <del>deleted text</del></p>
+    </header>
+    {% if document.sections %}
+        <nav id="{{ document.id }}-contents" popover class="bill-contents-panel" aria-label="Bill contents" data-controller="bill-contents" data-action="click->bill-contents#follow">
+            <div class="d-flex justify-content-between align-items-center gap-3 mb-3">
+                <h2 class="m-0">In this bill</h2>
+                <button type="button" class="btn btn-sm btn-outline-secondary" popovertarget="{{ document.id }}-contents" popovertargetaction="hide" aria-label="Close bill contents">Close</button>
+            </div>
+            <p class="text-secondary small">Choose a section or expand it to jump to a definition or subsection.</p>
+            <ol class="bill-contents-sections">{% for section in document.sections %}
+                <li>
+                    {% if section.children %}
+                        <details open>
+                            <summary>{{ section.title }} <span class="text-secondary">({{ section.children|length }})</span></summary>
+                            <a class="bill-contents-section-start" href="#{{ section.id }}">Start of section</a>
+                            <ol>{% for child in section.children %}
+                                <li><a href="#{{ child.id }}">{{ child.title }}</a></li>
+                            {% endfor %}</ol>
+                        </details>
+                    {% else %}<a href="#{{ section.id }}">{{ section.title }}</a>{% endif %}
+                </li>
+            {% endfor %}</ol>
+        </nav>
+    {% endif %}
+    <div class="bill-reader-layout">
+        <article class="akoma-ntoso bill-reader-text">{{ document.html|raw }}</article>
+    </div>
+</section>

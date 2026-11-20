@@ -4,12 +4,23 @@
 {% block content %}
 {% set sc = survos_stimulus('search-bundle', 'instantsearch') %}
 <div class="container-xl py-4" {{ stimulus_controller(sc, {
-    endpoint: path('survos_search_instant'),
+    endpoint: endpoint|default(path('survos_search_instant')),
     name: name,
     template: path('app_bill_search_template'),
     sorts: sorts
 }) }}>
     <h1>Search Virginia bills</h1>
+    <p><a class="btn btn-primary" href="{{ path('app_bill_chat') }}">Chat about 2026 bills</a></p>
+    {% if true %}
+        {% set current = app.request.query.all[name]|default({}) %}
+        <nav class="nav nav-pills mb-3" aria-label="Search backend" data-controller="bill-backend" data-bill-backend-name-value="{{ name }}" data-action="click->bill-backend#switch">
+            {% set engines = {postgres: 'app_bill_pg', es: 'app_bill_es'} %}
+            {% for engine, searchName in engines %}
+                <a data-search-name="{{ searchName }}" class="nav-link{{ name == searchName ? ' active' : '' }}" href="{{ path('app_bill_compare', {backend: engine}) }}?{{ {(searchName): current}|url_encode }}">{{ engine == 'es' ? 'Elasticsearch' : (engine == 'postgres' ? 'PostgreSQL' : 'DuckDB') }}</a>
+            {% endfor %}
+        </nav>
+        <p class="text-secondary">{{ backendLabel|default('DuckDB FTS / BM25') }}</p>
+    {% endif %}
     <p class="text-secondary">Search legislation by title, summary, full text, or patron.</p>
     <div class="mb-4" {{ stimulus_target(sc, 'query') }}></div>
     <div class="alert alert-danger" role="alert" hidden {{ stimulus_target(sc, 'error') }}></div>
@@ -32,6 +43,10 @@
                 <div aria-label="Sort results" {{ stimulus_target(sc, 'sort') }}></div>
             </div>
             <div class="mb-3" {{ stimulus_target(sc, 'current') }}></div>
+            <div class="py-5 text-center text-secondary" style="min-height:18rem" role="status" aria-live="polite" hidden {{ stimulus_target(sc, 'loading') }}>
+                <div class="spinner-border text-primary mb-3" aria-hidden="true"></div>
+                <div>Searching…</div>
+            </div>
             <div {{ stimulus_target(sc, 'hits') }}></div>
             <div class="mt-4" {{ stimulus_target(sc, 'pagination') }}></div>
         </main>

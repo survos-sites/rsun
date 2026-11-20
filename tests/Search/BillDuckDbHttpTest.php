@@ -10,7 +10,7 @@ use Symfony\Component\Filesystem\Filesystem;
 
 final class BillDuckDbHttpTest extends WebTestCase
 {
-    public function testExistingEndpointFacetsPaginationSortingAndDetailUseDuckDb(): void
+    public function testExperimentalSearchAndDoctrineDetail(): void
     {
         if (!extension_loaded('pdo_duckdb')) {
             self::markTestSkipped('Native DuckDB PDO required.');
@@ -56,9 +56,44 @@ final class BillDuckDbHttpTest extends WebTestCase
             self::assertCount(6, $request(['facets' => ['*']])['facets']);
             $client->request('GET', '/bills/search');
             self::assertResponseIsSuccessful();
+            foreach (['duckdb', 'postgres', 'es'] as $backend) {
+                $client->request('GET', '/bills/search/'.$backend);
+                self::assertResponseIsSuccessful();
+                self::assertSelectorExists('nav[aria-label="Search backend"]');
+            }
+            $client->jsonRequest('POST', '/bills/search/duckdb/query', ['requests' => [['indexName' => 'app_bill', 'params' => ['query' => 'hb1']]]]);
+            self::assertResponseIsSuccessful();
+            self::assertSame(1, json_decode($client->getResponse()->getContent(), true)['results'][0]['nbHits']);
+            foreach (['duckdb' => 'app_bill_es', 'postgres' => 'app_bill', 'es' => 'app_bill_pg'] as $backend => $wrongName) {
+                $client->jsonRequest('POST', '/bills/search/'.$backend.'/query', ['requests' => [['indexName' => $wrongName]]]);
+                self::assertResponseStatusCodeSame(400);
+            }
+            $client->request('GET', '/api/search/bills/duckdb?q=minimum%20wage&limit=1&filter[year]=2026');
+            self::assertResponseIsSuccessful();
+            $api = json_decode($client->getResponse()->getContent(), true, flags: JSON_THROW_ON_ERROR);
+            self::assertSame(2, $api['total']);
+            self::assertSame(1, $api['page']);
+            self::assertCount(1, $api['hits']);
+            self::assertStringContainsString('<mark>', $api['hits'][0]['_highlightResult']['catchLine']['value']);
+            self::assertSame(['house' => 1, 'senate' => 1], $api['facets']['chamber']);
+            $client->request('GET', '/api/search/bills/duckdb?q=minimum&filter[chamber][]=house&filter[chamber][]=senate&min[year]=2026');
+            self::assertResponseIsSuccessful();
+            self::assertSame(2, json_decode($client->getResponse()->getContent(), true)['total']);
+            foreach (['limit=101', 'page=0', 'q[]=bad', 'filter[unknown]=x', 'sort=bogus', 'backend=es', 'min[year]=oops'] as $invalid) {
+                $client->request('GET', '/api/search/bills/duckdb?'.$invalid);
+                self::assertContains($client->getResponse()->getStatusCode(), [400, 422], $invalid);
+            }
+            $bill = new \App\Entity\Bill();
+            $bill->id = 900001;
+            $bill->number = 'hb1';
+            $bill->year = 2026;
+            $bill->catchLine = 'Minimum wage increase';
+            $repository = $this->createStub(\App\Repository\BillRepository::class);
+            $repository->method('find')->willReturnCallback(static fn ($id) => 900001 === $id ? $bill : null);
+            self::getContainer()->set(\App\Repository\BillRepository::class, $repository);
             $client->request('GET', '/bills/900001');
             self::assertResponseIsSuccessful();
-            self::assertSelectorTextContains('h1', 'Minimum wage increase');
+            self::assertSelectorTextContains('h2.mb-0', 'Minimum wage increase');
             $client->request('GET', '/bills/999999');
             self::assertResponseStatusCodeSame(404);
             $client->request('GET', '/bills/duckdb');

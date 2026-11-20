@@ -7,7 +7,11 @@
             </a>
         </h2>
         {% set summary = hit.summary|striptags %}
-        <p>{{ summary|slice(0, 400)|e }}{% if summary|length > 400 %}…{% endif %}</p>
+        {% if hit._highlightResult.summary is defined %}
+            <p style="display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden">{{ hit._highlightResult.summary.value|raw }}</p>
+        {% else %}
+            <p>{{ summary|slice(0, 400)|e }}{% if summary|length > 400 %}…{% endif %}</p>
+        {% endif %}
         <div class="text-secondary">{{ hit.patronNameFormatted|e }}</div>
     </div>
     <footer class="card-footer d-flex justify-content-between gap-3">

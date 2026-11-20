@@ -13,8 +13,6 @@ cp .env .env.local
 # Edit .env.local to set:
 # - APP_SECRET
 # - DATABASE_URL
-# - ELASTICSEARCH_DSN (local default: elasticsearch://127.0.0.1:9200)
-# - SEARCH_INDEX_PREFIX (rsun_, unique to this app)
 
 # Database setup
 bin/console doctrine:migrations:migrate
@@ -23,7 +21,8 @@ bin/console doctrine:migrations:migrate
 bin/console cache:clear
 bin/console cache:warmup
 
-# Elasticsearch is populated after importing bills (see below).
+# Build local PostgreSQL full-text search after importing bills:
+bin/console app:postgres:build
 ```
 
 ## Loading Data
@@ -52,10 +51,14 @@ collision. The Castor task supplies this option automatically.
 
 ## Search
 
-Search uses `survos/search-bundle` with Elasticsearch, following the `packages` app.
-The browser queries `/instant-search`; only `app_bill` is public, and engine credentials
-stay on the server. Open `/bills/search` for text search, facets, and sorting.
+Local bill details and default search use PostgreSQL. The SearchBundle provides
+PostgreSQL full-text/BM25 and Elasticsearch comparison routes. DuckDB is no longer
+in the active application path. See [bill chat and retrieval](docs/bill-chat.md)
+for 2026 structure, embeddings, scoped chat, MCP and the Elasticsearch projection.
 
+### Existing production Elasticsearch setup
+
+The following commands apply to the existing production setup, not local DuckDB.
 After importing bills, build the index:
 
 ```bash
@@ -92,10 +95,33 @@ Data is imported from https://www.richmondsunlight.com/downloads/
 
 ## Local DuckDB experiment
 
-In dev/test, `/bills/search` uses SearchBundle’s native DuckDB adapter through the
-existing `/instant-search` endpoint. Production keeps its Elasticsearch configuration.
-The local bundle is linked with `php ../mono/link "$PWD"`; it must include the
-DuckDB adapter, `ftsConjunctive`, and explicit-search precedence changes.
-Build its immutable snapshot with `php bin/console app:duckdb:build` after downloading
-the source files. See [the experiment and measurements](docs/duckdb-experiment.md)
-for setup, version differences, benchmarking and current limitations.
+The DuckDB build command and tests remain available for experiments, but the
+application defaults to PostgreSQL and omits DuckDB from navigation and public
+local API routes. See [historical experiment notes](docs/duckdb-experiment.md).
+
+## Backend comparison and API
+
+PostgreSQL and Elasticsearch share the browser hit template and facets:
+
+| Page | POST endpoint | Named search |
+|---|---|---|
+| `/bills/search/postgres` | `/bills/search/postgres/query` | `app_bill_pg` |
+| `/bills/search/es` | `/bills/search/es/query` | `app_bill_es` |
+
+`/bills/search` defaults to PostgreSQL. Each endpoint rejects another backend's
+search name. Switching tabs carries query/filter state. Details always load from
+Doctrine. `app:postgres:build` builds `rsun_bill_search` directly from the Bill table,
+with English GIN full-text and pg_textsearch BM25 indexes; DuckDB is not required.
+
+API Platform exposes `/api/search/bills/postgres` and `/api/search/bills/es`, with
+`q`, `page`, `limit`, `filter`, `min`, `max` and `sort` parameters. `/api/docs` documents
+the envelopes. The optional SearchBundle API Platform bridge supplies the provider
+and DTO. DuckDB routes survive only in the test environment.
+
+The bill-list ES route uses the original `rsun_bill` index. Versioned section/vector
+retrieval has its own `rsun_bill_sections_YEAR` projection and is documented in
+[the chat guide](docs/bill-chat.md). These are separate indexes with different units:
+one record per bill versus one record per section chunk.
+
+Typing is debounced by 300 ms. Pending searches replace old hits with a centered
+spinner. Highlighting escapes source HTML and uses safe literal-term matches.

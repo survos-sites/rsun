@@ -7792,6 +7792,9 @@
                 },
                 "additionalProperties": false
             },
+            "api_platform": {
+                "$ref": "#/$defs/types/variable"
+            },
             "asset": {
                 "anyOf": [
                     {
@@ -17819,9 +17822,19 @@
             "survos_ez": {
                 "$ref": "#/$defs/types/object_null",
                 "properties": {
-                    "enabled": {
-                        "$ref": "#/$defs/types/boolean",
-                        "default": true
+                    "localePlacement": {
+                        "anyOf": [
+                            {
+                                "enum": [
+                                    "header",
+                                    "settings"
+                                ]
+                            },
+                            {
+                                "$ref": "#/$defs/types/param"
+                            }
+                        ],
+                        "default": "header"
                     }
                 },
                 "additionalProperties": false
@@ -21987,6 +22000,9 @@
         "ai": {
             "$ref": "#/$defs/nodes/ai"
         },
+        "api_platform": {
+            "$ref": "#/$defs/nodes/api_platform"
+        },
         "asset": {
             "$ref": "#/$defs/nodes/asset"
         },
@@ -22059,9 +22075,6 @@
         "survos_admin": {
             "$ref": "#/$defs/nodes/survos_admin"
         },
-        "survos_elastic": {
-            "$ref": "#/$defs/nodes/survos_elastic"
-        },
         "survos_ez": {
             "$ref": "#/$defs/nodes/survos_ez"
         },
@@ -22130,6 +22143,9 @@
             "properties": {
                 "ai": {
                     "$ref": "#/$defs/nodes/ai"
+                },
+                "api_platform": {
+                    "$ref": "#/$defs/nodes/api_platform"
                 },
                 "asset": {
                     "$ref": "#/$defs/nodes/asset"
@@ -22218,9 +22234,6 @@
                 "survos_deployment": {
                     "$ref": "#/$defs/nodes/survos_deployment"
                 },
-                "survos_elastic": {
-                    "$ref": "#/$defs/nodes/survos_elastic"
-                },
                 "survos_ez": {
                     "$ref": "#/$defs/nodes/survos_ez"
                 },
@@ -22290,11 +22303,167 @@
             },
             "additionalProperties": false
         },
+        "when@prod": {
+            "$ref": "#/$defs/types/object_null",
+            "properties": {
+                "ai": {
+                    "$ref": "#/$defs/nodes/ai"
+                },
+                "api_platform": {
+                    "$ref": "#/$defs/nodes/api_platform"
+                },
+                "asset": {
+                    "$ref": "#/$defs/nodes/asset"
+                },
+                "asset_mapper": {
+                    "$ref": "#/$defs/nodes/asset_mapper"
+                },
+                "cache": {
+                    "$ref": "#/$defs/nodes/cache"
+                },
+                "doctrine": {
+                    "$ref": "#/$defs/nodes/doctrine"
+                },
+                "doctrine_migrations": {
+                    "$ref": "#/$defs/nodes/doctrine_migrations"
+                },
+                "framework": {
+                    "$ref": "#/$defs/nodes/framework"
+                },
+                "html_sanitizer": {
+                    "$ref": "#/$defs/nodes/html_sanitizer"
+                },
+                "http_client": {
+                    "$ref": "#/$defs/nodes/http_client"
+                },
+                "imports": true,
+                "inspector": {
+                    "$ref": "#/$defs/nodes/inspector"
+                },
+                "knp_menu": {
+                    "$ref": "#/$defs/nodes/knp_menu"
+                },
+                "live_component": {
+                    "$ref": "#/$defs/nodes/live_component"
+                },
+                "lock": {
+                    "$ref": "#/$defs/nodes/lock"
+                },
+                "mailer": {
+                    "$ref": "#/$defs/nodes/mailer"
+                },
+                "mcp": {
+                    "$ref": "#/$defs/nodes/mcp"
+                },
+                "messenger": {
+                    "$ref": "#/$defs/nodes/messenger"
+                },
+                "monolog": {
+                    "$ref": "#/$defs/nodes/monolog"
+                },
+                "notifier": {
+                    "$ref": "#/$defs/nodes/notifier"
+                },
+                "parameters": true,
+                "property_access": {
+                    "$ref": "#/$defs/nodes/property_access"
+                },
+                "property_info": {
+                    "$ref": "#/$defs/nodes/property_info"
+                },
+                "router": {
+                    "$ref": "#/$defs/nodes/router"
+                },
+                "security": {
+                    "$ref": "#/$defs/nodes/security"
+                },
+                "serializer": {
+                    "$ref": "#/$defs/nodes/serializer"
+                },
+                "services": true,
+                "stimulus": {
+                    "$ref": "#/$defs/nodes/stimulus"
+                },
+                "survos_admin": {
+                    "$ref": "#/$defs/nodes/survos_admin"
+                },
+                "survos_elastic": {
+                    "$ref": "#/$defs/nodes/survos_elastic"
+                },
+                "survos_ez": {
+                    "$ref": "#/$defs/nodes/survos_ez"
+                },
+                "survos_field": {
+                    "$ref": "#/$defs/nodes/survos_field"
+                },
+                "survos_import": {
+                    "$ref": "#/$defs/nodes/survos_import"
+                },
+                "survos_js_twig": {
+                    "$ref": "#/$defs/nodes/survos_js_twig"
+                },
+                "survos_jsonl": {
+                    "$ref": "#/$defs/nodes/survos_jsonl"
+                },
+                "survos_kit": {
+                    "$ref": "#/$defs/nodes/survos_kit"
+                },
+                "survos_search": {
+                    "$ref": "#/$defs/nodes/survos_search"
+                },
+                "survos_tabler": {
+                    "$ref": "#/$defs/nodes/survos_tabler"
+                },
+                "survos_workflow_extras": {
+                    "$ref": "#/$defs/nodes/survos_workflow_extras"
+                },
+                "translation": {
+                    "$ref": "#/$defs/nodes/translation"
+                },
+                "turbo": {
+                    "$ref": "#/$defs/nodes/turbo"
+                },
+                "twig": {
+                    "$ref": "#/$defs/nodes/twig"
+                },
+                "twig_component": {
+                    "$ref": "#/$defs/nodes/twig_component"
+                },
+                "twig_extra": {
+                    "$ref": "#/$defs/nodes/twig_extra"
+                },
+                "type_info": {
+                    "$ref": "#/$defs/nodes/type_info"
+                },
+                "uid": {
+                    "$ref": "#/$defs/nodes/uid"
+                },
+                "ux_icons": {
+                    "$ref": "#/$defs/nodes/ux_icons"
+                },
+                "ux_router": {
+                    "$ref": "#/$defs/nodes/ux_router"
+                },
+                "validation": {
+                    "$ref": "#/$defs/nodes/validation"
+                },
+                "web_link": {
+                    "$ref": "#/$defs/nodes/web_link"
+                },
+                "workflow": {
+                    "$ref": "#/$defs/nodes/workflow"
+                }
+            },
+            "additionalProperties": false
+        },
         "when@test": {
             "$ref": "#/$defs/types/object_null",
             "properties": {
                 "ai": {
                     "$ref": "#/$defs/nodes/ai"
+                },
+                "api_platform": {
+                    "$ref": "#/$defs/nodes/api_platform"
                 },
                 "asset": {
                     "$ref": "#/$defs/nodes/asset"
@@ -22377,9 +22546,6 @@
                 "survos_deployment": {
                     "$ref": "#/$defs/nodes/survos_deployment"
                 },
-                "survos_elastic": {
-                    "$ref": "#/$defs/nodes/survos_elastic"
-                },
                 "survos_ez": {
                     "$ref": "#/$defs/nodes/survos_ez"
                 },
@@ -22457,6 +22623,9 @@
                 "ai": {
                     "$ref": "#/$defs/nodes/ai"
                 },
+                "api_platform": {
+                    "$ref": "#/$defs/nodes/api_platform"
+                },
                 "asset": {
                     "$ref": "#/$defs/nodes/asset"
                 },
@@ -22528,9 +22697,6 @@
                 },
                 "survos_admin": {
                     "$ref": "#/$defs/nodes/survos_admin"
-                },
-                "survos_elastic": {
-                    "$ref": "#/$defs/nodes/survos_elastic"
                 },
                 "survos_ez": {
                     "$ref": "#/$defs/nodes/survos_ez"

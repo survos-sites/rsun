@@ -1,1 +1,3 @@
-# MCP HTTP endpoints will be enabled when application tools are configured.
+mcp:
+    resource: .
+    type: mcp

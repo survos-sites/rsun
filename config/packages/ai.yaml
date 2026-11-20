@@ -1,9 +1,24 @@
 ai:
-    # see https://symfony.com/doc/current/ai/components/platform.html
     platform:
-
-    # see https://symfony.com/doc/current/ai/bundles/ai-bundle.html
+        gemini:
+            api_key: '%env(GEMINI_API_KEY)%'
     agent:
-
-    # see https://symfony.com/doc/current/ai/components/store.html
-    store:
+        bill_chat:
+            platform: 'ai.platform.gemini'
+            model: 'gemini-flash-lite-latest'
+            prompt:
+                file: '%kernel.project_dir%/config/prompts/bill-chat.md'
+            tools:
+                - service: 'App\Chat\Tool\FindBills'
+                  name: find_bills
+                  description: Search Virginia bill sections using concise terms or OR alternatives, restricted by year and optionally billId.
+                - service: 'App\Chat\Tool\ReadBillSection'
+                  name: read_bill_section
+                  description: Read a complete bill section and its source version, status and inline changes.
+                - service: 'App\Chat\Tool\ReadBill'
+                  name: read_bill
+                  description: Read the selected bill by numeric ID, with its summary, patron, full text, status and version references. Works for bills outside the 2026 section index.
+                - service: 'App\Chat\Tool\FindBillSummaries'
+                  name: find_bill_summaries
+                  description: Discover bills using their existing titles and summaries, with concise keywords or OR alternatives. Read the bill or sections before answering details.
+            max_tool_calls: 8

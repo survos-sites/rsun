@@ -16,6 +16,9 @@ final class BillSearchConfigurationTest extends KernelTestCase
     {
         self::bootKernel();
         $container = self::getContainer();
+        self::assertInstanceOf(DuckDbAdapter::class, $container->get(AdapterProvider::class)->getAdapter());
+        self::assertArrayNotHasKey('SurvosElasticBundle', self::$kernel->getBundles());
+        self::assertFalse($container->has('messenger.transport.elastic'));
         $search = $container->get(SearchProvider::class)->getSearch('app_bill')->create();
         self::assertInstanceOf(BillDuckDbSearch::class, $search);
         self::assertInstanceOf(DuckDbAdapter::class, $container->get(AdapterProvider::class)->getAdapter($search->getAdapterName()));

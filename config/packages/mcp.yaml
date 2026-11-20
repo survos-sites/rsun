@@ -1,2 +1,11 @@
 mcp:
-    servers: []
+    servers:
+        bills:
+            name: Clause and Effect
+            description: Retrieve Virginia bill sections with version-specific citations.
+            registry: 'App\Mcp\'
+            transports:
+                stdio: true
+            http:
+                path: /mcp
+                allowed_hosts: ['localhost', '127.0.0.1', 'rsun.wip']

@@ -1,0 +1,51 @@
+{% extends '@SurvosTabler/layout/base.html.twig' %}
+{% block title %}Clause & Effect · Bill chat{% endblock %}
+{% block content %}
+<div class="container-xl py-4" style="max-width: 960px">
+    <a href="{{ path('app_bill_search') }}">← Search bills</a>
+    <h1 class="mt-3">Clause & Effect</h1>
+    <p class="text-secondary">Explore Virginia bills, with citations to the text and version.</p>
+    {% if bill %}
+        <section class="card mb-4" aria-label="Bill context">
+            <div class="card-body">
+                <div class="subheader">{{ bill.year }} · {{ bill.number|upper }} · {{ bill.version }}</div>
+                <h2 class="mt-2">{{ bill.catchLine }}</h2>
+                <p><strong>Patron:</strong> {{ bill.patronNameFormatted|default('Not listed') }}</p>
+                {% if bill.copatron %}
+                    <details class="mb-3"><summary>Co-patrons ({{ bill.copatron|length }})</summary>
+                        <ul>{% for patron in bill.copatron %}<li>{{ patron.name_formatted|default(patron.shortname|default('Not listed')) }}</li>{% endfor %}</ul>
+                    </details>
+                {% endif %}
+                <p class="text-secondary">{{ bill.statusDetail|default(bill.status) }}{% if bill.outcome %} · {{ bill.outcome }}{% endif %}</p>
+                <div class="mb-3">{{ bill.summary|default('No summary available.')|sanitize_html('bill_text') }}</div>
+                <a class="btn btn-outline-primary btn-sm" href="{{ path('app_bill_show', {id: bill.id}) }}">Read full bill</a>
+                <a class="btn btn-link btn-sm" href="{{ path('app_bill_chat', {year: year}) }}">Chat about the whole session</a>
+            </div>
+        </section>
+        <p class="text-secondary">This conversation stays within {{ bill.number|upper }} ({{ year }}). Available source text is used; unavailable historical versions cannot be compared.</p>
+    {% else %}
+        <form method="get" class="d-flex gap-3 mb-4 align-items-end">
+            <label>Session<input class="form-control" name="year" type="number" min="2023" max="2026" value="{{ year }}"></label>
+            <button class="btn btn-outline-primary">Set scope</button>
+        </form>
+        <p>Scope: <strong>{{ year }} session</strong>. Semantic section search is currently indexed for 2026.</p>
+    {% endif %}
+    {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% endif %}
+    {% include '@SurvosAiChat/widget.html.twig' with {
+        resetAction: path('app_bill_chat_clear', {year: year, bill: billId}), resetToken: csrf_token(key ~ '_clear'),
+        messages: turns, action: path('app_bill_chat', {year: year, bill: billId}), token: csrf_token(key),
+        samples: bill ? [
+            {label: 'Explain this bill', question: 'Explain this bill and what it would change.'},
+            {label: 'Penalties and taxes', question: 'What penalties, taxes or fees does this bill establish or change?'},
+            {label: 'Changes in wording', question: 'Explain the additions and deletions marked in this version.'}
+        ] : [
+            {label: 'Smoking and minors', question: 'What do these bills say about penalties for smoking in a car with minors present?'},
+            {label: 'Loose tobacco tax', question: 'How would I calculate the tax on 10 pounds of loose leaf tobacco? What other details do you need?'},
+            {label: 'Minimum wage', question: 'What changes to the minimum wage appear in the 2026 bills?'}
+        ]
+    } %}
+    {% if sources %}<h2 class="mt-4">Cited sources</h2><ul>{% for source in sources %}
+        <li><a href="{{ source.citation }}">{{ source.number|upper }} · {{ source.version }} · {{ source.heading }}</a></li>
+    {% endfor %}</ul>{% endif %}
+</div>
+{% endblock %}

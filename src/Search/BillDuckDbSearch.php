@@ -10,11 +10,15 @@ use Survos\SearchBundle\Search\AbstractSearch;
 use Survos\SearchBundle\Twig\Components\Facet\RefinementList;
 use Symfony\Component\DependencyInjection\Attribute\When;
 
-#[When(env: 'dev')]
 #[When(env: 'test')]
 #[AsSearch(index: Bill::class, name: 'app_bill', adapter: 'duckdb')]
-final class BillDuckDbSearch extends AbstractSearch
+final class BillDuckDbSearch extends AbstractSearch implements \Survos\SearchBundle\Search\HighlightSearchInterface
 {
+    public function getHighlightFields(): array
+    {
+        return ['catchLine', 'summary'];
+    }
+
     public function build(array $options = []): void
     {
         $columns = [

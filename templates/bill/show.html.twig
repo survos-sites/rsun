@@ -28,6 +28,7 @@
                 </div>
                 <div class="col-auto ms-auto d-print-none">
                     <div class="btn-list">
+                        <a class="btn btn-primary" href="{{ path('app_bill_chat', {year: bill.year, bill: bill.id}) }}">Chat about this bill</a>
                         <a class="btn btn-outline-secondary" href="{{ path('app_bill_ux_search') }}">
                             {{ ux_icon('tabler:database-search', {height: '18px', width: '18px'}) }}
                             Search
@@ -62,14 +63,7 @@
                     </div>
 
                     {% if bill.fullText %}
-                        <div class="card mt-3">
-                            <div class="card-header">
-                                <h2 class="card-title">Full Text</h2>
-                            </div>
-                            <div class="card-body">
-                                <div class="text-body bill-text">{{ bill.fullText|sanitize_html('bill_text') }}</div>
-                            </div>
-                        </div>
+                        <twig:BillReader :html="bill.fullText" :id="'bill-' ~ bill.id" />
                     {% endif %}
                 </div>
 
