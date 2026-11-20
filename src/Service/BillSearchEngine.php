@@ -66,6 +66,27 @@ final readonly class BillSearchEngine
             'collapse'=>['field'=>'bill_id'], 'sort'=>[['_score'=>'desc'],['bill_id'=>'asc'],['record_type'=>'asc'],['position'=>'asc']],
             '_source'=>['excludes'=>['embedding','search_summary']], 'track_total_hits'=>false];
     }
+    /** Resolve incorporation against the same published generation as the search hits. */
+    public function resolveIncorporations(string $index, array $bills): array
+    {
+        $numbers = array_values(array_unique(array_filter(array_map(static fn ($bill) => $bill['incorporated_into']['number'] ?? null, $bills))));
+        if (!$numbers) return $bills;
+        $response = $this->client()->search(['index'=>$index, 'body'=>[
+            'size'=>count($numbers), 'query'=>['bool'=>['filter'=>[
+                ['term'=>['record_type'=>'bill']], ['terms'=>['number'=>$numbers]],
+            ]]], '_source'=>['bill_id','number','year','title','summary','status','outcome','patron','patron_party','version','citation'],
+        ]])->asArray();
+        $this->assertComplete($response);
+        $related = [];
+        foreach ($response['hits']['hits'] as $hit) $related[$hit['_source']['number']] = $hit['_source'];
+        foreach ($bills as &$bill) {
+            $target = $bill['incorporated_into']['number'] ?? null;
+            if ($target && isset($related[$target])) {
+                $bill['incorporated_into'] = $related[$target] + ['note'=>'Separate bill: read its final text. Do not assume every provision of the original survived.'];
+            }
+        }
+        return $bills;
+    }
     /** Enumerate composite buckets, not approximate cardinality or pre-collapse hit totals. */
     public function counts(string $index, array $query): array
     {

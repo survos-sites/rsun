@@ -14,9 +14,12 @@ use Symfony\Component\Routing\Attribute\Route;
 
 final class BillChatController extends AbstractController
 {
+    #[Route('/mobile', name: 'app_bill_chat_mobile', methods: ['GET', 'POST'])]
     #[Route('/bills/chat', name: 'app_bill_chat', methods: ['GET', 'POST'])]
     public function chat(Request $request, #[Autowire(service: 'ai.agent.bill_chat')] AgentInterface $agent, \App\Repository\BillRepository $bills, BillRetrieval $retrieval, \Psr\Log\LoggerInterface $logger): Response
     {
+        $mobile = $request->attributes->get('_route') === 'app_bill_chat_mobile';
+        $chatRoute = $mobile ? 'app_bill_chat_mobile' : 'app_bill_chat';
         $year = $request->query->getInt('year', 2026);
         $billId = max(0, $request->query->getInt('bill', 0));
         $bill = $billId ? ($bills->find($billId) ?? throw $this->createNotFoundException('Bill not found')) : null;
@@ -52,7 +55,7 @@ final class BillChatController extends AbstractController
                     $turns[] = ['role' => 'user', 'text' => $question];
                     $turns[] = ['role' => 'assistant', 'text' => $answer];
                     $session->set($key, array_slice($turns, -20));
-                    return $this->redirectToRoute('app_bill_chat', ['year' => $year, 'bill' => $billId]);
+                    return $this->redirectToRoute($chatRoute, ['year' => $year, 'bill' => $billId]);
                 } catch (\Throwable $exception) {
                     $error = 'The AI request could not be completed. Your question has not been added to the conversation.';
                     $logger->error('Bill chat failed', ['exception' => $exception]);
@@ -73,7 +76,7 @@ final class BillChatController extends AbstractController
                 if ($source) $sources[$source['citation']] = $source + ['heading' => $source['title']];
             }
         }
-        return $this->render('chat/bills.html.twig', compact('turns', 'year', 'billId', 'bill', 'key', 'error', 'sources'), new Response(headers: ['Cache-Control' => 'private, no-store']));
+        return $this->render($mobile ? 'chat/mobile.html.twig' : 'chat/bills.html.twig', compact('mobile', 'turns', 'year', 'billId', 'bill', 'key', 'error', 'sources'), new Response(headers: ['Cache-Control' => 'private, no-store']));
     }
 
     #[Route('/bills/chat/connect', name: 'app_bill_mcp_help', methods: ['GET'])]
@@ -93,7 +96,7 @@ final class BillChatController extends AbstractController
         }
         // This history is the sole conversation memory supplied to the stateless agent.
         $request->getSession()->remove($key);
-        return $this->redirectToRoute('app_bill_chat', ['year' => $year, 'bill' => $billId]);
+        return $this->redirectToRoute($request->query->getBoolean('mobile') ? 'app_bill_chat_mobile' : 'app_bill_chat', ['year' => $year, 'bill' => $billId]);
     }
 
     #[Route('/bills/sections/{id}', name: 'app_bill_section', requirements: ['id' => '[a-f0-9]{64}'], methods: ['GET'])]

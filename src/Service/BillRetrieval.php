@@ -89,6 +89,11 @@ final readonly class BillRetrieval
         if (!$bill) return [];
         $bill = BillSearchResult::metadata($bill);
         $bill['citation'] = '/bills/'.$id;
+        if ($target = $bill['incorporated_into'] ?? null) {
+            $related = $this->db->fetchAssociative('SELECT id AS bill_id,year,number,catch_line AS title,summary,status,outcome,patron_name_formatted AS patron,patron_party,version FROM bill WHERE year=? AND number=?', [$target['year'], $target['number']]);
+            if ($related) $bill['incorporated_into'] = $related + ['citation'=>'/bills/'.$related['bill_id'], 'note'=>'Read this separate bill before describing what was enacted; original provisions may have changed.'];
+        }
+
         $bill['sections'] = $this->db->fetchAllAssociative('SELECT s.id,s.heading,v.code AS version FROM bill_section s JOIN bill_version v ON v.id=s.version_id WHERE v.bill_id=? ORDER BY v.source_date,s.position', [$id]);
         $bill['version_references'] = json_decode($bill['version_references'] ?? '[]', true);
         $bill['versions'] = $this->db->fetchAllAssociative("SELECT code,source_date,source_url, (coalesce(source_html,'') <> '') AS text_available FROM bill_version WHERE bill_id=? ORDER BY source_date,code", [$id]);
@@ -166,7 +171,7 @@ final readonly class BillRetrieval
     private function scope(int $year, int $billId): array
     {
         $request = $this->requests->getCurrentRequest();
-        if ($request && 'app_bill_chat' === $request->attributes->get('_route')) {
+        if ($request && in_array($request->attributes->get('_route'), ['app_bill_chat', 'app_bill_chat_mobile'], true)) {
             return [$request->query->getInt('year', 2026), max(0, $request->query->getInt('bill', 0))];
         }
         return [$year, $billId];

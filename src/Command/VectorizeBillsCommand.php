@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 namespace App\Command;
-use App\Service\{BillChunker, BillEmbeddings};
+use App\Service\{BillChunker, BillEmbeddings, BillDiscoveryText};
 use Doctrine\DBAL\Connection;
 use Symfony\Component\Console\Attribute\{AsCommand, Option};
 use Symfony\Component\Console\Style\SymfonyStyle;
@@ -10,16 +10,17 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 #[AsCommand('app:bills:vectorize', 'Prepare and embed versioned bill section chunks, resuming completed work')]
 final readonly class VectorizeBillsCommand
 {
-    public function __construct(private Connection $db, private BillChunker $chunker, private BillEmbeddings $embeddings) {}
+    public function __construct(private Connection $db, private BillChunker $chunker, private BillEmbeddings $embeddings, private BillDiscoveryText $discovery) {}
     public function __invoke(SymfonyStyle $io,
         #[Option('Session year')] int $year = 2026,
         #[Option('Only prepare chunks without provider calls')] bool $prepareOnly = false,
         #[Option('Maximum new embeddings; 0 processes all')] int $limit = 0): int
     {
-        foreach ($this->db->iterateAssociative('SELECT s.id,s.heading,s.proposed_text,b.number,b.catch_line,v.code FROM bill_section s JOIN bill_version v ON v.id=s.version_id JOIN bill b ON b.id=v.bill_id WHERE b.year=?', [$year]) as $s) {
+        foreach ($this->db->iterateAssociative('SELECT s.id,s.heading,s.html,s.proposed_text,b.number,b.catch_line,v.code FROM bill_section s JOIN bill_version v ON v.id=s.version_id JOIN bill b ON b.id=v.bill_id WHERE b.year=?', [$year]) as $s) {
             $prefix = $s['number'].' · '.$s['code'].' · '.$s['catch_line']."\n".$s['heading']."\n\n";
             $prefix = mb_strcut($prefix, 0, 1500, 'UTF-8');
-            $chunks = $this->chunker->split($s['proposed_text'], 4500);
+            $chunks = $this->chunker->split($this->discovery->fromSection($s['html'], $s['heading'], $s['proposed_text']), 4500);
+            $chunks = array_values(array_filter($chunks, static fn ($body) => '' !== trim($body)));
             foreach ($chunks as $position => $body) {
                 $text = $prefix.$body;
                 $embeddingId = $this->embeddings->register($text);

@@ -17,3 +17,30 @@ body {
 .bill-chat-answer th, .bill-chat-answer td { padding: .5rem .75rem; border: 1px solid var(--tblr-border-color, #ddd); }
 .bill-chat-answer pre { overflow-x: auto; }
 .bill-chat > section[aria-label="Conversation"] small.text-secondary { display: none; }
+
+.mobile-bills { height:100dvh; display:flex; flex-direction:column; margin:0; background:#f6f8fb; font-size:16px; }
+.mobile-header { padding:calc(12px + env(safe-area-inset-top)) 18px 12px; display:flex; align-items:center; justify-content:space-between; background:#fff; border-bottom:1px solid #dce3eb; gap:12px; }
+.mobile-brand { color:#126dcc; font-size:24px; font-weight:750; text-decoration:none; }
+.mobile-brand span { display:block; color:#526173; font-size:12px; font-weight:400; }
+.mobile-settings summary { cursor:pointer; padding:12px 0; }
+.mobile-settings > div { position:absolute; z-index:10; right:12px; top:80px; padding:20px; background:#fff; border:1px solid #dce3eb; box-shadow:0 8px 30px #17253626; border-radius:14px; width:min(310px,90vw); }
+.mobile-history { flex:1; min-height:0; overflow-y:auto; overscroll-behavior:contain; padding:24px 16px; width:100%; max-width:800px; margin:auto; }
+.mobile-intro h1 { font-size:clamp(28px,5vw,40px); line-height:1.15; margin:14px 0; color:#172536; }
+.mobile-intro p,.mobile-note { color:#526173; line-height:1.6; }
+.mobile-message { background:#fff; border:1px solid #dce3eb; border-radius:16px; padding:18px; margin:16px 0; }
+.mobile-message--user { background:#e7f0fc; margin-left:24px; }
+.mobile-message .bill-chat-answer { line-height:1.6; }
+.mobile-context h1 { font-size:24px; }
+.mobile-composer { background:#fff; border-top:1px solid #dce3eb; padding:12px 16px 6px; width:100%; flex-shrink:0; }
+.mobile-composer > section,.mobile-hint { max-width:768px; margin:auto; }
+.mobile-composer textarea { font-size:16px; min-height:54px; height:64px; resize:vertical; max-height:140px; }
+.mobile-composer label { font-size:13px; }
+.mobile-composer .btn { min-height:44px; }
+.mobile-composer small { display:none; }
+.mobile-composer [aria-label="Sample questions"] { gap:6px!important; margin:6px 0!important; }
+.mobile-composer [aria-label="Sample questions"]:empty { display:none!important; }
+.mobile-hint { font-size:11px; color:#526173; padding-top:6px; }
+.mobile-note { font-size:13px; margin-top:24px; }
+.mobile-nav { display:flex; justify-content:space-around; padding:4px 8px calc(4px + env(safe-area-inset-bottom)); background:#fff; border-top:1px solid #dce3eb; flex-shrink:0; }
+.mobile-nav a { padding:12px 8px; font-weight:600; text-decoration:none; }
+@media (max-height:650px) { .mobile-header { padding-top:8px; padding-bottom:8px; } .mobile-brand span,.mobile-hint { display:none; } .mobile-history { padding-top:12px; } }

@@ -15,6 +15,7 @@ final class BillSearchApiTest extends WebTestCase
 {
     private array $bodies = [];
     private bool $partial = false;
+    private bool $incorporated = false;
     private function installEngine(): void
     {
         $db = $this->createStub(Connection::class);
@@ -37,9 +38,11 @@ final class BillSearchApiTest extends WebTestCase
                 ]]]];
             } elseif (isset($body['aggs']['embedded'])) {
                 $response = ['hits'=>['total'=>['value'=>3,'relation'=>'eq']], 'aggregations'=>['embedded'=>['doc_count'=>2]]];
+            } elseif (isset($body['query']['bool']['filter'][1]['terms']['number'])) {
+                $response = ['hits'=>['hits'=>[['_source'=>['bill_id'=>3,'number'=>'hb508','year'=>2026,'title'=>'Agrivoltaics','status'=>'signed by governor','outcome'=>'passed','citation'=>'/bills/3']]]]];
             } elseif (isset($body['collapse'])) {
                 $response = ['hits'=>['total'=>['value'=>52,'relation'=>'eq'], 'hits'=>[
-                    ['_index'=>'generation','_id'=>'chunk-1','_score'=>3.5,'_source'=>['bill_id'=>1,'title'=>'Youth opportunities','text'=>'A provision about children.','citation'=>'/bills/sections/abc','patron'=>'Example','patron_party'=>'D']],
+                    ['_index'=>'generation','_id'=>'chunk-1','_score'=>3.5,'_source'=>['bill_id'=>1,'title'=>'Youth opportunities','text'=>'A provision about children.','citation'=>'/bills/sections/abc','patron'=>'Example','patron_party'=>'D','incorporated_into'=>$this->incorporated ? ['number'=>'hb508','year'=>2026] : null]],
                 ]]];
             }
             if ($this->partial && isset($body['aggs']['bills'])) $response['timed_out'] = true;
@@ -89,6 +92,17 @@ final class BillSearchApiTest extends WebTestCase
         $count = json_decode($client->getResponse()->getContent(), true)['result'];
         self::assertFalse($count['isError'] ?? false, json_encode($count));
         self::assertSame($http['total'], $count['structuredContent']['total']);
+    }
+    public function testIncorporationIncludesDestinationOutcomeWithoutChangingCounts(): void
+    {
+        $this->incorporated = true;
+        $client = self::createClient(); $this->installEngine();
+        $client->request('GET', '/api/bills/search?query=solar&mode=fulltext');
+        self::assertResponseIsSuccessful();
+        $data = json_decode($client->getResponse()->getContent(), true);
+        self::assertSame(2, $data['total']);
+        self::assertSame('passed', $data['bills'][0]['incorporated_into']['outcome']);
+        self::assertSame('/bills/3', $data['bills'][0]['incorporated_into']['citation']);
     }
     public function testInvalidArgumentsDoNotReachSearch(): void
     {

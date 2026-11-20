@@ -39,7 +39,7 @@ final readonly class BillSearchProvider implements ProviderInterface
             $input->$key = $value;
         }
         $request = $this->requests->getCurrentRequest();
-        if ($request && $request->attributes->get('_route') === 'app_bill_chat') {
+        if ($request && in_array($request->attributes->get('_route'), ['app_bill_chat', 'app_bill_chat_mobile'], true)) {
             $input->year = $request->query->getInt('year', 2026);
             $input->billId = max(0, $request->query->getInt('bill', 0));
         }
@@ -57,7 +57,7 @@ final readonly class BillSearchProvider implements ProviderInterface
         $result->coverage = $this->engine->coverage($index);
         $provider = new CollectionProvider($this->engine->client(), new BillHitDenormalizer(), new Pagination(), [new BillSearchExtension()]);
         $items = $provider->provide(new GetCollection(class: BillSearchInput::class, stateOptions: new Options(index: $index), paginationItemsPerPage: $input->limit), context: ['bill_search_body' => $body, 'bill_query' => $input->query]);
-        $result->bills = iterator_to_array($items, false);
+        $result->bills = $this->engine->resolveIncorporations($index, iterator_to_array($items, false));
         $result->returnedCount = count($result->bills);
         $result->hasMore = $input->offset + $result->returnedCount < $result->total;
         return $result;
