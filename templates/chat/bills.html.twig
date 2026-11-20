@@ -1,10 +1,10 @@
 {% extends '@SurvosTabler/layout/base.html.twig' %}
-{% block title %}Clause & Effect · Bill chat{% endblock %}
+{% block title %}VA Bills · Bill chat{% endblock %}
 {% block content %}
-<div class="container-xl py-4" style="max-width: 960px">
+<div class="container-xl py-4 bill-chat" style="max-width: 960px" data-controller="bill-chat" data-action="keydown->bill-chat#keydown">
     <a href="{{ path('app_bill_search') }}">← Search bills</a>
-    <h1 class="mt-3">Clause & Effect</h1>
-    <p class="text-secondary">Explore Virginia bills, with citations to the text and version.</p>
+    <h1 class="mt-3">VA Bills</h1>
+    <p class="text-secondary">Explore Virginia bills, with citations to the text and version. <a href="{{ path('app_bill_mcp_help') }}">Connect your own AI agent</a></p>
     {% if bill %}
         <section class="card mb-4" aria-label="Bill context">
             <div class="card-body">
@@ -31,9 +31,24 @@
         <p>Scope: <strong>{{ year }} session</strong>. Semantic section search is currently indexed for 2026.</p>
     {% endif %}
     {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% endif %}
+    <section aria-label="Conversation" class="bill-chat-history">
+        {% for message in turns %}
+            <article class="card mb-3 bill-chat-message bill-chat-message--{{ message.role == 'assistant' ? 'assistant' : 'user' }}">
+                <div class="card-body">
+                    <div class="subheader mb-2">{{ message.role == 'assistant' ? 'VA Bills' : 'You' }}</div>
+                    {% if message.role == 'assistant' %}
+                        <div class="bill-chat-answer">{{ message.text|chat_markdown }}</div>
+                    {% else %}
+                        <div class="bill-chat-question">{{ message.text }}</div>
+                    {% endif %}
+                </div>
+            </article>
+        {% endfor %}
+    </section>
+    <p class="text-secondary mb-2">Choose a suggested question, or write your own. <strong>Enter</strong> to send · <strong>Shift+Enter</strong> for a new line.</p>
     {% include '@SurvosAiChat/widget.html.twig' with {
         resetAction: path('app_bill_chat_clear', {year: year, bill: billId}), resetToken: csrf_token(key ~ '_clear'),
-        messages: turns, action: path('app_bill_chat', {year: year, bill: billId}), token: csrf_token(key),
+        messages: [], action: path('app_bill_chat', {year: year, bill: billId}), token: csrf_token(key),
         samples: bill ? [
             {label: 'Explain this bill', question: 'Explain this bill and what it would change.'},
             {label: 'Penalties and taxes', question: 'What penalties, taxes or fees does this bill establish or change?'},
@@ -41,7 +56,10 @@
         ] : [
             {label: 'Smoking and minors', question: 'What do these bills say about penalties for smoking in a car with minors present?'},
             {label: 'Loose tobacco tax', question: 'How would I calculate the tax on 10 pounds of loose leaf tobacco? What other details do you need?'},
-            {label: 'Minimum wage', question: 'What changes to the minimum wage appear in the 2026 bills?'}
+            {label: 'Minimum wage', question: 'What changes to the minimum wage appear in the ' ~ year ~ ' bills?'},
+            {label: 'Tobacco taxes', question: 'Which bills in this session propose changing tobacco taxes? Distinguish failed proposals from enacted bills and cite the provisions.'},
+            {label: 'School funding', question: 'Which bills in this session address school funding, and what do they propose?'},
+            {label: 'Housing', question: 'Which bills in this session address housing affordability? Summarize the proposals and their status.'}
         ]
     } %}
     {% if sources %}<h2 class="mt-4">Cited sources</h2><ul>{% for source in sources %}

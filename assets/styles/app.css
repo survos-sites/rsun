@@ -4,3 +4,16 @@ body {
     background-color: var(--tblr-bg-surface-secondary, #f6f8fb);
     color: var(--tblr-body-color, #182433);
 }
+
+.bill-chat-message--user { background: var(--tblr-bg-surface-secondary, #f6f8fb); }
+.bill-chat-question { white-space: pre-wrap; }
+.bill-chat-answer { line-height: 1.75; overflow-wrap: anywhere; }
+.bill-chat-answer > :last-child { margin-bottom: 0; }
+.bill-chat-answer p, .bill-chat-answer ul, .bill-chat-answer ol { margin-bottom: 1rem; }
+.bill-chat-answer li + li { margin-top: .65rem; }
+.bill-chat-answer h1, .bill-chat-answer h2, .bill-chat-answer h3 { margin-top: 1.5rem; font-size: 1.2rem; }
+.bill-chat-answer a { text-decoration: underline; text-underline-offset: .18em; }
+.bill-chat-answer table { display: block; overflow-x: auto; border-collapse: collapse; }
+.bill-chat-answer th, .bill-chat-answer td { padding: .5rem .75rem; border: 1px solid var(--tblr-border-color, #ddd); }
+.bill-chat-answer pre { overflow-x: auto; }
+.bill-chat > section[aria-label="Conversation"] small.text-secondary { display: none; }

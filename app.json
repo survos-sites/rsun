@@ -1,6 +1,6 @@
 {
-    "name": "rsun",
-    "description": "Richmond Sunshine Search",
+    "name": "VA Bills",
+    "description": "Search and discuss Virginia legislation with cited sources and MCP access",
     "keywords": [
         "php",
         "symfony"
@@ -8,21 +8,11 @@
     "repository": "https://github.com/survos-sites/rsun",
     "scripts": {
         "dokku": {
-            "predeploy": "bin/console importmap:install && bin/console asset-map:compile && bin/console  secrets:decrypt-to-local --force && bin/console doctrine:migrations:migrate -n --allow-no-migration",
+            "predeploy": "bin/console importmap:install && bin/console asset-map:compile && bin/console doctrine:migrations:migrate -n --allow-no-migration",
             "postdeploy": "bin/console about"
         }
     },
-    "env": {
-        "SECRET_TOKEN": {
-            "description": "A secret key for verifying the integrity of signed cookies.",
-            "value": "secret"
-        }
-    },
     "image": "gliderlabs/herokuish",
-    "addons": [
-        "dokku-postgres",
-        "dokku-redis"
-    ],
     "buildpacks": [
         {
             "url": "https://github.com/heroku/heroku-buildpack-php.git"

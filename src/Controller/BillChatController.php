@@ -76,6 +76,12 @@ final class BillChatController extends AbstractController
         return $this->render('chat/bills.html.twig', compact('turns', 'year', 'billId', 'bill', 'key', 'error', 'sources'), new Response(headers: ['Cache-Control' => 'private, no-store']));
     }
 
+    #[Route('/bills/chat/connect', name: 'app_bill_mcp_help', methods: ['GET'])]
+    public function mcpHelp(): Response
+    {
+        return $this->render('chat/connect.html.twig');
+    }
+
     #[Route('/bills/chat/clear', name: 'app_bill_chat_clear', methods: ['POST'])]
     public function clear(Request $request): Response
     {

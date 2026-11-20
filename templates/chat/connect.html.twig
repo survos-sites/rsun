@@ -1,0 +1,71 @@
+{% extends '@SurvosTabler/layout/base.html.twig' %}
+{% block title %}Connect your agent · VA Bills{% endblock %}
+{% block content %}
+<div class="container-xl py-4" style="max-width: 860px">
+    <a href="{{ path('app_bill_chat') }}">← Bill chat</a>
+    <h1 class="mt-3">Connect your own AI agent</h1>
+    <p class="lead">Use VA Bills’s bill sources from an agent that supports the Model Context Protocol (MCP).</p>
+    <p>Search Virginia legislation and read the cited bill text from your own AI assistant. The public connector is read-only and requires no VA Bills account.</p>
+    <section class="card mb-3"><div class="card-body">
+        <h2>Connect by URL</h2>
+        <p>In your agent’s MCP settings, add a server named <strong>VA Bills</strong>. Choose <strong>Streamable HTTP</strong> and enter:</p>
+        <pre><code>https://vabills.org/mcp</code></pre>
+        <p>Choose <strong>No authentication</strong> (or <strong>No sign in</strong>). Your AI provider may require a supported plan or workspace administrator approval.</p>
+    </div></section>
+    <section class="card mb-3"><div class="card-body">
+        <h2>Connect in Claude</h2>
+        <p><a class="btn btn-outline-primary" href="https://claude.ai/customize/connectors" target="_blank" rel="noopener">Open Claude connectors ↗</a></p>
+        <ol>
+            <li>Open <strong>Customize → Connectors</strong>, then <strong>+ Add → Add custom connector</strong>.</li>
+            <li>Name it <strong>VA Bills</strong> and paste <code>https://vabills.org/mcp</code>.</li>
+            <li>Continue, choose <strong>No sign in</strong>, and finish adding it.</li>
+            <li>In a chat, open <strong>+ → Connectors</strong> and enable VA Bills.</li>
+        </ol>
+        <p class="mb-0">Team accounts may need an owner to add it first. <a href="https://support.claude.com/en/articles/11175166-get-started-with-custom-connectors-using-remote-mcp">Claude’s setup guide</a>.</p>
+    </div></section>
+    <section class="card mb-3"><div class="card-body">
+        <h2>Connect in ChatGPT</h2>
+        <p><a class="btn btn-outline-primary" href="https://chatgpt.com/plugins" target="_blank" rel="noopener">Open ChatGPT plugins ↗</a></p>
+        <ol>
+            <li>Select <strong>+ → Add custom MCP server</strong>.</li>
+            <li>Name it <strong>VA Bills</strong>, set the server URL to <code>https://vabills.org/mcp</code>, and choose <strong>No authentication</strong>.</li>
+            <li>Review the permissions, create the plugin, and install it.</li>
+            <li>In a new chat, type <strong>@</strong> and select <strong>VA Bills</strong>.</li>
+        </ol>
+        <p class="mb-0">Your workspace may restrict custom servers. Labels can vary by account. <a href="https://developers.openai.com/api/docs/guides/custom-mcp-server">ChatGPT’s setup guide</a>.</p>
+    </div></section>
+    <section class="card mb-3"><div class="card-body">
+        <h2>For developers: connect through a local checkout</h2>
+        <p>For agents supporting stdio servers, use this configuration. Replace the console path with your RSun checkout and use the absolute path to PHP if your desktop app cannot find it.</p>
+        <pre><code>{
+  "mcpServers": {
+    "va-bills": {
+      "command": "php",
+      "args": [
+        "/absolute/path/to/rsun/bin/console",
+        "mcp:server",
+        "bills",
+        "--no-debug",
+        "--no-interaction"
+      ]
+    }
+  }
+}</code></pre>
+        <p>The app reads its existing local database and AI configuration. You do not need to paste its provider keys into your agent. The agent uses its own model to answer; semantic searches may use the app’s embedding provider.</p>
+    </div></section>
+    <section class="card mb-3"><div class="card-body">
+        <h2>What your agent can do</h2>
+        <dl>
+            <dt><code>find_bills</code></dt><dd>Search sections with full-text and semantic retrieval. Supply <code>year</code> and optionally <code>billId</code>; semantic indexing currently covers 2026.</dd>
+            <dt><code>find_bill_summaries</code></dt><dd>Find bills by title or summary in an imported session.</dd>
+            <dt><code>read_bill</code></dt><dd>Read a bill by numeric <code>id</code>, including its sponsor, status, source text and version references.</dd>
+            <dt><code>read_bill_section</code></dt><dd>Read a specific section by its returned <code>id</code>, including proposed wording and marked changes.</dd>
+        </dl>
+        <p>These tools read bill sources; they do not modify legislation data. Unlike the website’s bill chat, an external agent must pass the desired session and bill scope itself.</p>
+        <h3>Try this prompt</h3>
+        <blockquote class="border-start ps-3">Use VA Bills to find 2026 bills proposing changes to tobacco taxes. Read the relevant sections, distinguish proposed changes from enacted law, and cite the returned sources. Don’t infer that no other bills exist from ranked search results.</blockquote>
+        <p>For a quick connection check, ask your agent to call <code>read_bill</code> with <code>id: 83553</code>. It should return 2026 HB1, version CHAP0350.</p>
+        <p class="text-secondary mb-0">Sources return site-relative citation links. Resolve them against <code>https://vabills.org</code>. Historical version references may have no available body; a reference alone cannot support a comparison.</p>
+    </div></section>
+</div>
+{% endblock %}

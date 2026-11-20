@@ -4,8 +4,8 @@ survos_tabler:
     # <title> was already correct -- that comes from the template, not from here.
     app:
         code: rsun
-        title: 'Richmond Sunlight'
+        title: 'VA Bills'
         description: 'Virginia legislation, imported from Richmond Sunlight'
         # The <b> is the convention the default uses: the second half renders bold in the navbar.
-        abbr: 'Richmond<b>Sunlight</b>'
+        abbr: 'VA <b>Bills</b>'
         homepage_route: app_homepage
