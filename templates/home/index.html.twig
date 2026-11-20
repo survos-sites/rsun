@@ -1,6 +1,6 @@
 {% extends '@SurvosTabler/layout/base.html.twig' %}
 
-{% block title %}Richmond Sunlight{% endblock %}
+{% block title %}VA Bills{% endblock %}
 
 {% block content %}
     <div class="page-header d-print-none mb-3">
@@ -8,15 +8,18 @@
             <div class="row g-2 align-items-center">
                 <div class="col">
                     <div class="page-pretitle">Virginia Legislation</div>
-                    <h1 class="page-title">Richmond Sunlight</h1>
+                    <h1 class="page-title">VA Bills</h1>
                 </div>
                 <div class="col-auto ms-auto d-print-none">
                     <div class="btn-list">
+                        <a class="btn btn-primary" href="{{ path('app_bill_search') }}">
+                            {{ ux_icon('tabler:search', {height: '18px', width: '18px'}) }} Search bills
+                        </a>
+                        <a class="btn btn-outline-primary" href="{{ path('app_bill_chat') }}">
+                            {{ ux_icon('tabler:message-circle', {height: '18px', width: '18px'}) }} Ask about bills
+                        </a>
                         <a class="btn btn-outline-primary" href="{{ path('survos_admin_dashboard') }}">
                             {{ ux_icon('tabler:layout-dashboard', {height: '18px', width: '18px'}) }} Admin
-                        </a>
-                        <a class="btn btn-outline-secondary" href="{{ path('survos_elastic_admin_index') }}">
-                            {{ ux_icon('tabler:external-link', {height: '18px', width: '18px'}) }} Search indexes
                         </a>
                     </div>
                 </div>
