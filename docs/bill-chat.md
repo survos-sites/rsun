@@ -112,3 +112,41 @@ Connect at `https://vabills.org/mcp` without authentication. The setup page at
 `APP_PUBLIC_URL` controls the origin shown there. Allowed hosts and browser origins
 are explicit in `config/packages/mcp.yaml`; ChatGPT and Claude are allowed, while
 unrelated browser origins remain rejected.
+
+## MCP feedback improvements (local, 2026-11-20)
+
+Both search tools accept `limit` (1–50), `offset` (0–200), `outcome`
+(passed/failed/vetoed/incorporated), exact `status`, `chamber` (house/senate),
+and a case-insensitive literal `patron` substring. The existing year/bill scope
+still applies before ranking. Invalid bounds and enum filters are rejected.
+
+Summary discovery remains weighted PostgreSQL keyword search, prioritizing titles.
+Exact topic queries vaping/vape/e-cigarettes expand to statutory aliases; tobacco
+adds nicotine/cigarette/cigar. Arbitrary OR queries retain their syntax. An ATF
+agency name in a summary alone no longer makes that bill a tobacco-topic match.
+This is a focused alias pass, not summary embeddings or a general synonym engine.
+
+Section retrieval still fuses BM25 and embeddings, first selecting the best chunk
+per section for each method (500 candidates each), then grouping Code headings
+within the year. Pagination is after grouping. Results retain a representative
+section and at most eight separate bill/version references, with candidate counts
+and a truncation flag. These are not exhaustive session counts. Different versions
+are never asserted to have identical text. Excerpts are at most 480 characters
+plus ellipses; use read_bill_section for the complete text.
+
+MCP outcomes normalize vetoes/incorporations while preserving archive_outcome.
+incorporated_into is derived from explicit archive summary/history evidence.
+SB826 points to SB542. The raw archive itself calls SB630's patron “Del.” and
+assigns house as her chamber; this is not a parser-added prefix. Tool responses
+flag the mismatch without guessing or overwriting source data.
+
+Budget line items are not separately indexed. Both tool descriptions and the
+site-agent prompt now state that limitation. No additional budget corpus or
+summary embeddings are claimed by this change.
+
+Reproduction against the local 2026 archive: vaping and e-cigarettes each discover
+HB1449, SB789 and SB712; the broad tobacco/nicotine/vapor/cigarette/hemp query
+excludes HB907 and SB704. Tested summary and grouped-section pagination, outcome
+plus chamber filters, patron matching, incorporation extraction and existing
+retrieval/scope smoke checks. Changes require deployment before public clients
+see the revised tool schema; reconnect/refresh tools afterward.
