@@ -27,7 +27,7 @@ final class BillElasticProjection
     {
         if (mb_strlen($query)>500) throw new \InvalidArgumentException('Search query too long');
         if (''===trim($query)) return [];
-        $filter=[['term'=>['year'=>$year]]];
+        $filter=[['term'=>['year'=>$year]], ['exists'=>['field'=>'section_id']]];
         if($billId) $filter[]=['term'=>['bill_id'=>$billId]];
         $base=['index'=>$this->alias($year), 'size'=>50, '_source_excludes'=>['embedding']];
         $lex=$this->client()->search($base+['body'=>['query'=>['bool'=>['filter'=>$filter,'must'=>[['match'=>['text'=>['query'=>$query,'operator'=>'and']]]]]]]])->asArray();

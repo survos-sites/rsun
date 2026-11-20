@@ -11,14 +11,14 @@ final readonly class BillRetrieval
     public function __construct(private Connection $db, private \Symfony\Component\HttpFoundation\RequestStack $requests, private BillEmbeddings $embeddings) {}
 
     public function find(string $query, int $year = 2026, int $billId = 0, int $limit = 10, int $offset = 0,
-        ?string $outcome = null, ?string $status = null, ?string $chamber = null, ?string $patron = null): array
+        ?string $outcome = null, ?string $status = null, ?string $chamber = null, ?string $patron = null, ?string $party = null): array
     {
         [$year, $billId] = $this->scope($year, $billId);
         self::validate($query, $limit, $offset);
         if ('' === trim($query)) return [];
-        [$where, $params] = self::filters($year, $billId, $outcome, $status, $chamber, $patron);
+        [$where, $params] = self::filters($year, $billId, $outcome, $status, $chamber, $patron, $party);
         $fields = "s.id, b.id AS bill_id, b.number, b.year, b.catch_line AS title, b.status, b.outcome,
-            b.chamber, b.patron_chamber, b.patron_name_formatted AS patron, b.summary, b.status_history,
+            b.chamber, b.patron_chamber, b.patron_name_formatted AS patron, b.patron_party, b.patron_district, b.date_introduced, b.summary, b.status_history,
             v.code AS version, v.source_date, s.heading, c.text AS excerpt,
             '/bills/sections/' || s.id AS citation";
         $joins = ' FROM rsun_ai_chunk c JOIN bill_section s ON s.id=c.section_id
@@ -30,16 +30,19 @@ final readonly class BillRetrieval
             " WHERE $where AND c.search_vector @@ websearch_to_tsquery('english', ?)
             ORDER BY s.id, search_rank, c.id) hits ORDER BY search_rank, id LIMIT 500",
             [$terms, ...$params, $terms]);
-        $vector = $this->embeddings->query('task: search result | query: '.$query);
-        $semantic = $this->db->fetchAllAssociative("SELECT * FROM (SELECT DISTINCT ON (s.id) ".$fields.
-            ", e.embedding <=> ?::vector AS search_rank".$joins.
-            " JOIN rsun_ai_embedding e ON e.id=c.embedding_id
-            WHERE $where AND e.status='complete' AND e.model=?
-            ORDER BY s.id, search_rank, c.id) hits ORDER BY search_rank, id LIMIT 500",
-            [$vector, ...$params, BillEmbeddings::MODEL]);
+        $semantic = [];
+        if ($this->hasEmbeddings($year, $billId)) {
+            $vector = $this->embeddings->query('task: search result | query: '.$query);
+            $semantic = $this->db->fetchAllAssociative("SELECT * FROM (SELECT DISTINCT ON (s.id) ".$fields.
+                ", e.embedding <=> ?::vector AS search_rank".$joins.
+                " JOIN rsun_ai_embedding e ON e.id=c.embedding_id
+                WHERE $where AND e.status='complete' AND e.model=?
+                ORDER BY s.id, search_rank, c.id) hits ORDER BY search_rank, id LIMIT 500",
+                [$vector, ...$params, BillEmbeddings::MODEL]);
+        }
         $hits = self::fuseAll($lexical, $semantic);
         foreach ($hits as &$hit) unset($hit['search_rank']);
-        return array_slice(BillSearchResult::group($hits, $query), $offset, $limit);
+        return array_slice(BillSearchResult::prioritize(BillSearchResult::group($hits, $query), $query), $offset, $limit);
     }
 
     /** Rank fusion counts a section once per retrieval method, not once per chunk. */
@@ -69,7 +72,7 @@ final readonly class BillRetrieval
     {
         [$year, $billId] = $this->scope(0, 0);
         $section = $this->db->fetchAssociative("SELECT s.*, b.id AS bill_id, b.number, b.year, b.status, b.outcome,
-            b.chamber, b.patron_chamber, b.patron_name_formatted AS patron, b.summary, b.status_history,
+            b.chamber, b.patron_chamber, b.patron_name_formatted AS patron, b.patron_party, b.patron_district, b.date_introduced, b.summary, b.status_history,
             v.code AS version, v.source_date, v.source_url, '/bills/sections/' || s.id AS citation
             FROM bill_section s JOIN bill_version v ON v.id=s.version_id JOIN bill b ON b.id=v.bill_id WHERE s.id=? AND (?=0 OR b.year=?) AND (?=0 OR b.id=?)", [$id, $year, $year, $billId, $billId]) ?: [];
         if (!$section) return [];
@@ -81,37 +84,51 @@ final readonly class BillRetrieval
     {
         [$year, $scopeId] = $this->scope(0, 0);
         $bill = $this->db->fetchAssociative("SELECT id,year,number,catch_line AS title,summary,patron_name_formatted AS patron,
-            status,outcome,chamber,patron_chamber,status_history,version,text AS version_references,full_text FROM bill
+            status,outcome,chamber,patron_chamber,patron_party,patron_district,date_introduced,status_history,version,text AS version_references,full_text FROM bill
             WHERE id=? AND (?=0 OR year=?) AND (?=0 OR id=?)", [$id,$year,$year,$scopeId,$scopeId]);
         if (!$bill) return [];
         $bill = BillSearchResult::metadata($bill);
         $bill['citation'] = '/bills/'.$id;
         $bill['sections'] = $this->db->fetchAllAssociative('SELECT s.id,s.heading,v.code AS version FROM bill_section s JOIN bill_version v ON v.id=s.version_id WHERE v.bill_id=? ORDER BY v.source_date,s.position', [$id]);
         $bill['version_references'] = json_decode($bill['version_references'] ?? '[]', true);
+        $bill['versions'] = $this->db->fetchAllAssociative("SELECT code,source_date,source_url, (coalesce(source_html,'') <> '') AS text_available FROM bill_version WHERE bill_id=? ORDER BY source_date,code", [$id]);
+        $bill = BillSearchResult::coverage($bill);
         $bill['full_text_truncated'] = strlen($bill['full_text'] ?? '') > 100000;
         $bill['full_text'] = mb_strcut($bill['full_text'] ?? '', 0, 100000, 'UTF-8');
         return $bill;
     }
 
     public function summaries(string $query, int $year = 2026, int $billId = 0, int $limit = 20, int $offset = 0,
-        ?string $outcome = null, ?string $status = null, ?string $chamber = null, ?string $patron = null): array
+        ?string $outcome = null, ?string $status = null, ?string $chamber = null, ?string $patron = null, ?string $party = null): array
     {
         [$year, $billId] = $this->scope($year, $billId);
         self::validate($query, $limit, $offset);
         if ('' === trim($query)) return [];
-        [$where, $params] = self::filters($year, $billId, $outcome, $status, $chamber, $patron);
+        [$where, $params] = self::filters($year, $billId, $outcome, $status, $chamber, $patron, $party);
         $query = BillSearchResult::query($query);
-        // Search titles preferentially; an agency name alone is not a tobacco topic.
-        $document = "setweight(to_tsvector('english',concat_ws(' ',b.number,b.catch_line)), 'A') ||
-            setweight(to_tsvector('english',regexp_replace(regexp_replace(coalesce(b.summary,''), '<[^>]*>', ' ', 'g'),
-            'Bureau of Alcohol, Tobacco, Firearms( and Explosives)?', '', 'gi')), 'B')";
+        $document = self::summaryDocument();
         $rows = $this->db->fetchAllAssociative("SELECT b.id,b.year,b.number,b.catch_line AS title,b.summary,
-            b.patron_name_formatted AS patron,b.patron_chamber,b.chamber,b.status,b.outcome,b.status_history,
+            b.patron_name_formatted AS patron,b.patron_chamber,b.patron_party,b.patron_district,b.date_introduced,b.chamber,b.status,b.outcome,b.status_history,
             b.version,'/bills/' || b.id AS citation FROM bill b
             WHERE $where AND ($document) @@ websearch_to_tsquery('english',?)
             ORDER BY ts_rank_cd(($document),websearch_to_tsquery('english',?)) DESC,b.id LIMIT $limit OFFSET $offset",
             [...$params,$query,$query]);
         return array_map(BillSearchResult::metadata(...), $rows);
+    }
+
+    private static function summaryDocument(): string
+    {
+        // Avoid treating the ATF agency name alone as a tobacco-topic match.
+        return "setweight(to_tsvector('english',concat_ws(' ',b.number,b.catch_line)), 'A') ||
+            setweight(to_tsvector('english',regexp_replace(regexp_replace(coalesce(b.summary,''), '<[^>]*>', ' ', 'g'),
+            'Bureau of Alcohol, Tobacco, Firearms( and Explosives)?', '', 'gi')), 'B')";
+    }
+
+    private function hasEmbeddings(int $year, int $billId): bool
+    {
+        return (bool) $this->db->fetchOne("SELECT 1 FROM rsun_ai_chunk c JOIN rsun_ai_embedding e ON e.id=c.embedding_id
+            JOIN bill_section s ON s.id=c.section_id JOIN bill_version v ON v.id=s.version_id JOIN bill b ON b.id=v.bill_id
+            WHERE b.year=? AND (?=0 OR b.id=?) AND e.status='complete' AND e.model=? LIMIT 1", [$year,$billId,$billId,BillEmbeddings::MODEL]);
     }
 
     private static function validate(string $query, int $limit, int $offset): void
@@ -122,7 +139,7 @@ final readonly class BillRetrieval
         }
     }
 
-    private static function filters(int $year, int $billId, ?string $outcome, ?string $status, ?string $chamber, ?string $patron): array
+    private static function filters(int $year, int $billId, ?string $outcome, ?string $status, ?string $chamber, ?string $patron, ?string $party): array
     {
         $where = 'b.year=? AND (?=0 OR b.id=?)';
         $params = [$year,$billId,$billId];
@@ -138,6 +155,10 @@ final readonly class BillRetrieval
         }
         if (null !== $patron) {
             $where .= " AND strpos(lower(coalesce(b.patron_name_formatted,'')),lower(?))>0"; $params[] = $patron;
+        }
+        if (null !== $party) {
+            if (!in_array($party, ['D','R','I'], true)) throw new \InvalidArgumentException('Party must be D, R or I.');
+            $where .= ' AND b.patron_party=?'; $params[] = $party;
         }
         return [$where,$params];
     }

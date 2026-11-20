@@ -1,4 +1,6 @@
 api_platform:
+    mcp:
+        enabled: true
     mapping:
         paths: ['%kernel.project_dir%/src/ApiResource']
     title: RSun Search API

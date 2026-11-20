@@ -11,6 +11,9 @@ final class BillSearchResult
     {
         return match (mb_strtolower(trim($query))) {
             'vaping', 'vape', 'vapes', 'e-cigarette', 'e-cigarettes', 'electronic cigarettes' => 'vaping OR "vape pen" OR "nicotine vapor" OR "electronic cigarette"',
+            'youth', 'young people', 'children', 'minors' => 'youth OR child OR minor OR juvenile OR adolescent',
+            'guns', 'gun', 'firearms' => 'gun OR firearm OR handgun OR ammunition',
+            'immigration' => 'immigration OR immigrant OR alien OR "federal immigration enforcement"',
             'tobacco' => 'tobacco OR nicotine OR cigarette OR cigar',
             default => $query,
         };
@@ -58,6 +61,40 @@ final class BillSearchResult
         return $row;
     }
 
+    public static function coverage(array $bill): array
+    {
+        $hasText = '' !== trim($bill['full_text'] ?? '');
+        $current = strtoupper($bill['version'] ?? '');
+        $available = [];
+        foreach ($bill['versions'] ?? [] as $version) {
+            if (filter_var($version['text_available'], FILTER_VALIDATE_BOOLEAN)) $available[] = strtoupper($version['code']);
+        }
+        foreach ($bill['version_references'] as &$reference) {
+            $reference['text_available'] = in_array(strtoupper($reference['number'] ?? ''), $available, true) || ($hasText && strtoupper($reference['number'] ?? '') === $current);
+            $reference['body_association'] = $reference['text_available'] ? (strtoupper($reference['number'] ?? '') === $current ? 'archive-reported-current-version' : 'stored-version-body') : 'metadata-only';
+        }
+        unset($reference);
+        $bill['text_coverage'] = ['current_archive_text_available'=>$hasText,
+            'historical_version_bodies_available'=>(bool) array_diff($available, [$current]), 'separate_amendment_documents_available'=>false,
+            'note'=>'Inline additions/deletions describe changes to existing law. They are not a complete amendment or version history.'];
+        return $bill;
+    }
+
+    /** Retain definition evidence but reduce its dominance for general topic searches. */
+    public static function prioritize(array $groups, string $query): array
+    {
+        $definitionQuery = (bool) preg_match('/\b(defin\w*|meaning|means)\b/i', $query);
+        foreach ($groups as $rank => &$group) {
+            $group['section_kind'] = preg_match('/\bdefinitions?\b/i', $group['heading']) ? 'definitions' : 'provision';
+            $group['_priority'] = (!$definitionQuery && 'definitions' === $group['section_kind'] ? 0.35 : 1) / (1 + $rank);
+            $group['_rank'] = $rank;
+        }
+        unset($group);
+        usort($groups, static fn ($a, $b) => ($b['_priority'] <=> $a['_priority']) ?: ($a['_rank'] <=> $b['_rank']));
+        foreach ($groups as &$group) unset($group['_priority'], $group['_rank']);
+        return $groups;
+    }
+
     /** Group Code headings for navigation, never treat different bill versions as identical text. */
     public static function group(array $hits, string $query): array
     {
@@ -68,7 +105,7 @@ final class BillSearchResult
             unset($hit['summary']);
             $key = preg_match('/^§\s*([\d.]+-[\d.:]+)/u', $hit['heading'], $m) ? $hit['year'].':'.$m[1] : $hit['id'];
             $groups[$key] ??= $hit + ['matching_bills' => []];
-            $groups[$key]['matching_bills'][] = array_intersect_key($hit, array_flip(['id','bill_id','number','year','version','status','outcome','archive_outcome','incorporated_into','citation','data_quality_notes']));
+            $groups[$key]['matching_bills'][] = array_intersect_key($hit, array_flip(['id','bill_id','number','year','title','patron','patron_party','patron_district','date_introduced','version','status','outcome','archive_outcome','incorporated_into','citation','data_quality_notes']));
         }
         foreach ($groups as &$group) {
             $group['matching_bill_count'] = count(array_unique(array_column($group['matching_bills'], 'bill_id')));

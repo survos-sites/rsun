@@ -10,14 +10,13 @@ use Mcp\Schema\ToolAnnotations;
 
 final readonly class BillTools
 {
-    public function __construct(private BillRetrieval $search) {}
+    public function __construct(private BillRetrieval $search, private \App\State\BillSearchProvider $api) {}
 
-    /** Hybrid BM25 + semantic section search (2026 indexed). Use natural language. Code sections are grouped with distinct bill/version citations and short excerpts; read_bill_section returns complete text. limit 1–50, offset 0–200 page a bounded ranked candidate pool, not an exhaustive inventory. Optional outcome (passed, failed, vetoed, incorporated), exact status, chamber (house/senate), patron substring filters. Budget line items are not separately indexed; no hits does not mean no budget provision. Results are evidence, not current law. */
-    #[McpTool(name: 'find_bills', annotations: new ToolAnnotations(readOnlyHint: true, openWorldHint: false))]
+    /** Delegate site chat to the same provider as the API Platform find_bills MCP operation. */
     public function find(string $query, int $year = 2026, int $billId = 0, int $limit = 10, int $offset = 0,
-        ?string $outcome = null, ?string $status = null, ?string $chamber = null, ?string $patron = null): array
+        ?string $outcome = null, ?string $status = null, ?string $chamber = null, ?string $patron = null, ?string $party = null, string $mode = 'hybrid', float $minimumSimilarity = 0.65): array
     {
-        return $this->search->find($query, $year, $billId, $limit, $offset, $outcome, $status, $chamber, $patron);
+        return get_object_vars($this->api->search(compact('query','year','billId','limit','offset','outcome','status','chamber','patron','party','mode','minimumSimilarity')));
     }
 
     /** Read the complete section returned by find_bills, including marked additions/deletions. */
@@ -32,11 +31,18 @@ final readonly class BillTools
     {
         return $this->search->bill($id);
     }
-    /** Title-weighted keyword discovery over bill titles and summaries, with aliases for vaping/e-cigarettes and tobacco. OR combines alternatives; this is not embedding search. Use find_bills for semantic section search. limit 1–50, offset 0–200; optional outcome (passed, failed, vetoed, incorporated), exact status, chamber (house/senate), patron substring. Budget line items are not separately indexed. Read the cited bill before answering details. */
+    /** Title-weighted keyword discovery over bill titles and summaries, with aliases for vaping, tobacco, youth, guns and immigration. OR combines alternatives; this is not embedding search. Use find_bills for semantic section search. limit 1–50, offset 0–9950; optional outcome (passed, failed, vetoed, incorporated), exact status, chamber (house/senate), party (D/R/I), patron substring. Budget line items are not separately indexed. Read the cited bill before answering details. */
     #[McpTool(name: 'find_bill_summaries', annotations: new ToolAnnotations(readOnlyHint: true, openWorldHint: false))]
     public function summaries(string $query, int $year = 2026, int $billId = 0, int $limit = 20, int $offset = 0,
-        ?string $outcome = null, ?string $status = null, ?string $chamber = null, ?string $patron = null): array
+        ?string $outcome = null, ?string $status = null, ?string $chamber = null, ?string $patron = null, ?string $party = null): array
     {
-        return $this->search->summaries($query, $year, $billId, $limit, $offset, $outcome, $status, $chamber, $patron);
+        return get_object_vars($this->api->search(compact('query','year','billId','limit','offset','outcome','status','chamber','patron','party') + ['mode'=>'summaries']));
+    }
+    /** Exact distinct bill counts and outcome/chamber/party facets from the canonical API search. Same filters and modes as find_bills: hybrid (default, keyword OR cosine threshold), fulltext, summaries. Empty query counts all filtered catalog bills. Counts apply to the indexed snapshot and query, not an exhaustive legal topic inventory. */
+    #[McpTool(name: 'count_bills', annotations: new ToolAnnotations(readOnlyHint: true, openWorldHint: false))]
+    public function counts(string $query = '', int $year = 2026, int $billId = 0,
+        ?string $outcome = null, ?string $status = null, ?string $chamber = null, ?string $patron = null, ?string $party = null, string $mode = 'hybrid', float $minimumSimilarity = 0.65): array
+    {
+        return get_object_vars($this->api->search(compact('query','year','billId','outcome','status','chamber','patron','party','mode','minimumSimilarity') + ['limit'=>1]));
     }
 }

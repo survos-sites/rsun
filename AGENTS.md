@@ -468,3 +468,19 @@ final class ExampleCommand
 - Explicit defaults for all options
 
 If any of these rules are violated, the command must be rewritten before merging.
+
+## API Platform, MCP and grouped search
+
+- Canonical bill retrieval is `App\State\BillSearchProvider`; HTTP, MCP and site
+  chat must call it. Do not add independent MCP SQL/ES search or count logic.
+- Use API Platform MCP resource metadata for new search tools. Reuse the provider
+  in process for existing tool compatibility; do not call our own HTTP endpoint.
+- Search/count/facets must use identical query semantics and scope filters. Preserve
+  the selected chat session and bill scope even if model arguments differ.
+- Counts declare their unit and basis. Collapsed ES hits still count chunks;
+  cardinality is approximate; vector top-k length is not a corpus total.
+- Return separate total, returnedCount and coverage. Test multiple chunks per bill,
+  bills without embeddings, pagination, filters, and HTTP/MCP parity.
+- See `docs/api-search.md` before changing retrieval or projecting search data.
+  Generic grouped-search/count behavior belongs in search-bundle when extracted;
+  bill citations, version semantics and topic aliases remain app-specific.

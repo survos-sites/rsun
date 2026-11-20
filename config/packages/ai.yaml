@@ -11,7 +11,7 @@ ai:
             tools:
                 - service: 'App\Chat\Tool\FindBills'
                   name: find_bills
-                  description: Hybrid BM25 and semantic section search. Natural-language queries; grouped Code sections with short excerpts and separate bill/version citations. Pagination limit 1–50, offset 0–200 over a bounded candidate pool. Filters outcome, status, chamber, patron. Budget line items are not separately indexed. Read complete evidence with read_bill_section.
+                  description: Canonical API Platform keyword and semantic search. One result per bill with title, sponsor, passage and citation. Exact distinct-bill totals for the query; semantic matching uses a cosine threshold of 0.65. Pagination limit 1–50, offset 0–9950. Filters outcome, status, chamber, patron and party (D/R/I). Budget line items are not separately indexed. Read complete evidence with read_bill_section.
                 - service: 'App\Chat\Tool\ReadBillSection'
                   name: read_bill_section
                   description: Read a complete bill section and its source version, status and inline changes.
@@ -20,5 +20,8 @@ ai:
                   description: Read the selected bill by numeric ID, with its summary, patron, full text, status and version references. Works for bills outside the 2026 section index.
                 - service: 'App\Chat\Tool\FindBillSummaries'
                   name: find_bill_summaries
-                  description: Title-weighted keyword search with vaping/e-cigarette and tobacco aliases; OR alternatives supported. Not embedding search; use find_bills for semantic retrieval. Pagination and outcome/status/chamber/patron filters supported. Budget line items are not separately indexed. Read cited evidence before answering.
+                  description: Title-weighted keyword search with vaping, tobacco, youth, guns and immigration aliases; OR alternatives supported. Not embedding search; use find_bills for semantic retrieval. Pagination and outcome/status/chamber/patron/party filters supported. Budget line items are not separately indexed. Read cited evidence before answering.
+                - service: 'App\Chat\Tool\CountBills'
+                  name: count_bills
+                  description: Exact distinct-bill counts and facets from the same API Platform search as find_bills. Modes hybrid (default, keywords OR cosine threshold), fulltext, summaries. Empty query counts the filtered published catalog. Includes index coverage. Not an exhaustive legal topic inventory.
             max_tool_calls: 8
