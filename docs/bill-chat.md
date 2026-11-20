@@ -1,7 +1,8 @@
 # Bill chat and retrieval
 
 Work stays in RSun until a second consumer justifies extracting a library.
-The production app uses `https://rsun.survos.com`; the VABills.org DNS switch is deferred.
+The public site is `https://vabills.org`. The previous rsun.survos.com hostname
+remains available for existing MCP connections.
 The active stack is PostgreSQL, Symfony AI,
 and the shared `survos/ai-chat-bundle`; DuckDB is retained only as an experiment.
 
@@ -106,7 +107,7 @@ the archive remain unavailable; 258 imported 2026 bills lack full-text bodies.
 
 ## Public connection
 
-Connect at `https://rsun.survos.com/mcp` without authentication. The setup page at
+Connect at `https://vabills.org/mcp` without authentication. The setup page at
 `/bills/chat/connect` links to the current Claude and ChatGPT connection screens.
 `APP_PUBLIC_URL` controls the origin shown there. Allowed hosts and browser origins
 are explicit in `config/packages/mcp.yaml`; ChatGPT and Claude are allowed, while
