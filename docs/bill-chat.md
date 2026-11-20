@@ -1,7 +1,8 @@
 # Bill chat and retrieval
 
 Work stays in RSun until a second consumer justifies extracting a library.
-Production deployment is paused. The active local stack is PostgreSQL, Symfony AI,
+The production app uses `https://rsun.survos.com`; the VABills.org DNS switch is deferred.
+The active stack is PostgreSQL, Symfony AI,
 and the shared `survos/ai-chat-bundle`; DuckDB is retained only as an experiment.
 
 ## Data and evidence
@@ -102,3 +103,11 @@ HTTP chat checks covered 2023 SB992 and 2026 HB1, including their metadata and s
 answers. Session-wide loose-tobacco questions do not have sufficient retrieved
 rate evidence for a supported calculation. Historical version bodies absent from
 the archive remain unavailable; 258 imported 2026 bills lack full-text bodies.
+
+## Public connection
+
+Connect at `https://rsun.survos.com/mcp` without authentication. The setup page at
+`/bills/chat/connect` links to the current Claude and ChatGPT connection screens.
+`APP_PUBLIC_URL` controls the origin shown there. Allowed hosts and browser origins
+are explicit in `config/packages/mcp.yaml`; ChatGPT and Claude are allowed, while
+unrelated browser origins remain rejected.
