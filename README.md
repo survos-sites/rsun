@@ -89,3 +89,10 @@ bin/console lint:container
 ## Data Source
 
 Data is imported from https://www.richmondsunlight.com/downloads/
+
+## Local DuckDB experiment
+
+A separate native-PDO full-text search prototype is available at `/bills/duckdb`.
+Build its immutable snapshot with `php bin/console app:duckdb:build` after downloading
+the source files. See [the experiment and measurements](docs/duckdb-experiment.md)
+for setup, version differences, benchmarking and current limitations.

@@ -1,0 +1,44 @@
+[
+  {
+    "query": "minimum wage",
+    "run": 1,
+    "httpMs": 1232.26,
+    "searchMs": 1137.0,
+    "openMs": 24.62
+  },
+  {
+    "query": "minimum wage",
+    "run": 2,
+    "httpMs": 1274.95,
+    "searchMs": 1218.53,
+    "openMs": 19.36
+  },
+  {
+    "query": "minimum wage",
+    "run": 3,
+    "httpMs": 1144.1,
+    "searchMs": 1089.74,
+    "openMs": 11.79
+  },
+  {
+    "query": "solar energy",
+    "run": 1,
+    "httpMs": 767.15,
+    "searchMs": 710.62,
+    "openMs": 11.77
+  },
+  {
+    "query": "solar energy",
+    "run": 2,
+    "httpMs": 751.43,
+    "searchMs": 694.58,
+    "openMs": 12.54
+  },
+  {
+    "query": "solar energy",
+    "run": 3,
+    "httpMs": 751.81,
+    "searchMs": 671.02,
+    "openMs": 12.32
+  }
+]

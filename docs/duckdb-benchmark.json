@@ -1,0 +1,230 @@
+{
+    "snapshot": {
+        "file": "bills-20261120-131740-5a10d12c-compact.duckdb",
+        "builtAt": "2026-11-20T13:17:58+00:00",
+        "engine": "v1.5.6",
+        "sourceRows": 14093,
+        "bills": 14084,
+        "versions": 32242,
+        "years": [
+            {
+                "year": 2023,
+                "count": 3029
+            },
+            {
+                "year": 2024,
+                "count": 3595
+            },
+            {
+                "year": 2025,
+                "count": 3512
+            },
+            {
+                "year": 2026,
+                "count": 3948
+            }
+        ],
+        "importSeconds": 4.217,
+        "buildSeconds": 19.742,
+        "sources": [
+            {
+                "file": "2023.jsonl",
+                "sha256": "8bf268a693bf22c31e002069697cf40fb2f84b3a50a175996a934da0382bdc14"
+            },
+            {
+                "file": "2024.jsonl",
+                "sha256": "5a2cf93be4ec26ba98ffd20fa0115a72dd9f3e958661cdfd4f60c59e36d4cdbe"
+            },
+            {
+                "file": "2025.jsonl",
+                "sha256": "99fba7792ca307ab4a4f4811d93671be41b8d89a746310a0f32676c5e23d930c"
+            },
+            {
+                "file": "2026.jsonl",
+                "sha256": "a532f1eab3b79567986b5cbea9c823aebdd9da34c422c415b29b82a8226d7537"
+            }
+        ],
+        "bytes": 516435968
+    },
+    "method": "One warmup + five measured sequential runs; median; 24 hits; 2026 filter; persistent DuckDB connection; Elasticsearch gateway includes facets, highlights and larger payloads. This compares current implementations, not equivalent engine workloads.",
+    "queries": [
+        {
+            "query": "",
+            "year": 2026,
+            "duckdbTotal": 3948,
+            "esTotal": 3948,
+            "duckdbMedianMs": 1.39,
+            "esMedianMs": 16.11,
+            "top10Overlap": 10,
+            "duckdbTop10": [
+                83553,
+                83554,
+                83555,
+                83556,
+                83557,
+                83558,
+                83559,
+                83560,
+                83561,
+                83562
+            ],
+            "esTop10": [
+                83553,
+                83554,
+                83555,
+                83556,
+                83557,
+                83558,
+                83559,
+                83560,
+                83561,
+                83562
+            ]
+        },
+        {
+            "query": "minimum wage",
+            "year": 2026,
+            "duckdbTotal": 98,
+            "esTotal": 103,
+            "duckdbMedianMs": 84.22,
+            "esMedianMs": 55.36,
+            "top10Overlap": 10,
+            "duckdbTop10": [
+                83553,
+                83565,
+                84793,
+                85039,
+                85660,
+                83674,
+                83899,
+                83987,
+                83965,
+                85693
+            ],
+            "esTop10": [
+                83553,
+                83565,
+                83674,
+                83899,
+                84793,
+                85039,
+                85660,
+                85693,
+                83965,
+                83987
+            ]
+        },
+        {
+            "query": "school funding",
+            "year": 2026,
+            "duckdbTotal": 395,
+            "esTotal": 430,
+            "duckdbMedianMs": 62.85,
+            "esMedianMs": 42.64,
+            "top10Overlap": 3,
+            "duckdbTop10": [
+                84592,
+                83631,
+                84356,
+                84588,
+                85894,
+                83868,
+                83595,
+                83918,
+                83750,
+                84183
+            ],
+            "esTop10": [
+                83631,
+                84356,
+                85894,
+                85045,
+                85107,
+                85794,
+                84558,
+                84240,
+                84670,
+                85002
+            ]
+        },
+        {
+            "query": "abortion",
+            "year": 2026,
+            "duckdbTotal": 30,
+            "esTotal": 462,
+            "duckdbMedianMs": 28.96,
+            "esMedianMs": 54.49,
+            "top10Overlap": 10,
+            "duckdbTop10": [
+                84372,
+                84660,
+                85270,
+                84618,
+                85448,
+                83560,
+                83603,
+                83972,
+                83788,
+                83849
+            ],
+            "esTop10": [
+                84372,
+                84660,
+                85270,
+                84618,
+                85448,
+                83788,
+                83972,
+                83560,
+                83603,
+                83849
+            ]
+        },
+        {
+            "query": "solar energy",
+            "year": 2026,
+            "duckdbTotal": 101,
+            "esTotal": 101,
+            "duckdbMedianMs": 65.89,
+            "esMedianMs": 65.61,
+            "top10Overlap": 8,
+            "duckdbTop10": [
+                85945,
+                86083,
+                84421,
+                85360,
+                85827,
+                85819,
+                85034,
+                84729,
+                85442,
+                86124
+            ],
+            "esTop10": [
+                84421,
+                85360,
+                85945,
+                86083,
+                85034,
+                85819,
+                86124,
+                85592,
+                85827,
+                86232
+            ]
+        },
+        {
+            "query": "hb1",
+            "year": 2026,
+            "duckdbTotal": 1,
+            "esTotal": 0,
+            "duckdbMedianMs": 26.68,
+            "esMedianMs": 5.04,
+            "top10Overlap": 0,
+            "duckdbTop10": [
+                83553
+            ],
+            "esTop10": []
+        }
+    ]
+}
