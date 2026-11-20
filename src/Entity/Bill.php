@@ -135,7 +135,7 @@ final class Bill
 	 * @types string (storageHint=string)
 	 * @stats total=3029, nulls=0, distinct=15
 	 */
-	#[Column(length: 18, nullable: true)]
+	#[Column(length: 64, nullable: true)]
 	public ?string $status = null;
 
 	/**
@@ -270,7 +270,7 @@ final class Bill
 	 * @types string (storageHint=string)
 	 * @stats total=1950, nulls=0, distinct=14
 	 */
-	#[Column(length: 15, nullable: true)]
+	#[Column(length: 64, nullable: true)]
 	public ?string $committeeShortname = null;
 
 	/**
@@ -286,7 +286,7 @@ final class Bill
 	 * @types string (storageHint=string)
 	 * @stats total=3029, nulls=0, distinct=15
 	 */
-	#[Column(length: 18, nullable: true)]
+	#[Column(length: 64, nullable: true)]
 	public ?string $statusDetail = null;
 
 	/**

@@ -31,14 +31,24 @@ bin/console cache:warmup
 Download the raw data files (if not already in data/):
 
 ```bash
-bin/console app:richmondsunlight:download-raw
+bin/console app:download --from=2026 --to=2026 --force
 ```
 
 Import bills into the database:
 
 ```bash
-bin/console import:entities App\\Entity\\Bill data/2023.jsonl
+bin/console import:entities App\\Entity\\Bill data/2026.jsonl --batch=1
 ```
+
+The downloader defaults to 2023 through the current year. Select sessions with
+`--from` and `--to`; use `--force` to refresh existing snapshots. Imports update
+bills by ID and retain other sessions. Do not use `--reset` for routine refreshes.
+`castor bills:load --fetch --from=2026 --to=2026` validates the schema, downloads
+the selected sessions, and imports them. Rebuild the search index afterward.
+
+The upstream 2026 export contains repeated bill IDs. Use `--batch=1` with the
+generic importer so repeated records update the same bill without an ORM identity
+collision. The Castor task supplies this option automatically.
 
 ## Search
 
