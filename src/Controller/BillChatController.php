@@ -79,7 +79,7 @@ final class BillChatController extends AbstractController
     #[Route('/bills/chat/connect', name: 'app_bill_mcp_help', methods: ['GET'])]
     public function mcpHelp(): Response
     {
-        return $this->render('chat/connect.html.twig');
+        return $this->render('chat/connect.html.twig', ['publicUrl' => $this->getParameter('app.public_url')]);
     }
 
     #[Route('/bills/chat/clear', name: 'app_bill_chat_clear', methods: ['POST'])]

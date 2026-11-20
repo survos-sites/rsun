@@ -17,5 +17,17 @@
         {
             "url": "https://github.com/heroku/heroku-buildpack-php.git"
         }
-    ]
+    ],
+    "healthchecks": {
+        "web": [
+            {
+                "type": "startup",
+                "name": "http",
+                "path": "/health",
+                "attempts": 5,
+                "timeout": 10,
+                "wait": 5
+            }
+        ]
+    }
 }

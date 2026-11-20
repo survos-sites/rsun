@@ -8,4 +8,4 @@ mcp:
                 stdio: true
             http:
                 path: /mcp
-                allowed_hosts: ['localhost', '127.0.0.1', 'rsun.wip', 'vabills.org']
+                allowed_hosts: ['localhost', '127.0.0.1', 'rsun.wip', 'vabills.org', 'rsun.survos.com']

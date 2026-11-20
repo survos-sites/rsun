@@ -9,7 +9,7 @@
     <section class="card mb-3"><div class="card-body">
         <h2>Connect by URL</h2>
         <p>In your agent’s MCP settings, add a server named <strong>VA Bills</strong>. Choose <strong>Streamable HTTP</strong> and enter:</p>
-        <pre><code>https://vabills.org/mcp</code></pre>
+        <pre><code>{{ publicUrl }}/mcp</code></pre>
         <p>Choose <strong>No authentication</strong> (or <strong>No sign in</strong>). Your AI provider may require a supported plan or workspace administrator approval.</p>
     </div></section>
     <section class="card mb-3"><div class="card-body">
@@ -17,7 +17,7 @@
         <p><a class="btn btn-outline-primary" href="https://claude.ai/customize/connectors" target="_blank" rel="noopener">Open Claude connectors ↗</a></p>
         <ol>
             <li>Open <strong>Customize → Connectors</strong>, then <strong>+ Add → Add custom connector</strong>.</li>
-            <li>Name it <strong>VA Bills</strong> and paste <code>https://vabills.org/mcp</code>.</li>
+            <li>Name it <strong>VA Bills</strong> and paste <code>{{ publicUrl }}/mcp</code>.</li>
             <li>Continue, choose <strong>No sign in</strong>, and finish adding it.</li>
             <li>In a chat, open <strong>+ → Connectors</strong> and enable VA Bills.</li>
         </ol>
@@ -28,7 +28,7 @@
         <p><a class="btn btn-outline-primary" href="https://chatgpt.com/plugins" target="_blank" rel="noopener">Open ChatGPT plugins ↗</a></p>
         <ol>
             <li>Select <strong>+ → Add custom MCP server</strong>.</li>
-            <li>Name it <strong>VA Bills</strong>, set the server URL to <code>https://vabills.org/mcp</code>, and choose <strong>No authentication</strong>.</li>
+            <li>Name it <strong>VA Bills</strong>, set the server URL to <code>{{ publicUrl }}/mcp</code>, and choose <strong>No authentication</strong>.</li>
             <li>Review the permissions, create the plugin, and install it.</li>
             <li>In a new chat, type <strong>@</strong> and select <strong>VA Bills</strong>.</li>
         </ol>
@@ -65,7 +65,7 @@
         <h3>Try this prompt</h3>
         <blockquote class="border-start ps-3">Use VA Bills to find 2026 bills proposing changes to tobacco taxes. Read the relevant sections, distinguish proposed changes from enacted law, and cite the returned sources. Don’t infer that no other bills exist from ranked search results.</blockquote>
         <p>For a quick connection check, ask your agent to call <code>read_bill</code> with <code>id: 83553</code>. It should return 2026 HB1, version CHAP0350.</p>
-        <p class="text-secondary mb-0">Sources return site-relative citation links. Resolve them against <code>https://vabills.org</code>. Historical version references may have no available body; a reference alone cannot support a comparison.</p>
+        <p class="text-secondary mb-0">Sources return site-relative citation links. Resolve them against <code>{{ publicUrl }}</code>. Historical version references may have no available body; a reference alone cannot support a comparison.</p>
     </div></section>
 </div>
 {% endblock %}
