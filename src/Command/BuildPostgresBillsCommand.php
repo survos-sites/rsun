@@ -8,9 +8,7 @@ use Doctrine\DBAL\Connection;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\DependencyInjection\Attribute\When;
 
-#[When(env: 'dev')]
 #[AsCommand('app:postgres:build', 'Build PostgreSQL full-text/BM25 search from imported bills')]
 final readonly class BuildPostgresBillsCommand
 {
