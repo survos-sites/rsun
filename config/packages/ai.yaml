@@ -17,7 +17,7 @@ ai:
                   description: Read a complete bill section and its source version, status and inline changes.
                 - service: 'App\Chat\Tool\ReadBill'
                   name: read_bill
-                  description: Read the selected bill by numeric ID, with its summary, patron, full text, status and version references. Works for bills outside the 2026 section index.
+                  description: Read the selected bill by numeric ID, with its summary, patron, full text, status and version references. Works for bills without semantic indexing.
                 - service: 'App\Chat\Tool\FindBillSummaries'
                   name: find_bill_summaries
                   description: Title-weighted keyword search with vaping, tobacco, youth, guns and immigration aliases; OR alternatives supported. Not embedding search; use find_bills for semantic retrieval. Pagination and outcome/status/chamber/patron/party filters supported. Budget line items are not separately indexed. Read cited evidence before answering.

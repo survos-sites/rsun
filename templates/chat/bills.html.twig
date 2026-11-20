@@ -28,7 +28,7 @@
             <label>Session<input class="form-control" name="year" type="number" min="2023" max="2026" value="{{ year }}"></label>
             <button class="btn btn-outline-primary">Set scope</button>
         </form>
-        <p>Scope: <strong>{{ year }} session</strong>. Semantic section search is currently indexed for 2026.</p>
+        <p>Scope: <strong>{{ year }} session</strong>. Search uses the published snapshot for this session. Some bills and historical versions may lack full text.</p>
     {% endif %}
     {% if error %}<div class="alert alert-danger" role="alert">{{ error }}</div>{% endif %}
     <section aria-label="Conversation" class="bill-chat-history">

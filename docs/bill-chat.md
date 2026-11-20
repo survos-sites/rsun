@@ -150,3 +150,25 @@ excludes HB907 and SB704. Tested summary and grouped-section pagination, outcome
 plus chamber filters, patron matching, incorporation extraction and existing
 retrieval/scope smoke checks. Changes require deployment before public clients
 see the revised tool schema; reconnect/refresh tools afterward.
+
+## Historical backfill on production
+
+The 2023–2025 catalogs are already imported (3,029 / 3,595 / 3,512 bills).
+For each session, run `app:bills:structure --year=YEAR --no-debug`, then
+`app:bills:vectorize --year=YEAR --no-debug`, followed by
+`app:bills:project-es --year=YEAR --no-debug`. Run on the production host so the
+database and Elasticsearch traffic stays there. Preserve completed vectors and
+inspect pending/failed attempts before retrying. The ES alias stays on its
+previous generation until projection validation succeeds.
+
+Verify `coverage.catalog_bills`, `coverage.bills_with_embeddings`, distinct-bill
+counts and HTTP/MCP parity for each year. Current imported full-text coverage is
+3,013 / 3,533 / 3,364 bills for 2023 / 2024 / 2025. Version references without
+bodies remain metadata-only; this does not fetch separate historical amendments.
+Definitions remain part of the source bill, with their scope and inline changes.
+
+## Demo follow-up
+
+The approved November 2026 demo is on YouTube. A QR code and a simplified mobile
+chat experience, using the RappNews local experience as a reference, are deferred
+to v2. Review new cuts before uploading: YouTube revisions need new video URLs.
