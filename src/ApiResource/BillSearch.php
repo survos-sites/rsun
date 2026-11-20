@@ -8,6 +8,7 @@ use App\Search\BillSearchInput;
 use App\State\BillSearchProvider;
 
 #[ApiResource(
+    formats: ['json' => ['application/json'], 'jsonld' => ['application/ld+json']],
     operations: [new Get(uriTemplate: '/bills/search', provider: BillSearchProvider::class, parameters: [
         'query' => new QueryParameter(schema: ['type'=>'string', 'maxLength'=>500]),
         'year' => new QueryParameter(schema: ['type'=>'integer', 'default'=>2026]),

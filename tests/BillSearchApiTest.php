@@ -53,7 +53,7 @@ final class BillSearchApiTest extends WebTestCase
     {
         $client = self::createClient();
         $this->installEngine();
-        $client->request('GET', '/api/bills/search?query=youth&mode=fulltext&limit=1');
+        $client->request('GET', '/api/bills/search?query=youth&mode=fulltext&limit=1', server: ['HTTP_ACCEPT'=>'application/json']);
         self::assertResponseIsSuccessful();
         $data = json_decode($client->getResponse()->getContent(), true);
         self::assertSame(2, $data['total']);
