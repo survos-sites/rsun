@@ -13,9 +13,9 @@
         <h2 id="find-heading">An issue. A name.<br>A bill number.</h2>
         <form action="{{ path('app_bill_search') }}" method="get" class="va-search-form">
             <label for="home-query">Search Virginia bills</label>
-            <div><input id="home-query" name="app_bill_pg[query]" type="search" placeholder="School funding, healthcare, HB755…" required><button type="submit" aria-label="Search bills">→</button></div>
+            <div><input id="home-query" name="app_bill_es[query]" type="search" placeholder="School funding, healthcare, HB755…" required><button type="submit" aria-label="Search bills">→</button></div>
         </form>
-        <div class="va-topics"><span>Try an issue</span>{% for label, query in {'Schools': 'school', 'Agriculture': 'agriculture', 'Healthcare': 'healthcare', 'Housing': 'housing'} %}<a href="{{ path('app_bill_search', {app_bill_pg: {query: query}}) }}">{{ label }}</a>{% endfor %}</div>
+        <div class="va-topics"><span>Try an issue</span>{% for label, query in {'Schools': 'school', 'Agriculture': 'agriculture', 'Healthcare': 'healthcare', 'Housing': 'housing'} %}<a href="{{ path('app_bill_search', {app_bill_es: {query: query}}) }}">{{ label }}</a>{% endfor %}</div>
         <p class="va-small">Filter by session, sponsor, or status. Read the text behind the headline.</p>
     </section>
     <section class="va-conversation" aria-labelledby="conversation-heading">

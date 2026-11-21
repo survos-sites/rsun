@@ -8,6 +8,7 @@ use App\Repository\BillRepository;
 use Survos\SearchBundle\Search\SearchProvider;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Attribute\Route;
 
 final class BillSearchController extends AbstractController
@@ -21,8 +22,6 @@ final class BillSearchController extends AbstractController
         ]);
     }
 
-    private const string SEARCH = 'app_bill';
-
     private const array FACETS = [
         'year' => 'Session year',
         'chamber' => 'Chamber',
@@ -34,9 +33,15 @@ final class BillSearchController extends AbstractController
 
     #[Route('/bills/search', name: 'app_bill_search', methods: ['GET'])]
     #[Route('/bills/search/ux', name: 'app_bill_ux_search', methods: ['GET'])]
-    public function search(SearchProvider $provider): Response
+    public function search(SearchProvider $provider, Request $request): Response
     {
-        $name = 'app_bill_pg';
+        $name = 'app_bill_es';
+        $parameters = $request->query->all();
+        if (isset($parameters['app_bill_pg'])) {
+            $parameters[$name] ??= $parameters['app_bill_pg'];
+            unset($parameters['app_bill_pg']);
+            return $this->redirectToRoute('app_bill_search', $parameters);
+        }
         $search = $provider->getSearch($name)->create();
         $available = array_map(static fn ($facet) => $facet->getProperty(), $search->getFacets());
         $sorts = array_map(
@@ -46,7 +51,7 @@ final class BillSearchController extends AbstractController
 
         return $this->render('bill/search.html.twig', [
             'name' => $name,
-            'backendLabel' => 'app_bill_es' === $name ? 'Elasticsearch / BM25' : 'PostgreSQL FTS / BM25',
+            'backendLabel' => 'Elasticsearch / BM25',
             'facets' => array_intersect_key(self::FACETS, array_flip($available)),
             'sorts' => $sorts,
         ]);
