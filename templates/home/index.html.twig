@@ -1,83 +1,27 @@
-{% extends '@SurvosTabler/layout/base.html.twig' %}
-
-{% block title %}VA Bills{% endblock %}
-
+{% extends 'layout/public.html.twig' %}
+{% block title %}VA Bills · Follow the issues. Understand the bills.{% endblock %}
 {% block content %}
-    <div class="page-header d-print-none mb-3">
-        <div class="container-xl">
-            <div class="row g-2 align-items-center">
-                <div class="col">
-                    <div class="page-pretitle">Virginia Legislation</div>
-                    <h1 class="page-title">VA Bills</h1>
-                </div>
-                <div class="col-auto ms-auto d-print-none">
-                    <div class="btn-list">
-                        <a class="btn btn-primary" href="{{ path('app_bill_search') }}">
-                            {{ ux_icon('tabler:search', {height: '18px', width: '18px'}) }} Search bills
-                        </a>
-                        <a class="btn btn-outline-primary" href="{{ path('app_bill_chat') }}">
-                            {{ ux_icon('tabler:message-circle', {height: '18px', width: '18px'}) }} Ask about bills
-                        </a>
-                        <a class="btn btn-outline-primary" href="{{ path('survos_admin_dashboard') }}">
-                            {{ ux_icon('tabler:layout-dashboard', {height: '18px', width: '18px'}) }} Admin
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="page-body">
-        <div class="container-xl">
-            <div class="row row-cards">
-                {% for card in entityCards %}
-                    {% set descriptor = card.descriptor %}
-                    <div class="col-12 col-md-6 col-xl-4">
-                        <div class="card h-100">
-                            <div class="card-body">
-                                <div class="d-flex align-items-start gap-3">
-                                    {% if descriptor.icon %}
-                                        <div class="text-primary">{{ ux_icon(descriptor.icon, {height: '32px', width: '32px'}) }}</div>
-                                    {% endif %}
-                                    <div class="flex-fill">
-                                        <div class="subheader">{{ descriptor.group }}</div>
-                                        <h2 class="h2 mb-1">{{ descriptor.label }}</h2>
-                                        {% if descriptor.description %}
-                                            <div class="text-muted small">{{ descriptor.description }}</div>
-                                        {% endif %}
-                                    </div>
-                                </div>
-
-                                <div class="row g-2 mt-3">
-                                    <div class="col-6">
-                                        <div class="text-muted small">Rows</div>
-                                        <div class="h2 mb-0">{{ card.rowCount is not null ? card.rowCount|number_format : 'n/a' }}</div>
-                                    </div>
-                                    <div class="col-6">
-                                        <div class="text-muted small">Entity</div>
-                                        <code class="small">{{ descriptor.code }}</code>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer d-flex flex-wrap gap-2">
-                                {% if card.dashboardUrl %}
-                                    <a class="btn btn-sm btn-primary" href="{{ card.dashboardUrl }}">Inventory</a>
-                                {% endif %}
-                                {% if card.uxSearchUrl %}
-                                    <a class="btn btn-sm btn-outline-primary" href="{{ path('app_bill_search') }}">Search bills</a>
-                                {% endif %}
-                                {% for workflow in card.workflows %}
-                                    {% if workflow.url %}<a class="btn btn-sm btn-outline-secondary" href="{{ workflow.url }}">{{ workflow.name }}</a>{% endif %}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                {% else %}
-                    <div class="col-12">
-                        <div class="alert alert-warning">No #[EntityMeta] entities are registered.</div>
-                    </div>
-                {% endfor %}
-            </div>
-        </div>
-    </div>
+<div class="va-home">
+    <section class="va-hero">
+        <div class="va-eyebrow">YOUR COMMONWEALTH. YOUR QUESTIONS.</div>
+        <h1>What’s happening<br>with the issues<br><em>you care about?</em></h1>
+        <p class="va-intro">School repairs. Rural healthcare. The cost of housing.<br>Find the Virginia bills behind the issues—and understand what they would change.</p>
+        <div class="va-hero-actions"><a class="va-button" href="{{ path('app_bill_chat') }}">Ask a question <span aria-hidden="true">↗</span></a><a class="va-text-link" href="{{ path('app_bill_search') }}">Explore the bills <span aria-hidden="true">→</span></a></div>
+    </section>
+    <section class="va-discover" aria-labelledby="find-heading">
+        <div class="va-eyebrow">START WITH WHAT YOU KNOW</div>
+        <h2 id="find-heading">An issue. A name.<br>A bill number.</h2>
+        <form action="{{ path('app_bill_search') }}" method="get" class="va-search-form">
+            <label for="home-query">Search Virginia bills</label>
+            <div><input id="home-query" name="app_bill_pg[query]" type="search" placeholder="School funding, healthcare, HB755…" required><button type="submit" aria-label="Search bills">→</button></div>
+        </form>
+        <div class="va-topics"><span>Try an issue</span>{% for label, query in {'Schools': 'school', 'Agriculture': 'agriculture', 'Healthcare': 'healthcare', 'Housing': 'housing'} %}<a href="{{ path('app_bill_search', {app_bill_pg: {query: query}}) }}">{{ label }}</a>{% endfor %}</div>
+        <p class="va-small">Filter by session, sponsor, or status. Read the text behind the headline.</p>
+    </section>
+    <section class="va-conversation" aria-labelledby="conversation-heading">
+        <div><div class="va-eyebrow">YOU DON’T NEED TO SPEAK LEGISLATIVE</div><h2 id="conversation-heading">Start with a question.<br>Then ask another.</h2><p>Explore a topic in your own words. Find out what a bill proposes, who introduced it, and where it stands—with links back to the source.</p><a class="va-text-link" href="{{ path('app_bill_chat') }}">Start a conversation →</a></div>
+        <div class="va-question-list" aria-label="Questions you can ask"><p>“What would help schools pay for repairs?”</p><p>“Did any of those bills pass?”</p><p>“Who introduced the ones that didn’t?”</p><span>Follow your curiosity. Follow the sources.</span></div>
+    </section>
+    <section class="va-agent" aria-labelledby="agent-heading"><div><div class="va-eyebrow">BRING YOUR OWN ASSISTANT</div><h2 id="agent-heading">Your AI. Virginia’s bills.</h2><p>Already use Claude or ChatGPT? Connect VA Bills so your assistant can find legislation and read the sources with you.</p></div><a class="va-button va-button-light" href="{{ path('app_bill_mcp_help') }}">Connect VA Bills <span aria-hidden="true">↗</span></a></section>
+</div>
 {% endblock %}

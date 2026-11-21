@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Explore Virginia legislation. Find bills, ask questions, and follow the sources with VA Bills.">
+    <title>{% block title %}VA Bills{% endblock %}</title>
+    {% block stylesheets %}{% endblock %}
+    {% block javascripts %}{{ importmap('app') }}{% endblock %}
+</head>
+<body class="va-public">
+<a class="va-skip" href="#main-content">Skip to content</a>
+<header class="va-header">
+    <a class="va-brand" href="{{ path('app_homepage') }}" aria-label="VA Bills home"><span class="va-monogram">VA</span> Bills<span class="va-brand-note">Virginia legislation, within reach.</span></a>
+    <nav aria-label="Main navigation">
+        <a href="{{ path('app_bill_search') }}">Search bills</a>
+        <a href="{{ path('app_bill_chat') }}">Ask a question</a>
+        <a class="va-nav-connect" href="{{ path('app_bill_mcp_help') }}">Connect your assistant <span aria-hidden="true">↗</span></a>
+    </nav>
+</header>
+<main id="main-content" class="va-main">{% block content %}{% endblock %}</main>
+<footer class="va-footer"><a href="{{ path('app_homepage') }}">VA Bills</a><p>An independent guide to Virginia legislation. Source data from <a href="https://www.richmondsunlight.com/">Richmond Sunlight</a>. Check the cited bill and its status.</p><a href="{{ path('app_bill_mcp_help') }}">For your AI assistant ↗</a></footer>
+</body>
+</html>

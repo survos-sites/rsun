@@ -1,4 +1,4 @@
-{% extends '@SurvosTabler/layout/base.html.twig' %}
+{% extends 'layout/public.html.twig' %}
 {% block title %}Search bills{% endblock %}
 {% do page({show_page_header: false}) %}
 {% block content %}
@@ -11,7 +11,7 @@
 }) }}>
     <h1>Search Virginia bills</h1>
     <p><a class="btn btn-primary" href="{{ path('app_bill_chat') }}">Chat about 2026 bills</a></p>
-    {% if true %}
+    {% if app.debug %}
         {% set current = app.request.query.all[name]|default({}) %}
         <nav class="nav nav-pills mb-3" aria-label="Search backend" data-controller="bill-backend" data-bill-backend-name-value="{{ name }}" data-action="click->bill-backend#switch">
             {% set engines = {postgres: 'app_bill_pg', es: 'app_bill_es'} %}
